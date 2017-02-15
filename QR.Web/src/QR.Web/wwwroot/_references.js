@@ -8,3 +8,4 @@
 /// <reference path="app/services/sampleget.service.js" />
 /// <reference path="app/services/shared.service.js" />
 /// <reference path="dist/js/app.min.js" />
+/// <reference path="dist/js/lib.min.js" />

@@ -2,16 +2,15 @@
     margin: 0;
     padding: 0 30px;
     width: 100%;
-    height: 56px;
-    background: $header-background-hover;
+    height: 60px;     
 
-    &-content{
+    &-content {
         width: 100%;
         height: 100%;
         -moz-box-sizing: border-box;
         -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        border: none;
+        box-sizing: border-box;        
+        border-top: 1px solid #f0f0f0;
 
         ul {
             margin: 0 -15px;
@@ -24,11 +23,11 @@
                 padding: 0 15px;
                 margin: 0;
                 text-align: center;
-                line-height: 48px;
+                line-height: 60px;
                 display: inline;
 
                 a {
-                    color: #808080;
+                    color: #303030;
                     text-decoration: none;
                 }
             }

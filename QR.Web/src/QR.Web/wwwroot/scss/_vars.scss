@@ -120,6 +120,12 @@ $break-mob: 320px;
 $break-tablet: 768px;
 $break-desktop: 1024px;
 
+@mixin respond-to-mobile {
+    @media only screen and (max-width:768px) {
+        @content;
+    }
+}
+
 
 @mixin respond-to($media) {
     @if $media == tablet {
@@ -128,7 +134,7 @@ $break-desktop: 1024px;
         }
     }
     @else if $media == mobile {
-        @media only screen and (min-width:$break-mob) and (max-width:$break-tablet - 1) {
+        @media only screen and (max-width:$break-tablet - 1) {
             @content;
         }
     }
@@ -217,4 +223,27 @@ $spacers: ( 0: ( x: 0, y: 0 ), auto: ( x: auto, y: auto ), 5: ( x: $spacer-x, y:
     src: url(/dist/fonts/office365/office365icons.eot?#iefix) format('embedded-opentype'), url(/dist/fonts/office365/office365icons.woff?) format('woff'), url(/dist/fonts/office365/office365icons.ttf?) format('truetype'), url(/dist/fonts/office365/office365icons.svg?#office365icons) format('svg');
     font-weight: 400;
     font-style: normal;
+}
+
+
+@mixin scrollbars($size, $foreground-color, $background-color) {
+    ::-webkit-scrollbar {
+        width: $size;
+        height: $size;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: $foreground-color;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: $background-color;
+    }
+    // For Internet Explorer
+    body {
+        -ms-scrollbar-face-color: $foreground-color;
+        scrollbar-face-color: $foreground-color;
+        -ms-scrollbar-track-color: $background-color;
+        scrollbar-track-color: $background-color;
+    }
 }

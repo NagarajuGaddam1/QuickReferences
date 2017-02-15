@@ -55,7 +55,8 @@ gulp.task('minify:lib:css', function () {
     return gulp.src([
             webroot + 'lib/css/**/*.css',
             webroot + 'lib/css/**/*min.css',
-            webroot + 'lib/css/**/*.min.css'
+            webroot + 'lib/css/**/*.min.css',
+            webroot + 'lib/css/**/*.css'
         ])
         .pipe(plumber(errorHandler))
         .pipe(cssmin())
@@ -75,7 +76,8 @@ gulp.task('minify:lib:js', function (cb) {
               webroot + 'lib/base/*min.js',
               webroot + 'lib/addons/*.js',
               webroot + 'lib/addons/*min.js',
-              webroot + 'lib/third-party/*min.js'             
+              webroot + 'lib/third-party/*.js',
+              webroot + 'lib/third-party/*min.js'
           ]),
           concat('lib.min.js'),
           gulp.dest(webroot + 'dist/js')
