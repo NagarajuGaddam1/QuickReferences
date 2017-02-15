@@ -1,0 +1,14 @@
+﻿<div class="modal-body">
+    <div class="notifyMsg">{{notifyModal.data.message}}</div>
+    <div class="icon-container"
+         ng-class="{'success': notifyModal.data.success, 'failed': notifyModal.data.failed,'info-progress': notifyModal.data.inProgress, 'info':notifyModal.data.info}" >
+        <i class="icon icon-accept-8fb" ng-show="notifyModal.data.success"></i>
+        <i class="icon icon-info-171" ng-show="notifyModal.data.info"></i>
+        <i class="icon icon-alert-7ba" ng-show="notifyModal.data.failed"></i>
+        <div class="spinner" ng-show="notifyModal.data.inProgress">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

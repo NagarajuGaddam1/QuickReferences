@@ -1,0 +1,19 @@
+﻿.dashboard {
+    width: 100%;
+    float: left;
+    height: calc(100vh - 235px);
+    margin-top: 15px;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    position: relative;
+    border-left: 1px solid #E6E6E6;
+
+    &-heading {
+        font-weight: 100;
+        width: 100%;
+        text-align: center;
+        color: #d0d0d0;
+    }
+}
