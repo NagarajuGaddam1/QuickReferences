@@ -4,24 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - QR.Web</title>
-
-    <environment names="Development">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
-        <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/4.1.0/css/fabric.min.css">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~//site.css" />
-        <link href="~/dist/css/lib.min.css" rel="stylesheet" />
-        <link href="~/dist/css/app.min.css" rel="stylesheet" />
-    </environment>    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/4.1.0/css/fabric.min.css">
+    <link href="~/dist/css/lib.min.css" rel="stylesheet" />
+    <link href="~/dist/css/app.min.css" rel="stylesheet" />
 </head>
 <body>
     @RenderBody()
-
-    <environment names="Development">
-        <script src="~/dist/js/lib.min.js"></script>
-        <script src="~/dist/js/app.min.js"></script>
-    </environment>
-
+    <script src="~/dist/js/lib.min.js"></script>
+    <script src="~/dist/js/app.min.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>
