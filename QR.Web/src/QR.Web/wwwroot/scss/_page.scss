@@ -75,7 +75,7 @@ body {
     }
 
     p {
-        font-family: 'Segoe UI';
+      font-family: 'Open Sans', sans-serif;
         font-size: xx-large;
         font-weight: 100;
         color: #fff;
@@ -93,7 +93,7 @@ body {
 
 button {
     &.btn-bod {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Open Sans', sans-serif;
         font-weight: 400;
         padding: 0 15px;
         margin: 0;
@@ -159,7 +159,7 @@ button {
             line-height: 80px;
             height: 80px;
             padding: 0 45px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-family: 'Open Sans', sans-serif;
             font-weight: 300;
             font-size: xx-large;
             margin-bottom: 0;
@@ -178,7 +178,7 @@ button {
             height: 100px;
             width: 100%;
             vertical-align: middle;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+           font-family: 'Open Sans', sans-serif;
             font-weight: 300;
             font-size: x-large;
             margin-bottom: 0;
@@ -222,7 +222,7 @@ button {
 
             label {
                 &.bod-user-name {
-                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                   font-family: 'Open Sans', sans-serif;
                     font-weight: 300;
                     font-size: x-large;
                     width: 100%;
@@ -236,7 +236,7 @@ button {
             width: 100%;
 
             &.bod-text-hilghlight {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                font-family: 'Open Sans', sans-serif;
                 font-size: large;
                 color: #000;
                 font-weight: 400;
@@ -244,7 +244,7 @@ button {
             }
 
             &.bod-text {
-                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+               font-family: 'Open Sans', sans-serif;
                 font-size: medium;
                 color: #707070;
             }
