@@ -13,7 +13,8 @@
         'QR.Web.Notify',
         'ngAnimate',
         'ui.bootstrap',
-        'ngSanitize'
+        'ngSanitize',
+        'ngMaterial'
     ]);
 
 })();

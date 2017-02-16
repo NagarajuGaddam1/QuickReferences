@@ -11,7 +11,12 @@ namespace QR.Web.Controllers
         public IActionResult Index()
         {
             return View();
-        }        
+        }
+
+        public IActionResult Explore()
+        {
+            return View();
+        }
 
         public IActionResult Error()
         {
