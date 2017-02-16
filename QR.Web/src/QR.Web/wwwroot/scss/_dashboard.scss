@@ -1,11 +1,132 @@
 ﻿.dashboard {
-    width: 100%;    
+    width: 100%;
+    height: 100%;
     padding: 0;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     position: relative;
-    border-left: 1px solid #E6E6E6;   
+
+    &-content {
+        padding: 0 30px;
+
+        &-search {
+            position: absolute;
+            top: 12px;
+            right: 30px;
+            line-height: 48px;
+            height: 48px;
+            z-index: 10;
+            min-width: 50vw;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.10);
+            font-family: 'Open Sans', sans-serif;
+            font-size: medium;
+
+            &-icon {
+                width: 48px;
+                height: 48px;
+                line-height: 48px;
+                text-align: center;
+                float: right;
+                border: 1px dotted transparent;
+                cursor: pointer;
+                transition: background 0.3s linear 0s;
+
+                &:hover {
+                    background: #0078d7;
+                    color: #fff;
+                }
+
+                &:focus {
+                    outline: none;
+                    border: 1px dotted #303030;
+                }
+            }
+
+            input {
+                padding: 0 15px;
+                border: none;
+                font-family: 'Open Sans', sans-serif;
+                font-size: medium;
+                background: transparent;
+                width: calc(100% - 48px);
+                border: 1px dotted transparent;
+                display: inline-block;
+                float: left;
+                line-height: 48px;
+                height: 48px;
+
+                &:focus {
+                    outline: none;
+                    border: 1px dotted #303030;
+                }
+            }
+        }
+
+        md-tabs-wrapper {
+            border-color: rgba(0,0,0,0.03);
+        }
+
+        md-tabs.md-default-theme md-ink-bar,
+        md-tabs md-ink-bar {
+            color: #0078d7;
+            background-color: #0078d7;
+        }
+
+        md-tabs-canvas,
+        md-pagination-wrapper {
+            height: 72px;
+
+            .md-tab {
+                height: 72px;
+                line-height: 72px;
+                padding: 0 24px;
+                font-size: medium;
+                text-transform: none;
+            }
+        }
+
+        md-content {
+            background: transparent;
+            padding: 0;
+
+            .codeview {
+                &-container {
+                    padding: 0;
+
+                    &-view {
+                        border: 1px solid rgba(0,0,0,.05);
+                    }
+                }
+            }
+        }
+    }
+
+    &-view {
+        width: 100%;
+        height: 100%;
+
+        &-top {
+            width: 100%;
+            background-color: #0078d7;
+            padding: 90px 0 30px 0;
+
+            .app-title {
+                display: inline-block;
+                width: 100%;
+
+                img {
+                    display: block;
+                    margin: 0 auto;
+
+                    @include respond-to-mobile() {
+                        width: 80vw;
+                    }
+                }
+            }
+        }
+    }
 
     &-heading {
         font-weight: 100;
