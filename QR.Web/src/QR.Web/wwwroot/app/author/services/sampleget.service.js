@@ -9,7 +9,7 @@
         var getData = function (StartDate, username, EndDate) {
 
             return $http({
-                url: "/Home/GetCurrentDateTime",
+                url: "/Author/GetTextFileContents",
                 method: "GET"
             }).then(handleSuccess, handleError);
         }

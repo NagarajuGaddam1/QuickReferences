@@ -5,7 +5,7 @@
         padding: 0 30px;
 
         &-view {
-            background: rgba(69,142,209,.04);
+            background: #f6f8fc;
             width: 100%;
             display: block;
             box-shadow: 0 3px 6px rgba(0,0,0,.1);
@@ -39,24 +39,44 @@
             display: block;
             background: #fff;
 
+            md-content {
+                background: transparent;
+                padding: 10px 16px;
+            }
+
+            md-chips.md-default-theme .md-chips,
+            md-chips .md-chips {
+                box-shadow: none;
+
+                md-chip {
+                    background: darken(#f6f8fc, 5);
+                }
+            }
+
+            .pull-left {
+                width: calc(100% - 200px);
+            }
+
             &-logo {
                 height: 78px;
-                display: inline-block;
-                vertical-align:top;
+                display: table-cell;
+                vertical-align: middle;
 
                 img {
                     height: 48px;
                     margin-left: 15px;
-                    margin-top:15px;
+                    margin-right: 15px;
                 }
             }
 
             &-title {
                 font-size: large;
-                line-height: 78px;
-                height: 78px;
+                min-height: 78px;
+                padding: 10px 0;
                 margin-left: 15px;
-                display: inline-block;
+                display: table-cell;
+                vertical-align: middle;
+                width: calc(100% - 80px);
             }
 
             &-action {
@@ -70,6 +90,13 @@
                 text-align: center;
                 font-size: x-large;
                 vertical-align: top;
+                cursor: pointer;
+                transition: background 0.3s linear 0s, color 0.3s linear 0s;
+
+                &:hover {
+                    background: #303030;
+                    color: #fff;
+                }
 
                 i {
                     line-height: 48px;

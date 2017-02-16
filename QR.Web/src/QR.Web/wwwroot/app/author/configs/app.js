@@ -12,6 +12,7 @@
         'QR.Web.Author.templates',
         'QR.Web.Author.Notify',
         'ngAnimate',
+        'ngMaterial',
         'ui.bootstrap',
         'ngSanitize'
     ]);
