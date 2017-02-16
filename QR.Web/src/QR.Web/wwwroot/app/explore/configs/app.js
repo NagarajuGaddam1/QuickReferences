@@ -2,10 +2,10 @@
     "use strict";
     angular.module('QR.Web.templates', [])
      .run(["$templateCache", function ($templateCache) {
-         for (var tmpl in window._bodAssets) {
-             $templateCache.put(tmpl, window._bodAssets[tmpl]);
+         for (var tmpl in window._exploreAssets) {
+             $templateCache.put(tmpl, window._exploreAssets[tmpl]);
          }
-         window._bodAssets = null;
+         window._exploreAssets = null;
      }])
 
     angular.module('QR.Web', [

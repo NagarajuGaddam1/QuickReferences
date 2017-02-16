@@ -8,11 +8,10 @@
     <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/4.1.0/css/fabric.min.css">
     <link href="~/dist/css/lib.min.css" rel="stylesheet" />
     <link href="~/dist/css/app.min.css" rel="stylesheet" />
+    <script src="~/dist/js/lib.min.js"></script>    
 </head>
 <body>
-    @RenderBody()
-    <script src="~/dist/js/lib.min.js"></script>
-    <script src="~/dist/js/app.min.js"></script>
+    @RenderBody()    
     @RenderSection("scripts", required: false)
 </body>
 </html>

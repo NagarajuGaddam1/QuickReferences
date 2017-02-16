@@ -1,0 +1,32 @@
+﻿(function () {
+    "use strict";
+
+    angular.module('QR.Web.Author')
+    .service("SampleGet", ["$http", "$q", SampleGetService]);
+
+    function SampleGetService($http, $q) {
+
+        var getData = function (StartDate, username, EndDate) {
+
+            return $http({
+                url: "/Home/GetCurrentDateTime",
+                method: "GET"
+            }).then(handleSuccess, handleError);
+        }
+
+        var handleSuccess = function (response) {
+            console.log('Success');
+            console.log(response);
+            return response.data;
+        }
+
+        var handleError = function (error) {
+            console.log(error);
+        }        
+
+        return {
+            get: getData            
+        }
+    }
+
+})();
