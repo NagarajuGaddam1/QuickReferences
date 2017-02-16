@@ -9,7 +9,6 @@
 
     &-content {
         padding: 0 30px;
-        background: transparent;
 
         &-search {
             position: absolute;
@@ -19,8 +18,8 @@
             height: 48px;
             z-index: 10;
             min-width: 50vw;
-            background: #f6f6f6;
-            border: none;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,.10);
             font-family: 'Open Sans', sans-serif;
             font-size: medium;
 
@@ -31,7 +30,7 @@
                 text-align: center;
                 float: right;
                 border: 1px dotted transparent;
-                cursor:pointer;
+                cursor: pointer;
                 transition: background 0.3s linear 0s;
 
                 &:hover {
@@ -41,7 +40,7 @@
 
                 &:focus {
                     outline: none;
-                    border: 1px dotted #0078d7;
+                    border: 1px dotted #303030;
                 }
             }
 
@@ -55,12 +54,18 @@
                 border: 1px dotted transparent;
                 display: inline-block;
                 float: left;
+                line-height: 48px;
+                height: 48px;
 
                 &:focus {
                     outline: none;
-                    border: 1px dotted #0078d7;
+                    border: 1px dotted #303030;
                 }
             }
+        }
+
+        md-tabs-wrapper {
+            border-color: rgba(0,0,0,0.03);
         }
 
         md-tabs.md-default-theme md-ink-bar,
@@ -89,6 +94,10 @@
             .codeview {
                 &-container {
                     padding: 0;
+
+                    &-view {
+                        border: 1px solid rgba(0,0,0,.05);
+                    }
                 }
             }
         }
