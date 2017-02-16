@@ -1,0 +1,96 @@
+﻿<div class="container-fluid authoring">
+    <div class="authoring-flask">
+        <div class="authoring-flask-pane">
+            <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">
+                <div class="authoring-flask-pane-item tag">
+                    <label>&ltp&gt</label>
+                </div>
+                <div class="authoring-flask-pane-item htm">
+                    <label>htm</label>
+                </div>
+                <div class="authoring-flask-pane-item js">
+                    <label>js</label>
+                </div>
+                <div class="authoring-flask-pane-item css">
+                    <label>css</label>
+                </div>
+                <div class="authoring-flask-pane-item scss">
+                    <label>scss</label>
+                </div>
+            </div>            
+        </div>
+        <div class="flask">
+            <div class="flask-instance tag">
+                <label class="title">Title for the post</label>
+                <input ng-model="app.post.name" />
+            </div>
+            <div class="flask-instance tag">
+                <label class="title">Categorize post as </label>
+                <div class="flask-instance-tag" ng-repeat="tag in app.mainTags" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="app.post.category = tag.id">
+                    <label ng-bind="tag.name"></label>
+                    <i class="ms-Icon ms-Icon--CheckMark" ng-show="tag.id == app.post.category"></i>
+                </div>
+            </div>
+            <div class="flask-instance tag">
+                <i class="ms-Icon ms-Icon--Delete"></i>
+                <label class="title">Tags</label>
+                <md-content class="md-padding" layout="column">
+                    <md-chips ng-model="app.post.tags" readonly="false" md-removable="true"></md-chips>
+                </md-content>
+            </div>
+            <div class="flask-instance tag">
+                <i class="ms-Icon ms-Icon--Delete"></i>
+                <label class="title">Paragraph</label>
+                <textarea ng-model="app.post.paragraphs[0]"></textarea>
+            </div>
+            <div class="flask-instance">
+                <i class="ms-Icon ms-Icon--Delete"></i>
+                <label class="title">JS Flask</label>
+                <div id="myCodeJSWrapper" data-language="javascript"></div>
+            </div>
+            <div class="flask-instance tag">
+                <i class="ms-Icon ms-Icon--Delete"></i>
+                <label class="title">Paragraph</label>
+                <textarea ng-model="app.post.paragraphs[1]"></textarea>
+            </div>            
+        </div>
+    </div>
+    <div class="authoring-preview">
+        <div class="codeview">
+            <div class="codeview-container">
+                <div class="codeview-container-view">
+                    <div class="codeview-container-actions">
+                        <div class="pull-left">
+                            <div class="codeview-container-actions-logo">
+                                <img src="/dist/images/css3.png" ng-show="app.post.category == 'css'" />
+                                <img src="/dist/images/js.png" ng-show="app.post.category == 'js'" />
+                                <img src="/dist/images/html5.png" ng-show="app.post.category == 'htm'" />
+                                <img src="/dist/images/scss.png" ng-show="app.post.category == 'scss'" />
+                            </div>
+                            <div class="codeview-container-actions-title" ng-bind="app.post.name"></div>
+                        </div>
+                        <div class="pull-right">
+                            <div class="codeview-container-actions-action">
+                                <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                            </div>
+                            <div class="codeview-container-actions-action">
+                                <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <p ng-bind="app.post.paragraphs[0]"></p>
+                    <pre><code class="language-js" id="displayPreview"></code></pre>
+                    <p ng-bind="app.post.paragraphs[1]"></p>
+                    <div class="codeview-container-actions">
+                        <md-content class="md-padding" layout="column">                            
+                            <md-chips ng-model="app.post.tags" readonly="true" md-removable="false"></md-chips> 
+                        </md-content>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>

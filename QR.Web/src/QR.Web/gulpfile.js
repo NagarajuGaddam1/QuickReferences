@@ -55,7 +55,8 @@ gulp.task('minify:lib:css', function () {
     return gulp.src([
             webroot + 'lib/css/**/*.css',
             webroot + 'lib/css/**/*min.css',
-            webroot + 'lib/css/**/*.min.css'
+            webroot + 'lib/css/**/*.min.css',
+            webroot + 'lib/css/**/*.css'
         ])
         .pipe(plumber(errorHandler))
         .pipe(cssmin())
@@ -75,7 +76,8 @@ gulp.task('minify:lib:js', function (cb) {
               webroot + 'lib/base/*min.js',
               webroot + 'lib/addons/*.js',
               webroot + 'lib/addons/*min.js',
-              webroot + 'lib/third-party/*min.js'             
+              webroot + 'lib/third-party/*.js',
+              webroot + 'lib/third-party/*min.js'
           ]),
           concat('lib.min.js'),
           gulp.dest(webroot + 'dist/js')
@@ -84,29 +86,58 @@ gulp.task('minify:lib:js', function (cb) {
     );
 });
 
-gulp.task('minify:app:js', ['jessify:views:js'], function (cb) {
+gulp.task('minify:app:explore:js', ['jessify:views:explore:js'], function (cb) {
     pump([
           gulp.src([
-              webroot + 'app/jessify/jessify.views.js',
-              webroot + 'app/providers/**/*.js',
-              webroot + 'app/**/*.js',
-              webroot + 'app/**/*.min.js',
+              webroot + 'app/explore/jessify/jessify.views.explore.js',
+              webroot + 'app/explore/providers/**/*.js',
+              webroot + 'app/explore/**/*.js',
+              webroot + 'app/explore/**/*.min.js',
           ]),
           uglify(),
-          concat('app.min.js'),
+          concat('app.explore.min.js'),
           gulp.dest(webroot + 'dist/js')
     ],
       cb
     );
 });
 
-
-gulp.task('jessify:views:js', function (cb) {
-    return gulp.src(['wwwroot/app/views/**/*', 'wwwroot/app/templates/**/*'])
-      .pipe(htmlToJsCompiler({ concat: 'jessify.views.js', prefix: 'templates/bod', global: 'window._bodAssets' }))
-      .pipe(gulp.dest('wwwroot/app/jessify'));
+gulp.task('jessify:views:explore:js', function (cb) {
+    return gulp.src(['wwwroot/app/explore/views/**/*', 'wwwroot/app/explore/templates/**/*'])
+      .pipe(htmlToJsCompiler({ concat: 'jessify.views.explore.js', prefix: 'templates/explore', global: 'window._exploreAssets' }))
+      .pipe(gulp.dest('wwwroot/app/explore/jessify'));
 });
 
-gulp.task('default:app:js', function () {
-    gulp.watch(['wwwroot/app/**/*.html', 'wwwroot/app/**/*.js'], ['minify:app:js']);
+gulp.task('default:app:explore:js', function () {
+    gulp.watch(['wwwroot/app/explore/**/*.html', 'wwwroot/app/explore/**/*.js'], ['minify:app:explore:js']);
+});
+
+/*
+ * AUTHOR
+ */
+
+gulp.task('minify:app:author:js', ['jessify:views:author:js'], function (cb) {
+    pump([
+          gulp.src([
+              webroot + 'app/author/jessify/jessify.views.author.js',
+              webroot + 'app/author/providers/**/*.js',
+              webroot + 'app/author/**/*.js',
+              webroot + 'app/author/**/*.min.js',
+          ]),
+          uglify(),
+          concat('app.author.min.js'),
+          gulp.dest(webroot + 'dist/js')
+    ],
+      cb
+    );
+});
+
+gulp.task('jessify:views:author:js', function (cb) {
+    return gulp.src(['wwwroot/app/author/views/**/*', 'wwwroot/app/author/templates/**/*'])
+      .pipe(htmlToJsCompiler({ concat: 'jessify.views.author.js', prefix: 'templates/author', global: 'window._authorAssets' }))
+      .pipe(gulp.dest('wwwroot/app/author/jessify'));
+});
+
+gulp.task('default:app:author:js', function () {
+    gulp.watch(['wwwroot/app/author/**/*.html', 'wwwroot/app/author/**/*.js'], ['minify:app:author:js']);
 });

@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Author";
+}
+<script src="~/dist/js/app.author.min.js"></script>
+<div class="container-fluid" ng-csp ng-app="QR.Web.Author">
+    <div class="row h100" ng-controller="AppController as app">
+        <div ng-include="'templates/author/header.tmpl.html'"></div>
+        <div class="content-body" auto-height="{{app.shared.hideFooter == true ? 0 : 48}}" id="contentBody">
+            <div class="content-body-container" ng-include="'templates/author/dashboard.view.html'"></div>
+            <div ng-include="'templates/author/footer.tmpl.html'"></div>
+        </div>
+    </div>
+</div>

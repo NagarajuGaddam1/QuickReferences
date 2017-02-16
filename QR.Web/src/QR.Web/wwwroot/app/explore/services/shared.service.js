@@ -30,43 +30,25 @@
         self.serviceApps = [
         {
             'id': 1,
-            'appName': 'App 1',
+            'appName': 'All',
             'appChar': 'A',
             'appUrl': '#'
         },
         {
             'id': 2,
-            'appName': 'App',
+            'appName': 'HTML5',
             'appChar': 'A',
             'appUrl': '#'
         },
         {
             'id': 3,
-            'appName': 'App',
+            'appName': 'JS',
             'appChar': 'A',
             'appUrl': '#'
         },
         {
             'id': 4,
-            'appName': 'App',
-            'appChar': 'A',
-            'appUrl': '#'
-        },
-        {
-            'id': 5,
-            'appName': 'App',
-            'appChar': 'A',
-            'appUrl': '#'
-        },
-        {
-            'id': 6,
-            'appName': 'App',
-            'appChar': 'A',
-            'appUrl': '#'
-        },
-        {
-            'id': 7,
-            'appName': 'App',
+            'appName': 'CSS',
             'appChar': 'A',
             'appUrl': '#'
         }
