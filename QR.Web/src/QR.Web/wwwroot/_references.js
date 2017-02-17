@@ -2,6 +2,7 @@
 /// <reference path="../gulpfile.js" />
 /// <reference path="app/author/configs/app.js" />
 /// <reference path="app/author/controllers/app.controller.js" />
+/// <reference path="app/author/directives/codeviewer.directive.js" />
 /// <reference path="app/author/jessify/jessify.views.author.js" />
 /// <reference path="app/author/services/extensions.service.js" />
 /// <reference path="app/author/services/notify.full.service.js" />

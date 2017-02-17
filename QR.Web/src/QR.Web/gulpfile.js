@@ -118,9 +118,10 @@ gulp.task('default:app:explore:js', function () {
 
 gulp.task('minify:app:author:js', ['jessify:views:author:js'], function (cb) {
     pump([
-          gulp.src([
-              webroot + 'app/author/jessify/jessify.views.author.js',
+          gulp.src([              
+              webroot + 'app/author/jessify/jessify.views.author.js',              
               webroot + 'app/author/providers/**/*.js',
+              webroot + 'app/author/config/app.js',
               webroot + 'app/author/**/*.js',
               webroot + 'app/author/**/*.min.js',
           ]),
