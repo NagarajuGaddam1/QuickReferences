@@ -1,6 +1,6 @@
 ﻿(function () {
     "use strict";
-    angular.module('QR.Extensions')
+    angular.module('QR.Web.Extensions')
     .directive('codeview', ['$document', '$rootScope', '$timeout', function ($document, $rootScope, $timeout) {
         return {
             restrict: 'E',
@@ -54,7 +54,7 @@
                         scope.codeViewer.buildFns();
                 })
             },
-            templateUrl: 'templates/author/codeviewer.directive.tmpl.html'
+            templateUrl: 'templates/extensions/codeviewer.directive.tmpl.html'
         }
     }])
 })()

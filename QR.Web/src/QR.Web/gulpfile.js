@@ -142,3 +142,33 @@ gulp.task('jessify:views:author:js', function (cb) {
 gulp.task('default:app:author:js', function () {
     gulp.watch(['wwwroot/app/author/**/*.html', 'wwwroot/app/author/**/*.js'], ['minify:app:author:js']);
 });
+
+/*
+ * EXTENSIONS
+ */
+
+gulp.task('minify:app:extensions:js', ['jessify:views:extensions:js'], function (cb) {
+    pump([
+          gulp.src([
+              webroot + 'app/extensions/jessify/jessify.views.extensions.js',              
+              webroot + 'app/extensions/config/app.js',
+              webroot + 'app/extensions/**/*.js',
+              webroot + 'app/extensions/**/*.min.js',
+          ]),
+          uglify(),
+          concat('app.extensions.min.js'),
+          gulp.dest(webroot + 'dist/js')
+    ],
+      cb
+    );
+});
+
+gulp.task('jessify:views:extensions:js', function (cb) {
+    return gulp.src(['wwwroot/app/extensions/views/**/*', 'wwwroot/app/extensions/templates/**/*'])
+      .pipe(htmlToJsCompiler({ concat: 'jessify.views.extensions.js', prefix: 'templates/extensions', global: 'window._extensionsAssets' }))
+      .pipe(gulp.dest('wwwroot/app/extensions/jessify'));
+});
+
+gulp.task('default:app:extensions:js', function () {
+    gulp.watch(['wwwroot/app/extensions/**/*.html', 'wwwroot/app/extensions/**/*.js'], ['minify:app:extensions:js']);
+});

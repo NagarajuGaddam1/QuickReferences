@@ -6,14 +6,12 @@
              $templateCache.put(tmpl, window._authorAssets[tmpl]);
          }
          window._authorAssets = null;
-     }])
-
-    angular.module('QR.Extensions', []);
+     }])    
 
     angular.module('QR.Web.Author', [
+        'QR.Web.Extensions',
         'QR.Web.Author.templates',
-        'QR.Web.Author.Notify',
-        'QR.Extensions',
+        'QR.Web.Author.Notify',        
         'ngAnimate',
         'ngMaterial',
         'ui.bootstrap',
