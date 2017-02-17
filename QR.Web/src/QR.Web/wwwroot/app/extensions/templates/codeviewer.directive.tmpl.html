@@ -1,0 +1,40 @@
+﻿<div class="codeview">
+    <div class="codeview-container">
+        <div class="codeview-container-view">
+            <div class="codeview-container-actions">
+                <div class="pull-left">
+                    <div class="codeview-container-actions-logo">
+                        <img src="/dist/images/css3.png" ng-show="codeViewer.post.category == 'css'" />
+                        <img src="/dist/images/js.png" ng-show="codeViewer.post.category == 'js'" />
+                        <img src="/dist/images/html5.png" ng-show="codeViewer.post.category == 'htm'" />
+                        <img src="/dist/images/scss.png" ng-show="codeViewer.post.category == 'scss'" />
+                    </div>
+                    <div class="codeview-container-actions-title" ng-bind="codeViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
+                </div>
+                <div class="pull-right">
+                    <div class="codeview-container-actions-action">
+                        <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                    </div>
+                    <div class="codeview-container-actions-action">
+                        <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="codeview-container-flasks">
+                <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
+                    <p ng-if="mod.type == 'text'" ng-bind="mod.data"></p>
+                    <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)">
+                        <code></code>
+                    </pre>
+                </div>                
+            </div>
+            <div class="codeview-container-actions">
+                <md-content class="md-padding" layout="column">
+                    <md-chips ng-model="codeViewer.post.tags" readonly="true" md-removable="false"></md-chips>
+                </md-content>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>

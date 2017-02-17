@@ -98,11 +98,49 @@
             width: calc(100% - 72px);
             float: right;
 
+            .tagged {
+                textarea {
+                    height: 100px;
+                }
+
+                input,
+                textarea {
+                    font-size: small;
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid rgba(0,0,0,0.20);
+
+                    &:active {
+                        border-color: rgba(0,0,0,0.50);
+                    }
+                }
+
+                md-content {
+                    background: transparent;
+                    padding: 0;
+
+                    ._md-chip-content {
+                        padding-right: 10px;
+                    }
+
+                    .md-chips md-chip ._md-chip-remove md-icon {
+                        height: 14px;
+                        width: 14px;
+                        min-height: auto;
+                        min-width: auto;
+                    }
+                }
+            }
+
             &-instance {
                 padding: 15px;
                 border: 1px dotted rgba(0,0,0,0.33);
                 margin-bottom: 10px;
                 position: relative;
+
+                &-content {
+                    width: 100%;
+                }
 
                 i {
                     position: absolute;
@@ -120,40 +158,6 @@
                     &:hover {
                         background: #303030;
                         color: #fff;
-                    }
-                }
-
-                &.tag {
-                    textarea {
-                        height: 100px;
-                    }
-
-                    input,
-                    textarea {
-                        font-size: small;
-                        width: 100%;
-                        padding: 10px;
-                        border: 1px solid rgba(0,0,0,0.20);
-
-                        &:active {
-                            border-color: rgba(0,0,0,0.50);
-                        }
-                    }
-
-                    md-content {
-                        background: transparent;
-                        padding: 0;
-
-                        ._md-chip-content {
-                            padding-right: 10px;
-                        }
-
-                        .md-chips md-chip ._md-chip-remove md-icon {
-                            height: 14px;
-                            width: 14px;
-                            min-height: auto;
-                            min-width: auto;
-                        }
                     }
                 }
 
@@ -224,7 +228,7 @@
         float: right;
 
         pre {
-            padding: 30px;
+            padding: 15px 30px 0 30px;
         }
     }
 
