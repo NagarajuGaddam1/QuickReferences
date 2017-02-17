@@ -19,6 +19,7 @@
 
             &-holder {
                 position: relative;
+                /*height: 100%;*/
             }
 
             &-item {
@@ -43,6 +44,14 @@
                     border-color: #d2679e;
                 }
 
+                &-separator {
+                    height: 3px;
+                    width: 100%;
+                    background: rgba(0,0,0,0.10);
+                    margin-top: 8px;
+                    margin-bottom: 8px;
+                }
+
                 label {
                     color: inherit;
                     margin: 0;
@@ -56,6 +65,20 @@
                     transition: color 0.3s linear 0s;
                     cursor: pointer;
                     background: transparent;
+                }
+
+                &.action {
+                    background-color: #303030;
+                    border-color: #303030;
+                    color: #fff;
+                }
+
+                i {
+                    height: 48px;
+                    line-height: 48px;
+                    width: 44px;
+                    text-align: center;
+                    font-size: x-large;
                 }
 
                 &:last-child {
@@ -91,7 +114,7 @@
                     height: 36px;
                     line-height: 36px;
                     text-align: center;
-                    cursor:pointer;
+                    cursor: pointer;
                     transition: background 0.3s linear 0s, border-color 0.3s linear 0s;
 
                     &:hover {

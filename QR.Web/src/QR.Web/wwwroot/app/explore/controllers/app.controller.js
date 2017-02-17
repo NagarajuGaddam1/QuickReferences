@@ -18,5 +18,12 @@
         notifyService.notify(data);
     }
 
+    self.onTabSelected = function (tabTitle) {
+        console.log(tabTitle);
+    }
+    self.onTabDeselected = function (tabTitle) {
+        console.log(tabTitle);
+    }
+
 }]);
 })();

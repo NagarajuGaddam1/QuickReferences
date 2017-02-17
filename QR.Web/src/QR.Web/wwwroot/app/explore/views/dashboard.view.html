@@ -11,7 +11,7 @@
                 <i class="ms-Icon ms-Icon--Search dashboard-content-search-icon" tabindex="0"></i>
             </div>
             <md-tabs md-dynamic-height="" md-border-bottom="">
-                <md-tab label="All">
+                <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')" >
                     <md-content class="md-padding">
                         <div class="codeview">
                             <div class="codeview-container">
@@ -157,7 +157,7 @@ $(document).ready(function () {
                         </div>
                     </md-content>
                 </md-tab>
-                <md-tab label="JavaScript">
+                <md-tab label="JavaScript" md-on-select="app.onTabSelected('js')" md-on-deselect="app.onTabDeselected('js')" >
                     <md-content class="md-padding">
                         <div class="codeview">
                             <div class="codeview-container">
@@ -197,7 +197,7 @@ $(document).ready(function () {
                         </div>
                     </md-content>
                 </md-tab>
-                <md-tab label="HTML5">
+                <md-tab label="HTML5" md-on-select="app.onTabSelected('htm')" md-on-deselect="app.onTabDeselected('htm')">
                     <md-content class="md-padding">
                         <div class="codeview">
                             <div class="codeview-container">
@@ -250,7 +250,7 @@ $(document).ready(function () {
                         </div>
                     </md-content>
                 </md-tab>
-                <md-tab label="CSS">
+                <md-tab label="CSS" md-on-select="app.onTabSelected('css')" md-on-deselect="app.onTabDeselected('css')">
                     <md-content class="md-padding">
                         <div class="codeview">
                             <div class="codeview-container">
