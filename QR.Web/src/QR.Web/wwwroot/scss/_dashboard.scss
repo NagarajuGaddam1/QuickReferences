@@ -11,56 +11,20 @@
         padding: 0 30px;
         margin-bottom: 30px;
 
-        &-search {
-            position: absolute;
-            top: 12px;
-            right: 30px;
-            line-height: 48px;
-            height: 48px;
-            z-index: 10;
-            min-width: 50vw;
-            background: #fff;
-            border: 1px solid rgba(0,0,0,.10);
-            font-family: 'Open Sans', sans-serif;
-            font-size: medium;
+        &-holder {
+            height: calc(100vh - 420px);
+            width: 100%;
+            overflow-y: auto;
+            position: relative;
+            z-index: 9;
 
-            &-icon {
-                width: 48px;
-                height: 48px;
-                line-height: 48px;
-                text-align: center;
-                float: right;
-                border: 1px dotted transparent;
-                cursor: pointer;
-                transition: background 0.3s linear 0s;
-
-                &:hover {
-                    background: #0078d7;
-                    color: #fff;
+            &.hideTabsHeader {
+                md-tabs-wrapper {
+                    display: none;
                 }
 
-                &:focus {
-                    outline: none;
-                    border: 1px dotted #303030;
-                }
-            }
-
-            input {
-                padding: 0 15px;
-                border: none;
-                font-family: 'Open Sans', sans-serif;
-                font-size: medium;
-                background: transparent;
-                width: calc(100% - 48px);
-                border: 1px dotted transparent;
-                display: inline-block;
-                float: left;
-                line-height: 48px;
-                height: 48px;
-
-                &:focus {
-                    outline: none;
-                    border: 1px dotted #303030;
+                md-content {
+                    margin-top: -8px;
                 }
             }
         }
@@ -111,12 +75,214 @@
     &-view {
         width: 100%;
         height: 100%;
-        min-height:calc(100vh - 60px);
+
+        &-header {
+            position: absolute;
+            bottom: 0;
+            padding: 0 30px;
+            width: 100%;
+            height: 72px;
+            background: lighten(#0078d7, 50);
+            display: none;
+            opacity: 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,.1);
+
+            .simulate-md-tabs {
+                position: relative;
+                top: 15px;
+
+                &-tab {
+                    display: inline-block;
+                    border-bottom: 2px solid lighten(#0078d7, 50);
+                    outline: none;
+                    cursor: pointer;
+
+                    &.active {
+                        border-bottom-color: #0078d7;
+                        color: #0078d7;
+                    }
+
+                    label {
+                        font-family: 'Open Sans';
+                        font-size: medium;
+                        text-transform: capitalize;
+                        padding: 0 15px;
+                        line-height: 40px;
+                        height: 40px;
+                        font-weight: 300;
+                        margin-bottom: 0;
+                        text-align: center;
+                        min-width: 60px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &-search {
+                margin-right: 9px;
+                position: relative;
+                top: 15px;
+                width: 50%;
+                line-height: 42px;
+                height: 42px;
+                z-index: 10;
+                min-width: 50vw;
+                background: transparent;
+                border: 1px dotted lighten(#909090, 10);
+                font-family: 'Open Sans', sans-serif;
+                font-size: medium;
+
+                ::-webkit-input-placeholder {
+                    color: #909090;
+                    font-size: small;
+                }
+
+                :-moz-placeholder { /* Firefox 18- */
+                    color: #909090;
+                    font-size: small;
+                }
+
+                ::-moz-placeholder { /* Firefox 19+ */
+                    color: #909090;
+                    font-size: small;
+                }
+
+                :-ms-input-placeholder {
+                    color: #909090;
+                    font-size: small;
+                }
+
+                &-icon {
+                    width: 42px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    float: right;
+                    border: 1px dotted transparent;
+                    cursor: pointer;
+                    transition: background 0.3s linear 0s;
+
+                    &:hover {
+                        background: #0078d7;
+                        color: #fff;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border: 1px dotted #303030;
+                    }
+                }
+
+                input {
+                    padding: 0 15px;
+                    border: none;
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: medium;
+                    background: transparent;
+                    width: calc(100% - 42px);
+                    border: 1px dotted transparent;
+                    display: inline-block;
+                    float: left;
+                    line-height: 40px;
+                    height: 40px;
+
+                    &:focus {
+                        outline: none;
+                        border: 1px dotted #303030;
+                    }
+                }
+            }
+        }
 
         &-top {
+            z-index: 10;
             width: 100%;
+            height: 420px;
             background-color: #0078d7;
             padding: 90px 0 30px 0;
+
+            &-search {
+                margin-right: 9px;
+                position: relative;
+                top: 15px;
+                width: 50%;
+                line-height: 45px;
+                height: 45px;
+                z-index: 10;
+                min-width: 50vw;
+                background: darken(#0078d7, 4);
+                border: 1px solid darken(#0078d7, 4);
+                font-family: 'Open Sans', sans-serif;
+                font-size: medium;
+                display: block;
+                margin: 50px auto;
+                /*-moz-box-shadow: 0px 0px 0px 0px darken(#0078d7, 0);*/
+                /*-webkit-box-shadow: 0px 0px 0px 0px darken(#0078d7,0);*/
+                box-shadow: 0 3px 3px rgba(0,0,0,.15);
+                border-radius: 40px;
+                color: #fff;
+
+                ::-webkit-input-placeholder {
+                    color: #fff;
+                    opacity: 0.50;
+                }
+
+                :-moz-placeholder { /* Firefox 18- */
+                    color: #fff;
+                    opacity: 0.50;
+                }
+
+                ::-moz-placeholder { /* Firefox 19+ */
+                    color: #fff;
+                    opacity: 0.50;
+                }
+
+                :-ms-input-placeholder {
+                    color: #fff;
+                    opacity: 0.50;
+                }
+
+                &-icon {
+                    width: 50px;
+                    height: 40px;
+                    line-height: 40px;
+                    text-align: center;
+                    float: right;
+                    border: 1px dotted transparent;
+                    cursor: pointer;
+                    transition: background 0.3s linear 0s;
+                    opacity: 0.50;
+
+                    &:hover {
+                        background: #0078d7;
+                        color: #fff;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        border: none;
+                    }
+                }
+
+                input {
+                    padding: 0 15px 0 20px;
+                    border: none;
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: medium;
+                    background: transparent;
+                    width: calc(100% - 50px);
+                    border: 1px dotted transparent;
+                    display: inline-block;
+                    float: left;
+                    line-height: 44px;
+                    height: 44px;
+
+                    &:focus {
+                        outline: none;
+                        border: none;
+                    }
+                }
+            }
 
             .app-title {
                 display: inline-block;

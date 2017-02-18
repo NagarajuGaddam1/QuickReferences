@@ -3,43 +3,80 @@
         <div class="dashboard-view-top">
             <div class="app-title">
                 <img src="/dist/images/quickRef.png" />
+                <div class="dashboard-view-top-search">
+                    <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
+                    <i class="ms-Icon ms-Icon--Search dashboard-view-top-search-icon" tabindex="0"></i>
+                </div>
+            </div>
+            <div class="dashboard-view-header" id="dashboardViewHeader">
+                <div class="pull-left">
+                    <div class="simulate-md-tabs">
+                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'all'}" ng-click="app.selectTab('all')">
+                            <label class="simulate-md-tabs-tabtitle">All</label>
+                        </div>
+                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'javascript'}" ng-click="app.selectTab('javascript')">
+                            <label class="simulate-md-tabs-tabtitle">JavaScript</label>
+                        </div>
+                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'markup'}" ng-click="app.selectTab('markup')">
+                            <label class="simulate-md-tabs-tabtitle">HTML5</label>
+                        </div>
+                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'css'}" ng-click="app.selectTab('css')">
+                            <label class="simulate-md-tabs-tabtitle">CSS</label>
+                        </div>
+                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'others'}" ng-click="app.selectTab('others')">
+                            <label class="simulate-md-tabs-tabtitle">Other(s)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <div class="dashboard-view-header-search">
+                        <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
+                        <i class="ms-Icon ms-Icon--Search dashboard-view-header-search-icon" tabindex="0"></i>
+                    </div>
+                </div>
             </div>
         </div>
-        <md-content class="dashboard-content">
-            <div class="dashboard-content-search">
-                <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
-                <i class="ms-Icon ms-Icon--Search dashboard-content-search-icon" tabindex="0"></i>
-            </div>
-            <md-tabs md-dynamic-height="" md-border-bottom="">
-                <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')" >
-                    <md-content class="md-padding">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['all']">
-                            <snippetview preview="false" post="item"></snippetview>
-                        </div>                        
-                    </md-content>
-                </md-tab>
-                <md-tab label="JavaScript" md-on-select="app.onTabSelected('javascript')" md-on-deselect="app.onTabDeselected('javascript')" >
-                    <md-content class="md-padding" >
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['javascript']">
-                            <snippetview preview="false" post="item"></snippetview>
-                        </div>                                                
-                    </md-content>
-                </md-tab>
-                <md-tab label="HTML5" md-on-select="app.onTabSelected('markup')" md-on-deselect="app.onTabDeselected('markup')">
-                    <md-content class="md-padding">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['markup']">
-                            <snippetview preview="false" post="item"></snippetview>
-                        </div>                                                
-                    </md-content>
-                </md-tab>
-                <md-tab label="CSS" md-on-select="app.onTabSelected('css')" md-on-deselect="app.onTabDeselected('css')">
-                    <md-content class="md-padding">
-                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['css']">
-                            <snippetview preview="false" post="item"></snippetview>
-                        </div>                                                
-                    </md-content>
-                </md-tab>
-            </md-tabs>
-        </md-content>
+        <div class="dashboard-content-holder">
+            <md-content class="dashboard-content">
+                <md-tabs md-dynamic-height="" md-border-bottom="" md-stretch-tabs="always" md-selected="app.selectedTabIndex">
+                    <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')">
+                        <md-content class="md-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['all']">
+                                <snippetview preview="false" post="item"></snippetview>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="JavaScript" md-on-select="app.onTabSelected('javascript')" md-on-deselect="app.onTabDeselected('javascript')">
+                        <md-content class="md-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['javascript']">
+                                <snippetview preview="false" post="item"></snippetview>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="HTML5" md-on-select="app.onTabSelected('markup')" md-on-deselect="app.onTabDeselected('markup')">
+                        <md-content class="md-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['markup']">
+                                <snippetview preview="false" post="item"></snippetview>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="CSS" md-on-select="app.onTabSelected('css')" md-on-deselect="app.onTabDeselected('css')">
+                        <md-content class="md-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['css']">
+                                <snippetview preview="false" post="item"></snippetview>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="Other(s)" md-on-select="app.onTabSelected('others')" md-on-deselect="app.onTabDeselected('others')">
+                        <md-content class="md-padding">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['others']">
+                                <snippetview preview="false" post="item"></snippetview>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </md-content>
+            <div ng-include="'templates/explore/footer.tmpl.html'"></div>
+        </div>
     </div>
 </div>

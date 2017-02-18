@@ -111,15 +111,6 @@
             }, function (data) {
             });
 
-            //document.getElementById('contentBody').addEventListener("scroll", function (e) {
-            //    if (e.target) {
-            //        if (e.target.scrollTop) {
-            //            if (document.getElementById(_paneHolder))
-            //                document.getElementById(_paneHolder).style.top = document.getElementById('contentBody').scrollTop + 'px';
-            //        }
-            //    }
-            //});
-
         }
         self.timeout(self.init, 100);
     }]);
