@@ -11,15 +11,18 @@
 
         &-pane {
             width: 60px;
-            height: 100%;
+            height: calc(100% - 60px);
             float: left;
             position: absolute;
             background: #f0f0f0;
             padding: 4px 6px;
+            display: table;
+            table-layout: fixed;
 
             &-holder {
                 position: relative;
-                /*height: 100%;*/
+                display: table-cell;
+                vertical-align: middle;
             }
 
             &-item {
