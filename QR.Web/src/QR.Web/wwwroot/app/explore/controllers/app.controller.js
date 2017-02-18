@@ -1,29 +1,37 @@
 ﻿(function () {
     "use strict";
     angular.module('QR.Web')
-    .controller('AppController', ['$uibModal', 'Notify', 'SharedService', function ($uibModal, notifyService, shared) {
-    var self = this;
-    self.shared = shared;
-
-    self.notifyMsg = function () {
-        var data = {
-            message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore',
-            dismissable: false,
-            timer: 5000,
-            info: false,
-            success: false,
-            failed: false,
-            inProgress: true
-        };
-        notifyService.notify(data);
-    }
-
-    self.onTabSelected = function (tabTitle) {
-        console.log(tabTitle);
-    }
-    self.onTabDeselected = function (tabTitle) {
-        console.log(tabTitle);
-    }
-
-}]);
+    .controller('AppController', ['$uibModal', 'Notify', 'SharedService', 'SamplePosts', function ($uibModal, notifyService, shared, SamplePosts) {
+        var self = this;
+        self.shared = shared;
+        self.samplePostsService = SamplePosts;
+        self.currentTitle = '';
+        self.posts = {};
+        self.onTabSelected = function (tabTitle) {
+            if (self.currentTitle != tabTitle) {
+                self.currentTitle = tabTitle;                
+                self.samplePostsService.get(self.currentTitle)
+                .then(function (data) {
+                    console.log(tabTitle);
+                    console.log(data);                    
+                    self.posts[self.currentTitle] = data;
+                }, function (data) {
+                    console.log(data);
+                })
+            }
+        }
+        self.onTabDeselected = function (tabTitle) {
+            self.posts[tabTitle] = [];
+        }
+        self.init = function () {
+            self.currentTitle = 'all';
+            self.samplePostsService.get(self.currentTitle)
+            .then(function (data) {                
+                self.posts[self.currentTitle] = data;
+            }, function (data) {
+                console.log(data);
+            })
+        }
+        self.init();
+    }]);
 })();

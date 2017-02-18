@@ -1,8 +1,12 @@
-$(document).ready(function () {
-    var flask = new CodeFlask;
-    flask.run('#coder', { language: 'javascript', rtl: false });
-    flask.onUpdate(function (code) {
-        document.getElementById('display').innerHTML 
-	= Prism.highlight(code, Prism.languages.javascript);
-    });
-})
+<footer class="footer-bod">
+    <div class="footer-bod-content">
+        <ul class="pull-left">                        
+            <li>
+                <a>Feedback</a>
+            </li>
+            <li>
+                <a>Contact Us</a>
+            </li>
+        </ul>
+    </div>
+</footer>
