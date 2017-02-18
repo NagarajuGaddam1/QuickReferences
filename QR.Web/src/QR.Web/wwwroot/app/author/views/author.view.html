@@ -25,14 +25,17 @@
                 <input ng-model="app.post.name" />
             </div>
             <div class="flask-instance tagged">
+                <label class="title">Description for the post</label>
+                <input ng-model="app.post.description" />
+            </div>
+            <div class="flask-instance tagged">
                 <label class="title">Categorize post as </label>
                 <div class="flask-instance-tag" ng-repeat="tag in app.mainTags" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="app.post.category = tag.id">
                     <label ng-bind="tag.name"></label>
                     <i class="ms-Icon ms-Icon--CheckMark" ng-show="tag.id == app.post.category"></i>
                 </div>
             </div>
-            <div class="flask-instance tagged">
-                <i class="ms-Icon ms-Icon--Delete"></i>
+            <div class="flask-instance tagged">                
                 <label class="title">Tags</label>
                 <md-content class="md-padding" layout="column">
                     <md-chips ng-model="app.post.tags" readonly="false" md-removable="true"></md-chips>

@@ -91,6 +91,7 @@ gulp.task('minify:app:explore:js', ['jessify:views:explore:js'], function (cb) {
           gulp.src([
               webroot + 'app/explore/jessify/jessify.views.explore.js',
               webroot + 'app/explore/providers/**/*.js',
+              webroot + 'app/explore/config/app.js',
               webroot + 'app/explore/**/*.js',
               webroot + 'app/explore/**/*.min.js',
           ]),

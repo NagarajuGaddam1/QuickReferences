@@ -9,6 +9,7 @@
      }])
 
     angular.module('QR.Web', [
+        'QR.Web.Extensions',
         'QR.Web.templates',
         'QR.Web.Notify',
         'ngAnimate',

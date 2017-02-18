@@ -6,7 +6,7 @@
             restrict: 'E',
             scope: {
                 post: "=",
-                preview: "@"
+                preview: "@"                
             },
             replace: true,
             controller: [function () {

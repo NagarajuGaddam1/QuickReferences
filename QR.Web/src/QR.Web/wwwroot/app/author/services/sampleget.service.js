@@ -16,7 +16,7 @@
 
         var handleSuccess = function (response) {
             console.log('Success');
-            console.log(response);
+            console.log(JSON.stringify(response.data));
             return response.data;
         }
 
