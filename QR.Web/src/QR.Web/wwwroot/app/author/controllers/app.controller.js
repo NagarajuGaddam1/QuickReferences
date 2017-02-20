@@ -52,10 +52,19 @@
         self.post = {};
 
         self.addFlask = function (_type) {
-            var _flask = _newFlaskContent[_type];
+            var _flask = angular.copy(_newFlaskContent[_type]);
             _flask.uid = _.uniqueId('_FLASK_CONTENT_');
-            self.post.content.splice(self.currentFlaskIndex, 0, _flask);            
+            self.post.content.splice(self.currentFlaskIndex, 0, _flask);
             self.currentFlaskIndex = self.post.content.length;
+            self.timeout(function () {
+                var _selector = '[uid="' + _flask.uid + '"]';
+                var _elem = document.querySelector(_selector);
+                if (_elem) {
+                    var _focusElm = _elem.querySelector('textarea');                    
+                    if(_focusElm)
+                        _focusElm.focus();
+                }
+            }, 100);
         }
 
         self.setupFlask = function (_content, _iter, _flaskId) {
@@ -63,7 +72,7 @@
             _flask.run('#' + _flaskId, { language: _content.langExt });
             _flask.uid = _content.uid;
             _flask.update(_content.data);
-            _flask.onUpdate(function (code) {                
+            _flask.onUpdate(function (code) {
                 var html = Prism.highlight(code, Prism.languages[_content.langExt]);
                 _.each(self.post.content, function (_content) {
                     if (_content.uid == _flask.uid) {

@@ -43,7 +43,7 @@
             </div>
             <div class="flask-instance">
                 <label class="title">Content</label>
-                <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}">
+                <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}">
                     <i class="ms-Icon ms-Icon--Delete"></i>
                     <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">
                         <label class="title">Text</label>
