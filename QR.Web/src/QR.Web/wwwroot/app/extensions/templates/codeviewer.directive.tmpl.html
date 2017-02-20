@@ -22,7 +22,7 @@
                 <div class="clearfix"></div>
             </div>
             <div class="codeview-container-flasks">
-                <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
+                <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content track by $index" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
                     <p ng-if="mod.type == 'text'" ng-bind="mod.data"></p>
                     <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)" class="language-{{mod.langExt}}">
                         <code></code>

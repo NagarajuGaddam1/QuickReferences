@@ -1,5 +1,37 @@
 ﻿(function () {
     "use strict";
+
+    var _newFlaskContent = {
+        'text': {
+            "type": "text",
+            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+        },
+        'javascript': {
+            "type": "flask",
+            "lang": "js",
+            "langExt": "javascript",
+            "data": "function(){\nconsole.log('hello');\n}"
+        },
+        'markup': {
+            "type": "flask",
+            "lang": "htm",
+            "langExt": "markup",
+            "data": "<div class=\"\"></div>"
+        },
+        'css': {
+            "type": "flask",
+            "lang": "scss",
+            "langExt": "css",
+            "data": "@mixin respond-to($media) {\n    @content;\n        }\n    }\n}        \n                              \n.dashboard {\n   display:\"bloc\";\n}"
+        },
+        'scss': {
+            "type": "flask",
+            "lang": "scss",
+            "langExt": "css",
+            "data": "@mixin respond-to($media) {\n    @content;\n        }\n    }\n}        \n                              \n.dashboard {\n   display:\"bloc\";\n}"
+        }
+    };
+
     angular.module('QR.Web.Author')
     .controller('AppController', ['$uibModal', 'Notify', 'SharedService', 'SampleGet', '$timeout', function ($uibModal, notifyService, shared, SampleGet, $timeout) {
         var self = this;
@@ -7,33 +39,48 @@
         self.sampleGet = SampleGet;
         self.timeout = $timeout;
         self.flask = '';
+        self.currentFlaskIndex = 0;
         self.mainTags = [
             { id: 'markup', name: 'html', forecolor: '#ffffff', backcolor: '#ff6d2e' },
             { id: 'javascript', name: 'js', forecolor: '#000000', backcolor: '#ffc629' },
             { id: 'css', name: 'css', forecolor: '#ffffff', backcolor: '#2facdb' },
             { id: 'scss', name: 'scss', forecolor: '#ffffff', backcolor: '#d2679e' }
-        ];        
+        ];
         var _paneHolder = 'authoringFlaskPaneHolder';
 
         self.flasks = [];
         self.post = {};
 
+        self.addFlask = function (_type) {
+            var _flask = angular.copy(_newFlaskContent[_type]);
+            _flask.uid = _.uniqueId('_FLASK_CONTENT_');
+            self.post.content.splice(self.currentFlaskIndex, 0, _flask);
+            self.currentFlaskIndex = self.post.content.length;
+            self.timeout(function () {
+                var _selector = '[uid="' + _flask.uid + '"]';
+                var _elem = document.querySelector(_selector);
+                if (_elem) {
+                    var _focusElm = _elem.querySelector('textarea');                    
+                    if(_focusElm)
+                        _focusElm.focus();
+                }
+            }, 100);
+        }
+
         self.setupFlask = function (_content, _iter, _flaskId) {
             var _flask = new CodeFlask();
             _flask.run('#' + _flaskId, { language: _content.langExt });
-            _flask.uid = _content.uid
+            _flask.uid = _content.uid;
             _flask.update(_content.data);
             _flask.onUpdate(function (code) {
                 var html = Prism.highlight(code, Prism.languages[_content.langExt]);
                 _.each(self.post.content, function (_content) {
                     if (_content.uid == _flask.uid) {
                         _content.data = html;
-                        console.log(self.post);
-                        console.log(typeof self.post["updateFlask"] !== 'undefined' && typeof self.post["updateFlask"] === 'function');
                         if (typeof self.post["updateFlask"] !== 'undefined' && typeof self.post["updateFlask"] === 'function') {
                             self.post["updateFlask"](html, _content.uid);
                         }
-                    }                    
+                    }
                 });
             });
             self.flasks.push(_flask);
@@ -60,13 +107,13 @@
 
         function _transfromResponse(_data) {
             self._originalPost = angular.copy(_data);
-            _.each(_data.content, function (_content) {                
+            _.each(_data.content, function (_content) {
                 _content.uid = _.uniqueId('_FLASK_CONTENT_');
             });
             return _data;
         }
 
-        self.init = function () {            
+        self.init = function () {
 
             self.sampleGet.get().then(function (data) {
                 var _data = {
@@ -108,6 +155,7 @@
                     ]
                 };
                 self.post = _transfromResponse(_data);
+                self.currentFlaskIndex = self.post.content.length;
             }, function (data) {
             });
 

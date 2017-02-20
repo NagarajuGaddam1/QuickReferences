@@ -4,7 +4,7 @@
      .run(["$templateCache", function ($templateCache) {
          for (var tmpl in window._exploreAssets) {
              $templateCache.put(tmpl, window._exploreAssets[tmpl]);
-         }
+         }         
          window._exploreAssets = null;
      }])
 

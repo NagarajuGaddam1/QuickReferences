@@ -9,16 +9,16 @@
         var _getPosts = function (_filter) {
             var _defer = $q.defer();
             $timeout(function () {
-                if (_filter == "all") {                 
-                    _defer.resolve({ filter: _filter, posts: _posts});
+                if (_filter == "all") {
+                    _defer.resolve({ filter: _filter, posts: _posts });
                 }
                 else if (_filter == "css") {
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == "css" || _post.category == "scss";
-                    })                    
+                    })
                     _defer.resolve({ filter: _filter, posts: _data });
                 }
-                else {                    
+                else {
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == _filter;
                     })
@@ -27,6 +27,39 @@
             }, 3000);
             return _defer.promise;
 
+        }
+
+        var _getPostsInterval = function (_filter) {
+            var _defer = $q.defer();
+            $timeout(function () {
+                var _post = {
+                    "name": "Lorem Ipsum Dolor Sit Amet",
+                    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+                    "tags": ["html5", "material", "js", "css"],
+                    "category": "javascript",
+                    "content": [
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "flask",
+                            "lang": "js",
+                            "langExt": "javascript",
+                            "data": "$(document).ready(function () {\r\n    var flask = new CodeFlask;\r\n    flask.run('#coder', { language: 'javascript', rtl: false });\r\n    flask.onUpdate(function (code) {\r\n        document.getElementById('display').innerHTML \r\n\t= Prism.highlight(code, Prism.languages.javascript);\r\n    });\r\n})"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        }
+                    ]
+                };
+                _post.id = _.uniqueId('_ORIG_POST');
+                if (_filter == "all") {
+                    _defer.resolve({ filter: _filter, posts: [_post] });
+                }                
+            }, 1000);
+            return _defer.promise;
         }
 
         var handleSuccess = function (response) {
@@ -40,7 +73,8 @@
         }
 
         return {
-            get: _getPosts
+            get: _getPosts,
+            getInterval: _getPostsInterval,
         }
     }
 

@@ -3,13 +3,8 @@
         <div class="codeview-container-view">
             <div class="codeview-container-actions">
                 <div class="pull-left">
-                    <div class="codeview-container-actions-logo">
-                        <img src="/dist/images/css3.png" ng-show="snippetViewer.post.category == 'css'" />
-                        <img src="/dist/images/js.png" ng-show="snippetViewer.post.category == 'javascript'" />
-                        <img src="/dist/images/html5.png" ng-show="snippetViewer.post.category == 'markup'" />
-                        <img src="/dist/images/scss.png" ng-show="snippetViewer.post.category == 'scss'" />
-                    </div>
-                    <div class="codeview-container-actions-title" ng-bind="snippetViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
+                    <div class="codeview-container-actions-logo"><img /></div>
+                    <div class="codeview-container-actions-title" ng-bind="::snippetViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
                 </div>
                 <div class="pull-right">
                     <div class="codeview-container-actions-action">
@@ -22,21 +17,17 @@
                 <div class="clearfix"></div>
             </div>
             <div class="snippetview-container">
-                <p class="snippetview" ng-bind="snippetViewer.post.description"></p>
+                <p class="snippetview" ng-bind="::snippetViewer.post.description"></p>
                 <div class="codeview-container-flasks snippetview" ng-init="snippetViewer.loadSnippet()">
-                    <div class="codeview-container-flasks-item" ng-repeat="mod in snippetViewer.previewContent" id="{{snippetViewer.snippetViewerId + '_MOD_' + $index}}">
-                        <pre ng-if="mod.type == 'flask'" class="snippetview language-{{mod.langExt}}" ng-init="snippetViewer.loadViewer($index)">
+                    <div class="codeview-container-flasks-item" ng-repeat="mod in ::snippetViewer.previewContent" id="{{::snippetViewer.snippetViewerId + '_MOD_' + $index}}">
+                        <pre ng-if="::mod.type == 'flask'" class="snippetview language-{{::mod.langExt}}" ng-init="snippetViewer.loadViewer($index)">
                         <code></code>
                     </pre>
                     </div>
                 </div>
                 <div class="snippetview-container-overlay"></div>
-            </div>            
-            <div class="codeview-container-actions">
-                <md-content class="md-padding" layout="column">
-                    <md-chips ng-model="snippetViewer.post.tags" readonly="true" md-removable="false"></md-chips>
-                </md-content>
-                <div class="clearfix"></div>
+            </div>
+            <div class="codeview-container-actions md-chips-container">                
             </div>
         </div>
     </div>
