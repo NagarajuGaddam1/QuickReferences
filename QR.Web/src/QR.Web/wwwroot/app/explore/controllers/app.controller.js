@@ -1,11 +1,24 @@
 ﻿(function () {
     "use strict";
+
+    window.requestAnimFrame = (function () {
+        return window.requestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.oRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function (/* function */ callback, /* DOMElement */ element) {
+              window.setTimeout(callback, 1000 / 60);
+          };
+    })();
+
     angular.module('QR.Web')
-    .controller('AppController', ['$uibModal', 'Notify', 'SharedService', 'SamplePosts', '$timeout', "$compile", "$scope", function ($uibModal, notifyService, shared, SamplePosts, $timeout, $compile, $scope) {
+    .controller('AppController', ['$uibModal', 'Notify', 'SharedService', 'SamplePosts', '$timeout', '$interval', "$compile", "$scope", function ($uibModal, notifyService, shared, SamplePosts, $timeout, $interval, $compile, $scope) {
         var self = this;
         var _loadedPosts = {};
         self.shared = shared;
         self.timeout = $timeout;
+        self.interval = $interval
         self.compile = $compile;
         self.headerPinned = false;
         self.samplePostsService = SamplePosts;
@@ -31,6 +44,9 @@
         self.selectedTabIndex = 0;
         self.onTabSelected = function (tabTitle) {
             if (self.currentTitle != tabTitle && self.initialized) {
+                self.timeout(function () {
+                    loadLoaderElementsIntoAllContent(tabTitle);
+                }, 500);
                 self.currentTitle = tabTitle;
                 self.samplePostsService.get(self.currentTitle)
                 .then(function (data) {
@@ -40,7 +56,12 @@
             }
         }
         self.onTabDeselected = function (tabTitle) {
-            //self.posts[tabTitle] = [];
+            var _view = angular.element(document.getElementById('_mdContent_' + tabTitle));
+            _.each(_loadedPosts[tabTitle], function (_lp) {
+                if (_lp.scope) _lp.scope.$destroy();
+            })
+            _view.empty();
+            _loadedPosts[tabTitle] = [];
         }
         var _viewTop = null;
         var _viewBottom = null;
@@ -94,35 +115,34 @@
             var _elm = angular.element(_content);
             for (var i = 0; i < 3; i++) {
                 var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID"><snippet-loader></snippet-loader></div>';
-                _tmpl = _tmpl.replace('SLID', _id)
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID">SNIPPET_TMPL</div>';
+                _tmpl = _tmpl.replace('SLID', _id);
+                _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                 _elm.append(_tmpl);
                 if (typeof _loadedPosts[_currentViewId] === 'undefined')
                     _loadedPosts[_currentViewId] = [];
                 _loadedPosts[_currentViewId].push({ id: _id, loaded: false });
-                if (typeof _defer !== 'undefined' && _defer == false) {
-                    var _elmToCompile = angular.element(document.getElementById(_id));
-                    self.compile(_elmToCompile.contents())($scope);
-                }
             }
         }
-        function loadLoaderElementsIntoAllContent() {
-            _.each(self.categories, function (_category) {
-                var _view = document.getElementById('_mdContent_' + _category.id);
-                loadLoaderElementsIntoContent(_view, _category.id, false);
-                var _elmToCompile = angular.element(_view);
-                self.compile(_elmToCompile.contents())($scope);
+        function loadLoaderElementsIntoAllContent(_categoryId) {
+            var _view = document.getElementById('_mdContent_' + _categoryId);
+            window.requestAnimationFrame(function () {
+                loadLoaderElementsIntoContent(_view, _categoryId, false);
             });
+            var _elmToCompile = angular.element(_view);
+            self.compile(_elmToCompile.contents())($scope);
         }
         function tryLoadingPostsForActiveContent(data) {
             var _currentViewId = data.filter;
-            var _currentlyPostedIds = _.map(_loadedPosts[_currentViewId], function (_post) {
+            var _currentlyPostedIds = _.map(_.filter(_loadedPosts[_currentViewId], function (_pl) {
+                return _pl.loaded == true
+            }), function (_post) {
                 return _post.loadedId
-            });            
+            });
             var _posts = _.reject(data.posts, function (_post) {
-                var _index = _.indexOf(_currentlyPostedIds, _post.id);                
+                var _index = _.indexOf(_currentlyPostedIds, _post.id);
                 return _index >= 0;
-            })            
+            })
             var _paintLength = _posts.length;
             var _emptyLength = _.filter(_loadedPosts[_currentViewId], function (_postHolder) {
                 return _postHolder.loaded == false
@@ -131,16 +151,13 @@
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 for (var i = 0; i < _paintLength - _emptyLength; i++) {
                     var _id = _.uniqueId('snippetLoader');
-                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID"><snippet-loader></snippet-loader></div>';
-                    _tmpl = _tmpl.replace('SLID', _id)
+                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID">SNIPPET_TMPL</div>';
+                    _tmpl = _tmpl.replace('SLID', _id);
+                    _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                     _elm.append(_tmpl);
                     if (typeof _loadedPosts[_currentViewId] === 'undefined')
                         _loadedPosts[_currentViewId] = [];
                     _loadedPosts[_currentViewId].push({ id: _id, loaded: false });
-                    if (typeof _defer !== 'undefined' && _defer == false) {
-                        var _elmToCompile = angular.element(document.getElementById(_id));
-                        self.compile(_elmToCompile.contents())($scope);
-                    }
                 }
             }
             else if (_paintLength < _emptyLength) {
@@ -163,8 +180,10 @@
                             self.posts[_postId] = _posts[_iter];
                         var _tmpl = '<snippetview preview="false" post="app.posts[\'POSTID\']"></snippetview>';
                         _tmpl = _tmpl.replace('POSTID', _postId);
-                        _elm.append(_tmpl);
-                        self.compile(_elm.contents())($scope);
+                        _postHolder.scope = $scope.$new();
+                        var compiledDirective = $compile(_tmpl);
+                        var directiveElement = compiledDirective(_postHolder.scope);
+                        _elm.append(directiveElement);
                         _postHolder.loaded = true;
                         _postHolder.loadedId = _postId;
                     }
@@ -176,6 +195,14 @@
             self.samplePostsService.get(self.currentTitle)
             .then(function (data) {
                 tryLoadingPostsForActiveContent(data);
+                console.log(data);
+                self.initialized = true;
+                //self.interval(function () {
+                //    self.samplePostsService.getInterval(self.currentTitle)
+                //    .then(function (data) {
+                //        tryLoadingPostsForActiveContent(data);
+                //    });
+                //}, 3000);
             }, function (data) {
             })
 
@@ -183,7 +210,7 @@
                 _viewTop = document.querySelector('.dashboard-view-top');
                 _viewBottom = document.querySelector('.dashboard-content-holder');
                 _viewHeader = document.getElementById('dashboardViewHeader');
-                loadLoaderElementsIntoAllContent();
+                loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -420 });
                 TweenLite.set(_viewTop, { y: 420 });
@@ -191,7 +218,6 @@
                 _viewBottom.addEventListener("scroll", function (e) {
                     self.debScrollFn(e.target.scrollTop);
                 });
-                self.initialized = true;
             }, 33);
 
         }

@@ -18,6 +18,11 @@
             position: relative;
             z-index: 9;
 
+            .dashboard-content {
+                min-height: calc(100% - 85px);
+                height: auto;
+            }
+
             &.hideTabsHeader {
                 md-tabs-wrapper {
                     display: none;
@@ -25,10 +30,6 @@
 
                 md-content {
                     margin-top: -8px;
-                }
-
-                .dashboard-content{
-                    min-height:calc(100% - 85px);
                 }
             }
         }

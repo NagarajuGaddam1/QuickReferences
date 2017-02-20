@@ -19,7 +19,7 @@
                         var _text = _.first(_.filter(self.post.content, function (_mod) { return _mod.type == 'text' })) || {};
                         self.previewContent.push(_text);
                         self.previewContent.push(_flask);
-                    }                
+                    }
                 }
                 self.loadViewer = function (e, _flaskId) {
                     _.each(self.previewContent, function (_content, _iter) {
@@ -43,6 +43,22 @@
             bindToController: true,
             controllerAs: 'snippetViewer',
             link: function (scope, element, attrs) {
+                var _imgElm = $(element).find('.codeview-container-actions-logo img');
+                var _imgElmSrc = '';
+                switch (scope.snippetViewer.post.category) {
+                    case 'css': _imgElmSrc = '/dist/images/css3.png'; break;
+                    case 'javascript': _imgElmSrc = '/dist/images/js.png'; break;
+                    case 'scss': _imgElmSrc = '/dist/images/scss.png'; break;
+                    case 'markup': _imgElmSrc = '/dist/images/html5.png'; break;
+                    default: _imgElmSrc = '/dist/images/css3.png'; break;
+                }
+                if (_imgElm)
+                    _imgElm.attr('src', _imgElmSrc)
+                var _chipContainer = $(element).find('.md-chips-container');
+                _.each(scope.snippetViewer.post.tags, function (_tag) {
+                    var _tmpl = '<div class="chip">' + _tag + '</div>';                    
+                    _chipContainer.append(_tmpl);
+                });
             },
             templateUrl: 'templates/extensions/snippetview.directive.tmpl.html'
         }
