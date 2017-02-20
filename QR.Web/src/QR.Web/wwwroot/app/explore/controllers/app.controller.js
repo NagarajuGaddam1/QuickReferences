@@ -25,13 +25,18 @@
         self.currentTitle = '';
         self.posts = {};
         self.initialized = false;
+        self.readingMode = false;
         self.categories = [
-            { id: 'all', name: 'All' },
+            { id: 'all', name: 'All Posts' },
             { id: 'javascript', name: 'JavaScript' },
             { id: 'markup', name: 'HTML' },
             { id: 'css', name: 'CSS' },
             { id: 'others', name: 'Other(s)' }
         ];
+        self.selectedCategory = 'all';
+        self.selectCategory = function () {
+            self.selectTab(self.selectedCategory);
+        }
         self.selectTab = function (tabTitle) {
             switch (tabTitle) {
                 case 'all': self.selectedTabIndex = 0; break;
@@ -44,18 +49,20 @@
         self.selectedTabIndex = 0;
         self.onTabSelected = function (tabTitle) {
             if (self.currentTitle != tabTitle && self.initialized) {
-                self.timeout(function () {
+                 self.timeout(function () {
                     loadLoaderElementsIntoAllContent(tabTitle);
-                }, 500);
+                 }, 500);
                 self.currentTitle = tabTitle;
                 self.samplePostsService.get(self.currentTitle)
                 .then(function (data) {
+                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
                 }, function (data) {
                 })
             }
         }
         self.onTabDeselected = function (tabTitle) {
+            console.log('onTabDeselected');
             var _view = angular.element(document.getElementById('_mdContent_' + tabTitle));
             _.each(_loadedPosts[tabTitle], function (_lp) {
                 if (_lp.scope) _lp.scope.$destroy();
@@ -115,7 +122,7 @@
             var _elm = angular.element(_content);
             for (var i = 0; i < 3; i++) {
                 var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID">SNIPPET_TMPL</div>';
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                 _tmpl = _tmpl.replace('SLID', _id);
                 _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                 _elm.append(_tmpl);
@@ -151,7 +158,7 @@
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 for (var i = 0; i < _paintLength - _emptyLength; i++) {
                     var _id = _.uniqueId('snippetLoader');
-                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" id="SLID">SNIPPET_TMPL</div>';
+                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                     _tmpl = _tmpl.replace('SLID', _id);
                     _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                     _elm.append(_tmpl);

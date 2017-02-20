@@ -10,25 +10,20 @@
             </div>
             <div class="dashboard-view-header" id="dashboardViewHeader">
                 <div class="pull-left">
-                    <div class="simulate-md-tabs">
-                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'all'}" ng-click="app.selectTab('all')">
-                            <label class="simulate-md-tabs-tabtitle">All</label>
-                        </div>
-                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'javascript'}" ng-click="app.selectTab('javascript')">
-                            <label class="simulate-md-tabs-tabtitle">JavaScript</label>
-                        </div>
-                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'markup'}" ng-click="app.selectTab('markup')">
-                            <label class="simulate-md-tabs-tabtitle">HTML5</label>
-                        </div>
-                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'css'}" ng-click="app.selectTab('css')">
-                            <label class="simulate-md-tabs-tabtitle">CSS</label>
-                        </div>
-                        <div class="simulate-md-tabs-tab" ng-class="{'active' : app.currentTitle == 'others'}" ng-click="app.selectTab('others')">
-                            <label class="simulate-md-tabs-tabtitle">Other(s)</label>
-                        </div>
-                    </div>
+                    <md-input-container class="dashboard-view-header-category">
+                        <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()">
+                            <md-option ng-repeat="state in app.categories" ng-value="state.id">
+                                {{state.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
                 <div class="pull-right">
+                    <md-input-container class="dashboard-view-header-switchmode">
+                        <md-switch md-invert="true" aria-label="Reading Mode" ng-model="app.readingMode">
+                            Reading Mode
+                        </md-switch>
+                    </md-input-container>
                     <div class="dashboard-view-header-search">
                         <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
                         <i class="ms-Icon ms-Icon--Search dashboard-view-header-search-icon" tabindex="0"></i>
@@ -37,7 +32,7 @@
             </div>
         </div>
         <div class="dashboard-content-holder">
-            <md-content class="dashboard-content">
+            <md-content class="dashboard-content" ng-class="{'readingMode': app.readingMode}">
                 <md-tabs md-dynamic-height="" md-border-bottom="" md-stretch-tabs="always" md-selected="app.selectedTabIndex">
                     <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')">
                         <md-content class="md-padding" id="_mdContent_all"></md-content>
