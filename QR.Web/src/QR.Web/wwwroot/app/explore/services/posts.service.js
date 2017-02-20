@@ -10,19 +10,19 @@
             var _defer = $q.defer();
             $timeout(function () {
                 if (_filter == "all") {                 
-                    _defer.resolve(_posts);
+                    _defer.resolve({ filter: _filter, posts: _posts});
                 }
                 else if (_filter == "css") {
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == "css" || _post.category == "scss";
                     })                    
-                    _defer.resolve(_data);
+                    _defer.resolve({ filter: _filter, posts: _data });
                 }
                 else {                    
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == _filter;
                     })
-                    _defer.resolve(_data);
+                    _defer.resolve({ filter: _filter, posts: _data });
                 }
             }, 3000);
             return _defer.promise;
