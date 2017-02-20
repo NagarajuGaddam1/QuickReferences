@@ -40,38 +40,34 @@
             <md-content class="dashboard-content">
                 <md-tabs md-dynamic-height="" md-border-bottom="" md-stretch-tabs="always" md-selected="app.selectedTabIndex">
                     <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')">
-                        <md-content class="md-padding">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['all']">
-                                <snippetview preview="false" post="item"></snippetview>
-                            </div>
-                        </md-content>
+                        <md-content class="md-padding" id="_mdContent_all"></md-content>
                     </md-tab>
                     <md-tab label="JavaScript" md-on-select="app.onTabSelected('javascript')" md-on-deselect="app.onTabDeselected('javascript')">
-                        <md-content class="md-padding">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['javascript']">
+                        <md-content class="md-padding" id="_mdContent_javascript">
+                            <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['javascript']">
                                 <snippetview preview="false" post="item"></snippetview>
-                            </div>
+                            </div>-->
                         </md-content>
                     </md-tab>
                     <md-tab label="HTML5" md-on-select="app.onTabSelected('markup')" md-on-deselect="app.onTabDeselected('markup')">
-                        <md-content class="md-padding">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['markup']">
+                        <md-content class="md-padding" id="_mdContent_markup">
+                            <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['markup']">
                                 <snippetview preview="false" post="item"></snippetview>
-                            </div>
+                            </div>-->
                         </md-content>
                     </md-tab>
                     <md-tab label="CSS" md-on-select="app.onTabSelected('css')" md-on-deselect="app.onTabDeselected('css')">
-                        <md-content class="md-padding">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['css']">
+                        <md-content class="md-padding" id="_mdContent_css">
+                            <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['css']">
                                 <snippetview preview="false" post="item"></snippetview>
-                            </div>
+                            </div>-->
                         </md-content>
                     </md-tab>
                     <md-tab label="Other(s)" md-on-select="app.onTabSelected('others')" md-on-deselect="app.onTabDeselected('others')">
-                        <md-content class="md-padding">
-                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['others']">
+                        <md-content class="md-padding" id="_mdContent_others">
+                            <!--<div class="col-xs-12 col-sm-12 col-md-12 col-lg-6" ng-repeat="item in app.posts['others']">
                                 <snippetview preview="false" post="item"></snippetview>
-                            </div>
+                            </div>-->
                         </md-content>
                     </md-tab>
                 </md-tabs>
