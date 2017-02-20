@@ -1,19 +1,19 @@
 ﻿<div class="container-fluid authoring">
     <div class="authoring-flask-pane">
         <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">
-            <div class="authoring-flask-pane-item tag">
+            <div class="authoring-flask-pane-item tag" ng-click="app.addFlask('text')">
                 <i class="ms-Icon ms-Icon--InsertTextBox"></i>
             </div>
-            <div class="authoring-flask-pane-item htm">
+            <div class="authoring-flask-pane-item htm" ng-click="app.addFlask('markup')">
                 <label>htm</label>
             </div>
-            <div class="authoring-flask-pane-item js">
+            <div class="authoring-flask-pane-item js" ng-click="app.addFlask('javascript')">
                 <label>js</label>
             </div>
-            <div class="authoring-flask-pane-item css">
+            <div class="authoring-flask-pane-item css" ng-click="app.addFlask('css')">
                 <label>css</label>
             </div>
-            <div class="authoring-flask-pane-item scss">
+            <div class="authoring-flask-pane-item scss" ng-click="app.addFlask('scss')">
                 <label>scss</label>
             </div>
         </div>
@@ -43,7 +43,7 @@
             </div>
             <div class="flask-instance">
                 <label class="title">Content</label>
-                <div class="flask-instance" ng-repeat="mod in app.post.content" id="_FLASK_{{$index}}">
+                <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}">
                     <i class="ms-Icon ms-Icon--Delete"></i>
                     <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">
                         <label class="title">Text</label>
