@@ -114,9 +114,15 @@
                 self.compile(_elmToCompile.contents())($scope);
             });
         }
-        function tryLoadingPostsForActiveContent(_posts) {
-            console.log(_posts);
-            var _currentViewId = self.currentTitle;
+        function tryLoadingPostsForActiveContent(data) {
+            var _currentViewId = data.filter;
+            var _currentlyPostedIds = _.map(_loadedPosts[_currentViewId], function (_post) {
+                return _post.loadedId
+            });            
+            var _posts = _.reject(data.posts, function (_post) {
+                var _index = _.indexOf(_currentlyPostedIds, _post.id);                
+                return _index >= 0;
+            })            
             var _paintLength = _posts.length;
             var _emptyLength = _.filter(_loadedPosts[_currentViewId], function (_postHolder) {
                 return _postHolder.loaded == false
@@ -140,7 +146,7 @@
             else if (_paintLength < _emptyLength) {
                 for (var i = 0; i < _emptyLength - _paintLength; i++) {
                     var _popped = _loadedPosts[_currentViewId].pop();
-                    var _elem = document.getElementById(_popped.id);
+                    var _elem = angular.element(document.getElementById(_popped.id));
                     _elem.remove();
                 }
             }
@@ -160,6 +166,7 @@
                         _elm.append(_tmpl);
                         self.compile(_elm.contents())($scope);
                         _postHolder.loaded = true;
+                        _postHolder.loadedId = _postId;
                     }
                 });
         }
