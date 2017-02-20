@@ -26,6 +26,10 @@
                 md-content {
                     margin-top: -8px;
                 }
+
+                .dashboard-content{
+                    min-height:calc(100% - 85px);
+                }
             }
         }
 
