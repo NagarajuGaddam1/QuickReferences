@@ -140,6 +140,14 @@ $break-desktop: 1024px;
     }
 }
 
+html {
+    @include respond-to-mobile {
+        [data-hide-on-mobile="true"] {
+            display: none;
+        }
+    }
+}
+
 $spacer: 5px !default;
 $spacer-x: $spacer !default;
 $spacer-y: $spacer !default;
