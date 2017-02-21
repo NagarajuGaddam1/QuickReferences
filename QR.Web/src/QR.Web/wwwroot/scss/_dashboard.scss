@@ -11,6 +11,10 @@
         padding: 0 30px;
         margin-bottom: 30px;
 
+        @include respond-to-mobile {
+            padding: 0 15px;
+        }
+
         &.readingMode {
             .snippet-loader-container {
                 width: 100%;
@@ -126,6 +130,10 @@
             opacity: 0;
             box-shadow: 0 3px 6px rgba(0,0,0,.1);
 
+            @include respond-to-mobile {
+                padding: 0 15px;
+            }
+
             .simulate-md-tabs {
                 position: relative;
                 top: 15px;
@@ -161,6 +169,11 @@
                 margin: 6px 45px 6px 0;
                 vertical-align: top;
                 max-width: 150px;
+
+                @include respond-to-mobile {
+                    margin: 6px 6px 6px 0;
+                    max-width: 100px;
+                }
 
                 md-select {
                     &:not([disabled]):focus {
@@ -230,6 +243,11 @@
                 height: 42px;
                 z-index: 10;
                 width: calc(100% - 210px);
+
+                @include respond-to-mobile {
+                    width: calc(100% - 120px);
+                }
+
                 background: transparent;
                 border: 1px dotted lighten(#909090, 10);
                 font-family: 'Open Sans', sans-serif;
@@ -272,6 +290,10 @@
                     height: 40px;
                     float: left;
 
+                    @include respond-to-mobile {
+                        width: calc(100% - 42px);
+                    }
+
                     &:focus {
                         outline: none;
                         border: 1px dotted #303030;
@@ -295,7 +317,8 @@
                 line-height: 45px;
                 height: 45px;
                 z-index: 10;
-                min-width: 50vw;
+                width: 50%;
+                text-align: center;
                 background: darken(#0078d7, 4);
                 border: 1px solid darken(#0078d7, 4);
                 font-family: 'Open Sans', sans-serif;
@@ -356,12 +379,13 @@
                     font-family: 'Open Sans', sans-serif;
                     font-size: medium;
                     background: transparent;
-                    width: calc(100% - 50px);
+                    width: 100%;
                     border: 1px dotted transparent;
                     display: inline-block;
                     float: left;
                     line-height: 44px;
                     height: 44px;
+                    text-align: center;
 
                     &:focus {
                         outline: none;
