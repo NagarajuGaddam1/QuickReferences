@@ -33,7 +33,7 @@
             { id: 'css', name: 'CSS' },
             { id: 'others', name: 'Other(s)' }
         ];
-        self.selectedCategory = 'javascript';
+        self.selectedCategory = 'all';
         self.selectCategory = function () {
             self.selectTab(self.selectedCategory);
         }
@@ -46,7 +46,7 @@
                 default: self.selectedTabIndex = 4; break;
             }
         }
-        self.selectedTabIndex = 1;
+        self.selectedTabIndex = 0;
         self.onTabSelected = function (tabTitle) {
             if (self.currentTitle != tabTitle && self.initialized) {
                 self.timeout(function () {
@@ -265,7 +265,7 @@
         }
         self.init = function () {
 
-            self.currentTitle = 'javascript';
+            self.currentTitle = 'all';
             self.samplePostsService.get(self.currentTitle)
             .then(function (data) {
                 tryLoadingPostsForActiveContent(data);
@@ -277,7 +277,7 @@
                 _viewTop = document.querySelector('.dashboard-view-top');
                 _viewBottom = document.querySelector('.dashboard-content-holder');
                 _viewHeader = document.getElementById('dashboardViewHeader');
-                self.loadLoaderElementsIntoAllContent('javascript');
+                self.loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -420 });
                 TweenLite.set(_viewTop, { y: 420 });

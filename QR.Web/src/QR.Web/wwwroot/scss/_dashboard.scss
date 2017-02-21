@@ -158,8 +158,9 @@
             }
 
             &-category {
-                margin: 6px 0;
+                margin: 6px 45px 6px 0;
                 vertical-align: top;
+                max-width: 150px;
 
                 md-select {
                     &:not([disabled]):focus {
@@ -194,6 +195,33 @@
                 }
             }
 
+            &-icon {
+                width: 42px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                display: inline-block;
+                border: 1px dotted transparent;
+                cursor: pointer;
+                transition: background 0.3s linear 0s;
+                float: left;
+
+                &:hover {
+                    background: lighten(#0078d7, 30);
+                    color: #0078d7;
+                }
+
+                &:focus {
+                    outline: none;
+                    border: 1px dotted #303030;
+                }
+
+                &.active {
+                    background: lighten(#0078d7, 40);
+                    color: #0078d7;
+                }
+            }
+
             &-search {
                 margin-right: 9px;
                 position: relative;
@@ -201,12 +229,14 @@
                 line-height: 42px;
                 height: 42px;
                 z-index: 10;
-                min-width: 33vw;
+                width: calc(100% - 210px);
                 background: transparent;
                 border: 1px dotted lighten(#909090, 10);
                 font-family: 'Open Sans', sans-serif;
                 font-size: medium;
                 display: inline-block;
+                float: right;
+                max-width: 1000px;
 
                 ::-webkit-input-placeholder {
                     color: #909090;
@@ -228,39 +258,19 @@
                     font-size: small;
                 }
 
-                &-icon {
-                    width: 42px;
-                    height: 40px;
-                    line-height: 40px;
-                    text-align: center;
-                    float: right;
-                    border: 1px dotted transparent;
-                    cursor: pointer;
-                    transition: background 0.3s linear 0s;
-
-                    &:hover {
-                        background: #0078d7;
-                        color: #fff;
-                    }
-
-                    &:focus {
-                        outline: none;
-                        border: 1px dotted #303030;
-                    }
-                }
-
                 input {
                     padding: 0 15px;
                     border: none;
                     font-family: 'Open Sans', sans-serif;
                     font-size: medium;
                     background: transparent;
-                    width: calc(100% - 42px);
+                    width: calc(100% - 84px);
                     border: 1px dotted transparent;
                     display: inline-block;
                     float: left;
                     line-height: 40px;
                     height: 40px;
+                    float: left;
 
                     &:focus {
                         outline: none;
