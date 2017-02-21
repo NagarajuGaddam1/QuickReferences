@@ -178,18 +178,19 @@
         }
 
         function tryToShowHeader() {
+            var _topHeight = window.innerWidth < 768 ? 240 : 420;
             if (_viewTop && _setToDisappear && !self.headerPinned) {
                 TweenMax.to(_viewHeader, 0.1, {
                     opacity: 0, onComplete: function () {
-                        document.querySelector('.app-title').style.display = 'BLOCK';
+                        document.querySelector('.app-title').style.display = 'BLOCK';                        
                         TweenMax.to(_viewTop, 0.3, {
-                            y: 420, onComplete: function () {
+                            y: _topHeight, onComplete: function () {
                                 _viewHeader.style.display = 'NONE';
                             }
                         })
                     }
                 });
-                TweenMax.to(_viewBottom, 0.3, { height: window.innerHeight - 420, marginTop: 420 });
+                TweenMax.to(_viewBottom, 0.3, { height: window.innerHeight - _topHeight, marginTop: _topHeight });
                 _setToDisappear = false;
             }
         }
@@ -274,14 +275,15 @@
             })
 
             self.timeout(function () {
+                var _topHeight = window.innerWidth < 768 ? 240 : 420;1
                 _viewTop = document.querySelector('.dashboard-view-top');
                 _viewBottom = document.querySelector('.dashboard-content-holder');
                 _viewHeader = document.getElementById('dashboardViewHeader');
                 self.loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
-                TweenLite.set(_viewTop, { marginTop: -420 });
-                TweenLite.set(_viewTop, { y: 420 });
-                TweenLite.set(_viewBottom, { marginTop: 420 });
+                TweenLite.set(_viewTop, { marginTop: -_topHeight });
+                TweenLite.set(_viewTop, { y: _topHeight });
+                TweenLite.set(_viewBottom, { marginTop: _topHeight });
                 _viewBottom.addEventListener("scroll", function (e) {
                     self.debScrollFn(e.target.scrollTop);
                 });
