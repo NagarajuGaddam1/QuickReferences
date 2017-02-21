@@ -16,7 +16,6 @@
 /// <reference path="app/explore/services/shared.service.js" />
 /// <reference path="app/extensions/configs/app.js" />
 /// <reference path="app/extensions/directives/codeviewer.directive.js" />
-/// <reference path="app/extensions/directives/snippetloader.directive.js" />
 /// <reference path="app/extensions/directives/snippetview.directive.js" />
 /// <reference path="app/extensions/jessify/jessify.views.extensions.js" />
 /// <reference path="dist/js/app.author.min.js" />
