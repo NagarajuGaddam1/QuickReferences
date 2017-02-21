@@ -96,6 +96,10 @@
                 padding: 0 24px;
                 font-size: medium;
                 text-transform: none;
+
+                @include respond-to-mobile {
+                    padding: 0 5px;
+                }
             }
         }
 
@@ -340,7 +344,7 @@
                 border-radius: 40px;
                 color: #fff;
 
-                @include respond-to-mobile {                    
+                @include respond-to-mobile {
                     margin: 15px auto;
                 }
 
