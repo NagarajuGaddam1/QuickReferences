@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace QR.Web
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IHostingEnvironment env)
         {
@@ -28,6 +25,7 @@ namespace QR.Web
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
+            ConfigureAuthServices(services);
             services.AddMvc();
         }
 
@@ -49,6 +47,9 @@ namespace QR.Web
 
             app.UseStaticFiles();
 
+            // CONFIGURE  GITHUB AUTH
+            ConfigureAuth(app);
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -56,5 +57,6 @@ namespace QR.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+        
     }
 }

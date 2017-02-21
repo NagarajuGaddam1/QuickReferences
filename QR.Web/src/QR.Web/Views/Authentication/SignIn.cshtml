@@ -1,0 +1,34 @@
+﻿@using Microsoft.AspNetCore.Http.Authentication
+@model IEnumerable<AuthenticationDescription>
+
+<div class="jumbotron">
+    <h1>Authentication</h1>
+    <p class="lead text-left">Sign in using one of these external providers:</p>
+
+    @foreach (var description in Model)
+    {
+        <form action="/signin" method="post">
+            <input type="hidden" name="Provider" value="@description.AuthenticationScheme" />
+            <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
+            <button class="btn btn-lg btn-success" type="submit">Connect using @description.DisplayName</button>
+        </form>
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <ul>
+                    @foreach (var claim in User.Claims)
+                    {
+                        <li>@claim.Type = @claim.Value</li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    else
+    {
+        <h1>Not Authneticated</h1>
+    }
+</div>
