@@ -6,27 +6,44 @@
 
     function SamplePostsService($http, $q, $timeout) {
 
+        var _mappedIDs = function (_posts) {
+            return _.map(_posts, function (_p) {
+                return _p.id
+            })
+        }
+
         var _getPosts = function (_filter) {
             var _defer = $q.defer();
             $timeout(function () {
                 if (_filter == "all") {
-                    _defer.resolve({ filter: _filter, posts: _posts });
+                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_posts) });
                 }
                 else if (_filter == "css") {
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == "css" || _post.category == "scss";
                     })
-                    _defer.resolve({ filter: _filter, posts: _data });
+                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
                 }
                 else {
                     var _data = _.filter(_posts, function (_post) {
                         return _post.category == _filter;
                     })
-                    _defer.resolve({ filter: _filter, posts: _data });
+                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
                 }
-            }, 3000);
+            }, 1000);
             return _defer.promise;
 
+        }
+
+        var _getDataForPost = function (_holder) {
+            var _defer = $q.defer();
+            $timeout(function () {
+                var _post = _.find(_posts, function (_p) {
+                    return _p.id == _holder.loadedId;
+                })
+                _defer.resolve({ holder: _holder , post : _post});
+            }, 1000 * Math.random());
+            return _defer.promise;
         }
 
         var _getPostsInterval = function (_filter) {
@@ -51,7 +68,22 @@
                         {
                             "type": "text",
                             "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "flask",
+                            "lang": "js",
+                            "langExt": "javascript",
+                            "data": "$(document).ready(function () {\r\n    var flask = new CodeFlask;\r\n    flask.run('#coder', { language: 'javascript', rtl: false });\r\n    flask.onUpdate(function (code) {\r\n        document.getElementById('display').innerHTML \r\n\t= Prism.highlight(code, Prism.languages.javascript);\r\n    });\r\n})"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
                         }
+
                     ]
                 };
                 _post.id = _.uniqueId('_ORIG_POST');
@@ -75,6 +107,7 @@
         return {
             get: _getPosts,
             getInterval: _getPostsInterval,
+            getDataForPost: _getDataForPost
         }
     }
 
@@ -89,16 +122,30 @@
                         "type": "text",
                         "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
                     },
-                    {
-                        "type": "flask",
-                        "lang": "js",
-                        "langExt": "javascript",
-                        "data": "$(document).ready(function () {\r\n    var flask = new CodeFlask;\r\n    flask.run('#coder', { language: 'javascript', rtl: false });\r\n    flask.onUpdate(function (code) {\r\n        document.getElementById('display').innerHTML \r\n\t= Prism.highlight(code, Prism.languages.javascript);\r\n    });\r\n})"
-                    },
-                    {
-                        "type": "text",
-                        "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-                    }
+                        {
+                            "type": "flask",
+                            "lang": "js",
+                            "langExt": "javascript",
+                            "data": "$(document).ready(function () {\r\n    var flask = new CodeFlask;\r\n    flask.run('#coder', { language: 'javascript', rtl: false });\r\n    flask.onUpdate(function (code) {\r\n        document.getElementById('display').innerHTML \r\n\t= Prism.highlight(code, Prism.languages.javascript);\r\n    });\r\n})"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "flask",
+                            "lang": "js",
+                            "langExt": "javascript",
+                            "data": "$(document).ready(function () {\r\n    var flask = new CodeFlask;\r\n    flask.run('#coder', { language: 'javascript', rtl: false });\r\n    flask.onUpdate(function (code) {\r\n        document.getElementById('display').innerHTML \r\n\t= Prism.highlight(code, Prism.languages.javascript);\r\n    });\r\n})"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "text",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        }
                 ]
             },
             {

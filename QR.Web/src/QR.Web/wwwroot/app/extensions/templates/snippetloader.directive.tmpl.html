@@ -1,29 +1,36 @@
-﻿<div class="snippetview-preview">
+﻿<div class="snippetview-preview" data-mode="loader">
     <div class="codeview snippetview">
         <div class="codeview-container">
             <div class="codeview-container-view">
                 <div class="codeview-container-actions">
                     <div class="pull-left">
-                        <div class="codeview-container-actions-logo">
-                            <div class="snippetview-preview-actions-logo">
+                        <div class="codeview-container-actions-logo">                            
+                            <div class="snippetview-preview-actions-logo" data-show="loader">
                                 <div class="snippetview-loader"></div>
                             </div>
+                            <img data-show="preview" />                            
                         </div>
-                        <div class="codeview-container-actions-title">
-                            <div class="snippetview-loader"></div>
+                        <div class="codeview-container-actions-title" data-show="preview"></div>
+                    </div>
+                    <div class="pull-right" data-show="preview">
+                        <div class="codeview-container-actions-action">
+                            <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                        </div>
+                        <div class="codeview-container-actions-action">
+                            <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="clearfix"></div>
                 </div>
                 <div class="snippetview-container">
-                    <div class="snippetview-preview-text">
+                    <div class="snippetview-preview-text" data-show="loader">
                         <div class="snippetview-loader"></div>
                         <div class="snippetview-loader"></div>
                         <div class="snippetview-loader"></div>
                     </div>
                     <div class="snippetview-container-overlay"></div>
                 </div>
-                <div class="codeview-container-actions">
+                <div class="codeview-container-actions md-chips-container">
                 </div>
             </div>
         </div>

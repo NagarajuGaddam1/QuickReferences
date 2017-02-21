@@ -33,7 +33,7 @@
             { id: 'css', name: 'CSS' },
             { id: 'others', name: 'Other(s)' }
         ];
-        self.selectedCategory = 'all';
+        self.selectedCategory = 'javascript';
         self.selectCategory = function () {
             self.selectTab(self.selectedCategory);
         }
@@ -46,12 +46,12 @@
                 default: self.selectedTabIndex = 4; break;
             }
         }
-        self.selectedTabIndex = 0;
+        self.selectedTabIndex = 1;
         self.onTabSelected = function (tabTitle) {
             if (self.currentTitle != tabTitle && self.initialized) {
-                 self.timeout(function () {
-                    loadLoaderElementsIntoAllContent(tabTitle);
-                 }, 500);
+                self.timeout(function () {
+                    self.loadLoaderElementsIntoAllContent(tabTitle);
+                }, 500);
                 self.currentTitle = tabTitle;
                 self.samplePostsService.get(self.currentTitle)
                 .then(function (data) {
@@ -76,6 +76,107 @@
         var _activeContentView = null;
         var _lastTop = 0;
         var _setToDisappear = false;
+        self.loadLoaderElementsIntoContent = function (_content, _currentViewId) {
+            var _elm = angular.element(_content);
+            for (var i = 0; i < 3; i++) {
+                var _id = _.uniqueId('snippetLoader');
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                _tmpl = _tmpl.replace('SLID', _id);
+                _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
+                _elm.append(_tmpl);
+                if (typeof _loadedPosts[_currentViewId] === 'undefined')
+                    _loadedPosts[_currentViewId] = [];
+                _loadedPosts[_currentViewId].push({ id: _id, loaded: false });
+            }
+        }
+        self.loadLoaderElementsIntoAllContent = function (_categoryId) {
+            var _view = document.getElementById('_mdContent_' + _categoryId);
+            window.requestAnimationFrame(function () {
+                self.loadLoaderElementsIntoContent(_view, _categoryId);
+            });
+            var _elmToCompile = angular.element(_view);
+            self.compile(_elmToCompile.contents())($scope);
+        }
+        self.fnLoadPost = function (_holder) {
+            self.samplePostsService.getDataForPost(_holder)
+            .then(function (_data) {
+                var _holder = _data.holder;
+                var _post = _data.post;
+                var _snippetViewerId = _.uniqueId('_cd_');
+                var _holderElm = document.getElementById(_holder.id);
+                var _flasksToProcess = [];
+                if (_holderElm) {
+                    var _titleElm = _holderElm.querySelector('.codeview-container-actions-title');
+                    if (_titleElm) {
+                        _titleElm.textContent = _post.name
+                    }
+                    var _imgElm = _holderElm.querySelector('img[data-show="preview"]');
+                    if (_imgElm) {
+                        var _imgElmSrc = '';
+                        switch (_post.category) {
+                            case 'css': _imgElmSrc = '/dist/images/css3.png'; break;
+                            case 'javascript': _imgElmSrc = '/dist/images/js.png'; break;
+                            case 'scss': _imgElmSrc = '/dist/images/scss.png'; break;
+                            case 'markup': _imgElmSrc = '/dist/images/html5.png'; break;
+                            default: _imgElmSrc = '/dist/images/css3.png'; break;
+                        }
+                        _imgElm.setAttribute('src', _imgElmSrc);
+                    }
+                    var _chipContainerElm = _holderElm.querySelector('.md-chips-container');
+                    if (_chipContainerElm) {
+                        _.each(_post.tags, function (_tag) {
+                            var _tmpl = '<div class="chip" data-show="preview">' + _tag + '</div>';
+                            angular.element(_chipContainerElm).append(_tmpl);
+                        });
+                    }
+                    var _snippetViewContainer = _holderElm.querySelector('.snippetview-container');
+                    if (_snippetViewContainer) {
+                        var _contentTmpl = '';
+                        _.each(_post.content, function (_content, _iter) {
+                            if (_content.type == 'text') {
+                                var _tmpl = '<p class="snippetview">TEXTCONTENT</p>';
+                                _tmpl = _tmpl.replace('TEXTCONTENT', _content.data);
+                                _contentTmpl = _contentTmpl + _tmpl;
+                            }
+                            else if (_content.type == 'flask') {                                
+                                var _tmpl = '<div class="codeview-container-flasks snippetview"><div class="codeview-container-flasks-item" id="_FLASK_ID"><pre class="snippetview language-_FLASK_LANG"><code></code></pre></div></div>';
+                                var _flaskId = _snippetViewerId + '_MOD_' + _iter;
+                                _tmpl = _tmpl.replace('_FLASK_ID', _flaskId);
+                                _tmpl = _tmpl.replace('_FLASK_LANG', _content.langExt);
+                                _flasksToProcess.push({
+                                    id: _flaskId,
+                                    langExt: _content.langExt,
+                                    codeViewId: '_CE_' + _snippetViewerId + '_MOD_' + _iter,
+                                    uid: _content.uid,
+                                    data: _content.data
+                                });
+                                _contentTmpl = _contentTmpl + _tmpl;
+                            }
+                        });
+                        angular.element(_snippetViewContainer).append(_contentTmpl);
+                    }
+                    var _snippetPreviewElm = _holderElm.querySelector('.snippetview-preview[data-mode="loader"]');
+                    if (_snippetPreviewElm) {
+                        _snippetPreviewElm.setAttribute('data-mode', 'preview');
+                        if (_flasksToProcess.length > 0) {
+                            _.each(_flasksToProcess, function (_flask) {
+                                var _elem = document.getElementById(_flask.id);
+                                if (_elem) {
+                                    var _codeElm = _elem.querySelector('code');
+                                    if (_codeElm) {
+                                        _codeElm.classList.add('language-' + _flask.langExt);
+                                        _codeElm.setAttribute('id', _flask.codeViewId);
+                                        _codeElm.setAttribute('uid', _flask.uid);
+                                        _codeElm.innerHTML = Prism.highlight(_flask.data, Prism.languages[_flask.langExt]);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+        }
+
         function tryToShowHeader() {
             if (_viewTop && _setToDisappear && !self.headerPinned) {
                 TweenMax.to(_viewHeader, 0.1, {
@@ -118,27 +219,6 @@
             _lastTop = _top;
         }
         self.debScrollFn = _.throttle(self.onScrollFn, 20);
-        function loadLoaderElementsIntoContent(_content, _currentViewId, _defer) {
-            var _elm = angular.element(_content);
-            for (var i = 0; i < 3; i++) {
-                var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
-                _tmpl = _tmpl.replace('SLID', _id);
-                _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
-                _elm.append(_tmpl);
-                if (typeof _loadedPosts[_currentViewId] === 'undefined')
-                    _loadedPosts[_currentViewId] = [];
-                _loadedPosts[_currentViewId].push({ id: _id, loaded: false });
-            }
-        }
-        function loadLoaderElementsIntoAllContent(_categoryId) {
-            var _view = document.getElementById('_mdContent_' + _categoryId);
-            window.requestAnimationFrame(function () {
-                loadLoaderElementsIntoContent(_view, _categoryId, false);
-            });
-            var _elmToCompile = angular.element(_view);
-            self.compile(_elmToCompile.contents())($scope);
-        }
         function tryLoadingPostsForActiveContent(data) {
             var _currentViewId = data.filter;
             var _currentlyPostedIds = _.map(_.filter(_loadedPosts[_currentViewId], function (_pl) {
@@ -147,7 +227,7 @@
                 return _post.loadedId
             });
             var _posts = _.reject(data.posts, function (_post) {
-                var _index = _.indexOf(_currentlyPostedIds, _post.id);
+                var _index = _.indexOf(_currentlyPostedIds, _post);
                 return _index >= 0;
             })
             var _paintLength = _posts.length;
@@ -177,39 +257,19 @@
             _.each(_.filter(_loadedPosts[_currentViewId],
                 function (_postHolder) {
                     return _postHolder.loaded == false
-                }),
-                function (_postHolder, _iter) {
-                    if (_iter < _paintLength) {
-                        var _elm = angular.element(document.getElementById(_postHolder.id));
-                        _elm.empty();
-                        var _postId = _posts[_iter].id;
-                        if (typeof self.posts[_postId] === 'undefined' || self.posts[_postId] == null || self.posts[_postId] == {})
-                            self.posts[_postId] = _posts[_iter];
-                        var _tmpl = '<snippetview preview="false" post="app.posts[\'POSTID\']"></snippetview>';
-                        _tmpl = _tmpl.replace('POSTID', _postId);
-                        _postHolder.scope = $scope.$new();
-                        var compiledDirective = $compile(_tmpl);
-                        var directiveElement = compiledDirective(_postHolder.scope);
-                        _elm.append(directiveElement);
-                        _postHolder.loaded = true;
-                        _postHolder.loadedId = _postId;
-                    }
+                }), function (_postHolder, _iter) {
+                    _postHolder.loadedId = _posts[_iter];
+                    if (typeof self.fnLoadPost !== 'undefined' && typeof self.fnLoadPost === 'function')
+                        self.fnLoadPost(_postHolder);
                 });
         }
         self.init = function () {
 
-            self.currentTitle = 'all';
+            self.currentTitle = 'javascript';
             self.samplePostsService.get(self.currentTitle)
             .then(function (data) {
                 tryLoadingPostsForActiveContent(data);
-                console.log(data);
                 self.initialized = true;
-                //self.interval(function () {
-                //    self.samplePostsService.getInterval(self.currentTitle)
-                //    .then(function (data) {
-                //        tryLoadingPostsForActiveContent(data);
-                //    });
-                //}, 3000);
             }, function (data) {
             })
 
@@ -217,7 +277,7 @@
                 _viewTop = document.querySelector('.dashboard-view-top');
                 _viewBottom = document.querySelector('.dashboard-content-holder');
                 _viewHeader = document.getElementById('dashboardViewHeader');
-                loadLoaderElementsIntoAllContent('all');
+                self.loadLoaderElementsIntoAllContent('javascript');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -420 });
                 TweenLite.set(_viewTop, { y: 420 });
