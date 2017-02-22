@@ -100,7 +100,7 @@ gulp.task('minify:lib:explore:js', function (cb) {
               webroot + 'lib/addons/angular-material.min.js',
               webroot + 'lib/addons/ng-draggable.min.js',              
               webroot + 'lib/third-party/bootstrap.min.js',
-              webroot + 'lib/third-party/prism.js',
+              webroot + 'lib/third-party/prism.min.js',
           ]),          
           concat('lib.explore.min.js'),
           gulp.dest(webroot + 'dist/js')
