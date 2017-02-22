@@ -51,11 +51,13 @@
         self.onDropComplete = function (_dropIndex, data) {
             self.swapContent(_dropIndex, data.index)
         }
-        self.swapContent = function (_dropIndex, _pickIndex) {
+        self.swapContent = function (_dropIndex, _pickIndex) {            
             var _temp = self.post.content[_pickIndex];
             self.post.content.splice(_pickIndex, 1);
-            _temp.index = _dropIndex;
-            self.post.content.splice(_dropIndex, 0, _temp);
+            self.post.content.splice(_dropIndex, 0, _temp);            
+            _.each(self.post.content, function (_content, _iter) {
+                _content.index = _iter;
+            });            
         }
         self.flasks = [];
         self.post = {};
@@ -77,8 +79,8 @@
                 var _selector = '[uid="' + _flask.uid + '"]';
                 var _elem = document.querySelector(_selector);
                 if (_elem) {
-                    var _focusElm = _elem.querySelector('textarea');                    
-                    if(_focusElm)
+                    var _focusElm = _elem.querySelector('textarea');
+                    if (_focusElm)
                         _focusElm.focus();
                 }
             }, 100);
