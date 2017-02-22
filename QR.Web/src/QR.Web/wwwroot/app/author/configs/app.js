@@ -15,7 +15,8 @@
         'ngAnimate',
         'ngMaterial',
         'ui.bootstrap',
-        'ngSanitize'
+        'ngSanitize',
+        'ngDraggable'
     ]);
 
 })();

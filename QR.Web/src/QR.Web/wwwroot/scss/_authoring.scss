@@ -90,7 +90,8 @@
                     margin-bottom: 6px;
                 }
 
-                &:hover {
+                &:hover,
+                &.active {
                     background-color: #303030;
                     border-color: #303030;
                     color: #fff;
@@ -143,6 +144,97 @@
                 margin-bottom: 10px;
                 position: relative;
 
+                label.title {
+                    width: calc(100% - 100px);
+                    text-align: left;
+                }
+
+                &.draglist {
+                    display: inline-block;
+                    margin: 0 auto;
+
+                    [ng-drag] {
+                        -moz-user-select: -moz-none;
+                        -khtml-user-select: none;
+                        -webkit-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                    }
+
+                    [ng-drag] {
+                        /*width: 100px;
+                        height: 100px;
+                        background: rgba(255, 0, 0, 0.5);
+                        color: white;
+                        text-align: center;
+                        padding-top: 40px;
+                        display: block;
+                        cursor: move;*/
+                    }
+
+                    [ng-drag].one {
+                        background: rgba(255, 0, 0, 0.5);
+                    }
+
+                    [ng-drag].two {
+                        background: rgba(0, 255, 0, 0.5);
+                    }
+
+                    [ng-drag].three {
+                        background: rgba(0, 0, 255, 0.5);
+                    }
+
+                    [ng-drag].drag-over {
+                        &.drag-enter {
+                            border: solid 5px #0078d7;
+                            opacity: 1;
+                        }
+                    }
+
+                    [ng-drop] {
+                        text-align: center;
+                        display: block;
+                        position: relative;
+                        width: 100%;
+                        float: left;
+                    }
+
+                    [ng-drop].drag-enter {
+                        border: solid 5px lighten(#0078d7, 33);
+                        opacity: 0.50;
+                    }
+
+                    [ng-drop] span.title {
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 200px;
+                        height: 20px;
+                        margin-left: -100px;
+                        margin-top: -10px;
+                    }
+
+                    [ng-drop] div {
+                        position: relative;
+                        z-index: 2;
+                    }
+                }
+
+                &.redorderingActive {
+                    .flask-instance-content {
+                        height: 100px;
+                        overflow: hidden;
+
+                        textarea {
+                            border: none;
+                            overflow: hidden;
+                            opacity: 0.50;
+                            height: 100px;
+                        }
+                    }
+                }
+
                 &-content {
                     width: 100%;
                 }
@@ -151,6 +243,7 @@
                     position: absolute;
                     top: 0px;
                     right: 0px;
+                    z-index: 10;
                     background: #fff;
                     color: #909090;
                     width: 36px;
@@ -163,6 +256,10 @@
                     &:hover {
                         background: #303030;
                         color: #fff;
+                    }
+
+                    &.ms-Icon--Move {
+                        right: 36px;
                     }
                 }
 
@@ -211,6 +308,10 @@
                     font-weight: bold;
                     width: 100%;
                     margin-bottom: 15px;
+
+                    span {
+                        text-transform: uppercase;
+                    }
                 }
             }
 
