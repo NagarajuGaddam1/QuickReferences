@@ -77,9 +77,9 @@
         var _setToDisappear = false;
         self.loadLoaderElementsIntoContent = function (_content, _currentViewId) {
             var _elm = angular.element(_content);
-            for (var i = 0; i < 4; i++) {
+            for (var i = 0; i < 6; i++) {
                 var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                 _tmpl = _tmpl.replace('SLID', _id);
                 _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                 _elm.append(_tmpl);
@@ -236,7 +236,7 @@
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 for (var i = 0; i < _paintLength - _emptyLength; i++) {
                     var _id = _.uniqueId('snippetLoader');
-                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                     _tmpl = _tmpl.replace('SLID', _id);
                     _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                     _elm.append(_tmpl);

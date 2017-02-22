@@ -3,6 +3,7 @@
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify"),
+    insert = require('gulp-insert'),
     plumber = require('gulp-plumber'),
     del = require('del'),
     sass = require('gulp-sass'),

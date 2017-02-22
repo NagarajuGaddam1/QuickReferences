@@ -4,20 +4,20 @@
             <div class="codeview-container-view">
                 <div class="codeview-container-actions">
                     <div class="pull-left">
-                        <div class="codeview-container-actions-logo">                            
+                        <div class="codeview-container-actions-logo">
                             <div class="snippetview-preview-actions-logo" data-show="loader">
                                 <div class="snippetview-loader"></div>
                             </div>
-                            <img data-show="preview" />                            
+                            <img data-show="preview" />
                         </div>
                         <div class="codeview-container-actions-title" data-show="preview"></div>
                     </div>
-                    <div class="pull-right" data-show="preview" data-hide-on-mobile="true">
+                    <div class="pull-right" data-show="preview" data-hide-on-mobile="true" data-readingmode="off">
                         <div class="codeview-container-actions-action">
-                            <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                            <i class="ms-Icon ms-Icon--ReadingMode" aria-hidden="true"></i>
                         </div>
                         <div class="codeview-container-actions-action">
-                            <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                            <i class="ms-Icon ms-Icon--OpenInNewWindow" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -30,8 +30,20 @@
                     </div>
                     <div class="snippetview-container-overlay"></div>
                 </div>
-                <div class="codeview-container-actions md-chips-container">
-                </div>
+                <div class="codeview-container-actions">
+                    <div class="pull-left">
+                        <div class="md-chips-container"></div>
+                    </div>
+                    <div class="pull-right" data-readingmode="on" data-hide-on-mobile="true">
+                        <div class="codeview-container-actions-action">
+                            <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                        </div>
+                        <div class="codeview-container-actions-action">
+                            <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>                
             </div>
         </div>
     </div>

@@ -15,7 +15,24 @@
             padding: 0 15px;
         }
 
+        [data-readingmode="on"] {
+            display: none;
+        }
+
+        [data-readingmode="off"] {
+            display: block;
+        }
+
         &.readingMode {
+
+            [data-readingmode="on"] {
+                display: block;
+            }
+
+            [data-readingmode="off"] {
+                display: none;
+            }
+
             .snippet-loader-container {
                 width: 100%;
 

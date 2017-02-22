@@ -152,6 +152,7 @@
                 &.draglist {
                     display: inline-block;
                     margin: 0 auto;
+                    width: 100%;
 
                     [ng-drag] {
                         -moz-user-select: -moz-none;
@@ -159,30 +160,7 @@
                         -webkit-user-select: none;
                         -ms-user-select: none;
                         user-select: none;
-                    }
-
-                    [ng-drag] {
-                        /*width: 100px;
-                        height: 100px;
-                        background: rgba(255, 0, 0, 0.5);
-                        color: white;
-                        text-align: center;
-                        padding-top: 40px;
-                        display: block;
-                        cursor: move;*/
-                    }
-
-                    [ng-drag].one {
-                        background: rgba(255, 0, 0, 0.5);
-                    }
-
-                    [ng-drag].two {
-                        background: rgba(0, 255, 0, 0.5);
-                    }
-
-                    [ng-drag].three {
-                        background: rgba(0, 0, 255, 0.5);
-                    }
+                    }                    
 
                     [ng-drag].drag-over {
                         &.drag-enter {
