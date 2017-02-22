@@ -42,7 +42,7 @@
                     return _p.id == _holder.loadedId;
                 })
                 _defer.resolve({ holder: _holder , post : _post});
-            }, 1000 * Math.random());
+            }, 50 * Math.random());
             return _defer.promise;
         }
 

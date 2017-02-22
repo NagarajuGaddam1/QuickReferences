@@ -1,4 +1,4 @@
-﻿<div class="codeview snippetview">
+﻿<div class="codeview codeview-Dashboard">
     <div class="codeview-container">
         <div class="codeview-container-view">
             <div class="codeview-container-actions">
@@ -17,8 +17,8 @@
                 <div class="clearfix"></div>
             </div>
             <div class="snippetview-container">
-                <p class="snippetview" ng-bind="::snippetViewer.post.description"></p>
-                <div class="codeview-container-flasks snippetview" ng-init="snippetViewer.loadSnippet()">
+                <p class="snippets-p" ng-bind="::snippetViewer.post.description"></p>
+                <div class="codeview-container-flasks codeview-container-flasks-snippets" ng-init="snippetViewer.loadSnippet()">
                     <div class="codeview-container-flasks-item" ng-repeat="mod in ::snippetViewer.previewContent" id="{{::snippetViewer.snippetViewerId + '_MOD_' + $index}}">
                         <pre ng-if="::mod.type == 'flask'" class="snippetview language-{{::mod.langExt}}" ng-init="snippetViewer.loadViewer($index)">
                         <code></code>

@@ -1,15 +1,11 @@
 ﻿.codeview {
     margin: 30px 0 0 0;
 
-    &.snippetview {
-        margin: 30px 0;
+    &-dashboard {
+        margin: 30px 0 0 0;
 
         @include respond-to-mobile {
             margin: 15px 0;
-        }
-
-        &:last-child {
-            margin-bottom: 0;
         }
     }
 
@@ -22,36 +18,6 @@
             display: block;
             box-shadow: 0 3px 6px rgba(0,0,0,.1);
 
-            .snippetview-container {
-                height: 300px;
-                width: 100%;
-                overflow: hidden;
-                position: relative;
-                z-index: 1;
-
-                @include respond-to-mobile {
-                    height: 250px;
-                }
-
-                &-overlay {
-                    width: 100%;
-                    height: 300px;
-                    z-index: 10;
-                    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+76,ffffff+100&0+77,1+100 */
-                    background: -moz-linear-gradient(top, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-                    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-                    background: linear-gradient(to bottom, rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-
-                    @include respond-to-mobile {
-                        height: 250px;
-                    }
-                }
-            }
-
             p {
                 padding: 20px;
                 font-size: 14px;
@@ -60,9 +26,13 @@
                     margin-bottom: 0;
                 }
 
-                &.snippetview {
+                &.snippets-p {
                     height: 100px;
                     overflow: hidden;
+
+                    @include _READINGMODE_ONLY(&) {
+                        height: auto;
+                    }
 
                     @include respond-to-mobile {
                         padding: 10px;
@@ -97,9 +67,14 @@
         &-flasks {
             width: 100%;
 
-            &.snippetview {
+            &-snippets {
                 height: 200px;
                 overflow: hidden;
+
+                @include _READINGMODE_ONLY(&) {
+                    height: auto;
+                    overflow: auto;
+                }
             }
 
             &-item {
@@ -124,27 +99,6 @@
 
                 md-chip {
                     background: darken(#f6f8fc, 5);
-                }
-            }
-
-            &.md-chips-container {
-                padding: 18px;
-
-
-                @include respond-to-mobile {
-                    padding: 10px;
-                }
-
-                .chip {
-                    background: #e3e9f6;
-                    border-radius: 16px;
-                    cursor: default;
-                    display: inline-block;
-                    height: 32px;
-                    line-height: 32px;
-                    margin: 8px 8px 0 0;
-                    padding: 0 12px;
-                    box-sizing: border-box;
                 }
             }
 
@@ -212,109 +166,243 @@
                 }
             }
         }
-    }
 
-    &:last-child {
-        margin-bottom: 60px;
+        .md-chips-container {
+            padding: 18px;
+
+
+            @include respond-to-mobile {
+                padding: 10px;
+            }
+
+            .chip {
+                background: #e3e9f6;
+                border-radius: 16px;
+                cursor: default;
+                display: inline-block;
+                height: 32px;
+                line-height: 32px;
+                margin: 8px 8px 0 0;
+                padding: 0 12px;
+                box-sizing: border-box;
+            }
+        }
     }
 }
 
-.snippetview {
+.snippet {
 
     &-loader {
-        height: 20px;
-        width: 100%;
-        background: lighten(#0078d7, 50);
-        display: inline-block;
-        overflow: hidden;
-        z-index: 2;
-        position: relative;
-
-        &:after {
-            height: 100%;
-            width: 100%;
-            content: " ";
-            background: lighten(#0078d7, 40);
-            display: block;
-            position: relative;
-            -webkit-animation: snippet-view-bg-anim 1s linear infinite;
-            animation: snippet-view-bg-anim 1s linear infinite;
-            z-index: 1;
+        &-container {
+            @include _READINGMODE_ONLY(&) {
+                width: 100%;
+            }
         }
     }
 
-    &-preview {
+    &view {
+        &[data-mode="preview"] {
+            .snippetview-container {
 
-        &[data-mode="loader"] {
-            [data-show="preview"] {
-                display: none;
+                @include _READINGMODE_ONLY(&) {
+                    height: auto;
+                }
             }
 
-            .codeview-container-actions {
-                height: 70px;
+            .snippetview-container-overlay {
 
-                &-action {
-                    overflow: hidden;
-                    box-shadow: none;
+                @include _READINGMODE_ONLY(&) {
+                    display: none;
+                }
+            }
+        }
 
-                    .snippetview {
-                        &-loader {
-                            height: 100%;
-                            border-radius: 50%;
+        &-loader {
+            height: 20px;
+            width: 100%;
+            background: lighten(#0078d7, 50);
+            display: inline-block;
+            overflow: hidden;
+            z-index: 2;
+            position: relative;
+
+            &:after {
+                height: 100%;
+                width: 100%;
+                content: " ";
+                background: lighten(#0078d7, 40);
+                display: block;
+                position: relative;
+                -webkit-animation: snippet-view-bg-anim 1s linear infinite;
+                animation: snippet-view-bg-anim 1s linear infinite;
+                z-index: 1;
+            }
+        }
+
+        &-preview {
+
+            @include _READINGMODE_ONLY(&) {
+                width: 80%;
+                display: block;
+                margin: 0 auto;
+                max-width: 991px;
+
+                @include respond-to-mobile {
+                    width: 100%;
+                }
+            }
+
+            &[data-mode="loader"] {
+                [data-show="preview"] {
+                    display: none;
+                }
+
+                .codeview-container-actions {
+                    height: 70px;
+
+                    &-action {
+                        overflow: hidden;
+                        box-shadow: none;
+
+                        .snippetview {
+                            &-loader {
+                                height: 100%;
+                                border-radius: 50%;
+                            }
                         }
+                    }
+                }
+            }
+
+            &[data-mode="preview"] {
+                [data-show="loader"] {
+                    display: none;
+                }
+
+                .codeview-container-actions {
+                    height: auto;
+                }
+            }
+
+            &-actions-logo {
+                height: 48px;
+                width: 48px;
+                margin-left: 15px;
+                border-radius: 50%;
+                overflow: hidden;
+
+                .snippetview {
+                    &-loader {
+                        height: 100%;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+            &-text {
+                height: 300px;
+                overflow: hidden;
+                padding: 60px;
+
+                .snippetview {
+                    &-loader {
+                        height: 10px;
+                        margin-top: 45px;
+                    }
+                }
+            }
+
+            &-tag {
+                height: 24px;
+                width: 72px;
+                display: inline-block;
+                margin-left: 27px;
+                margin-top: 27px;
+
+                .snippetview {
+                    &-loader {
+                        height: 100%;
                     }
                 }
             }
         }
 
-        &[data-mode="preview"] {
-            [data-show="loader"] {
-                display: none;
-            }
+        &-container {
+            height: 300px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
 
-            .codeview-container-actions {
+            @include _READINGMODE_ONLY(&) {
                 height: auto;
             }
-        }
 
-        &-actions-logo {
-            height: 48px;
-            width: 48px;
-            margin-left: 15px;
-            border-radius: 50%;
-            overflow: hidden;
-
-            .snippetview {
-                &-loader {
-                    height: 100%;
-                    border-radius: 50%;
-                }
+            @include respond-to-mobile {
+                height: 250px;
             }
-        }
 
-        &-text {
-            height: 300px;
-            overflow: hidden;
-            padding: 60px;
+            &-overlay {
+                width: 100%;
+                height: 300px;
+                z-index: 10;
+                /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+76,ffffff+100&0+77,1+100 */
+                background: -moz-linear-gradient(top, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 61%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+                background: -webkit-linear-gradient(top, rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+                background: linear-gradient(to bottom, rgba(255,255,255,0) 60%,rgba(255,255,255,0) 61%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: table;
 
-            .snippetview {
-                &-loader {
-                    height: 10px;
-                    margin-top: 45px;
+                @include _READINGMODE_ONLY(&) {
+                    display: none;
                 }
-            }
-        }
 
-        &-tag {
-            height: 24px;
-            width: 72px;
-            display: inline-block;
-            margin-left: 27px;
-            margin-top: 27px;
+                @include respond-to-mobile {
+                    height: 250px;
+                }
 
-            .snippetview {
-                &-loader {
-                    height: 100%;
+                &:hover {
+                    .icon-holder {
+                        opacity: 1;
+
+                        i {
+                            opacity: .50;
+                        }
+                    }
+
+                    .snippetview-container-popup {
+                        background: lighten(#0078d7, 50);
+                    }
+                }
+
+                &-popup {
+                    width: 100%;
+                    display: table-cell;
+                    vertical-align: middle;
+                    padding: 15px;
+
+                    .icon-holder {
+                        width: 120px;
+                        height: 120px;
+                        background: lighten(#0078d7, 50);
+                        border-radius: 50%;
+                        cursor: pointer;
+                        transition: opacity 0.2s ease-in 0s;
+
+                        i {
+                            font-size: 60px;
+                            line-height: 120px;
+                            text-align: center;
+                            width: 100%;
+                        }
+
+                        display: block;
+                        margin: 0 auto;
+                        opacity: 0;
+                    }
                 }
             }
         }
