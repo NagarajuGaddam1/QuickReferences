@@ -126,6 +126,12 @@ $break-desktop: 1024px;
     }
 }
 
+@mixin respond-to-except-mobile {
+    @media only screen and (min-width:769px) {
+        @content;
+    }
+}
+
 
 @mixin respond-to($media) {
     @if $media == tablet {

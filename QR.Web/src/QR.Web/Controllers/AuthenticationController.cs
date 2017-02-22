@@ -16,7 +16,7 @@ namespace QR.Web.Controllers
         [HttpGet("~/signin")]
         public IActionResult SignIn()
         {
-
+             
             return View("SignIn", HttpContext.GetExternalProviders());
         }
 

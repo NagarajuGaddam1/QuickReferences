@@ -40,6 +40,7 @@
         self.timeout = $timeout;
         self.flask = '';
         self.currentFlaskIndex = 0;
+        self.flasksBeingReodered = false;
         self.mainTags = [
             { id: 'markup', name: 'html', forecolor: '#ffffff', backcolor: '#ff6d2e' },
             { id: 'javascript', name: 'js', forecolor: '#000000', backcolor: '#ffc629' },
@@ -47,13 +48,29 @@
             { id: 'scss', name: 'scss', forecolor: '#ffffff', backcolor: '#d2679e' }
         ];
         var _paneHolder = 'authoringFlaskPaneHolder';
-
+        self.onDropComplete = function (_dropIndex, data) {
+            self.swapContent(_dropIndex, data.index)
+        }
+        self.swapContent = function (_dropIndex, _pickIndex) {
+            var _temp = self.post.content[_pickIndex];
+            self.post.content.splice(_pickIndex, 1);
+            _temp.index = _dropIndex;
+            self.post.content.splice(_dropIndex, 0, _temp);
+        }
         self.flasks = [];
         self.post = {};
-
+        self.enableFlaskReordering = function () {
+            if (!self.flasksBeingReodered) {
+                self.flasksBeingReodered = true;
+            }
+            else {
+                self.flasksBeingReodered = false;
+            }
+        }
         self.addFlask = function (_type) {
             var _flask = angular.copy(_newFlaskContent[_type]);
             _flask.uid = _.uniqueId('_FLASK_CONTENT_');
+            _flask.index = self.currentFlaskIndex;
             self.post.content.splice(self.currentFlaskIndex, 0, _flask);
             self.currentFlaskIndex = self.post.content.length;
             self.timeout(function () {
@@ -107,8 +124,9 @@
 
         function _transfromResponse(_data) {
             self._originalPost = angular.copy(_data);
-            _.each(_data.content, function (_content) {
+            _.each(_data.content, function (_content, _iter) {
                 _content.uid = _.uniqueId('_FLASK_CONTENT_');
+                _content.index = _iter;
             });
             return _data;
         }

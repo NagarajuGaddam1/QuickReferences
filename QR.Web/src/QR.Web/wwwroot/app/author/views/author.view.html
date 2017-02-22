@@ -1,6 +1,9 @@
 ﻿<div class="container-fluid authoring">
     <div class="authoring-flask-pane">
-        <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">
+        <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">            
+            <div class="authoring-flask-pane-item tag" ng-click="app.enableFlaskReordering()" ng-class="{'active': app.flasksBeingReodered}">
+                <i class="ms-Icon ms-Icon--SwitcherStartEnd"></i>
+            </div>
             <div class="authoring-flask-pane-item tag" ng-click="app.addFlask('text')">
                 <i class="ms-Icon ms-Icon--InsertTextBox"></i>
             </div>
@@ -41,16 +44,17 @@
                     <md-chips ng-model="app.post.tags" readonly="false" md-removable="true"></md-chips>
                 </md-content>
             </div>
-            <div class="flask-instance">
+            <div class="flask-instance draglist" ng-class="{'redorderingActive': app.flasksBeingReodered}">
                 <label class="title">Content</label>
-                <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}">
+                <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="app.flasksBeingReodered" ng-drop-success="app.onDropComplete($index, $data)" ng-drag="app.flasksBeingReodered" ng-drag-data="mod">
+                    <i class="ms-Icon ms-Icon--Move" ng-drag-handle ng-show="app.flasksBeingReodered"></i>
                     <i class="ms-Icon ms-Icon--Delete"></i>
                     <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">
                         <label class="title">Text</label>
                         <textarea ng-model="mod.data"></textarea>
                     </div>
                     <div class="flask-instance-content" ng-if="mod.type == 'flask'">
-                        <label class="title"><span ng-bind="mod.language"></span> Flask</label>                        
+                        <label class="title"><span ng-bind="mod.lang"></span> Flask</label>                        
                         <div data-flask="true" ng-init="app.loadFlask($index)"></div>
                     </div>
                 </div>                

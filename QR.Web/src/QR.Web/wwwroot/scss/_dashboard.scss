@@ -50,7 +50,7 @@
         }
 
         &-holder {
-            height: calc(100vh - 420px);
+            height: calc(100vh - 380px);
             width: 100%;
             overflow-y: auto;
             position: relative;
@@ -66,9 +66,6 @@
             }
 
             &.hideTabsHeader {
-                md-tabs-wrapper {
-                    display: none;
-                }
 
                 md-content {
                     padding-bottom: 8px;
@@ -78,6 +75,7 @@
 
         md-tabs-wrapper {
             border-color: rgba(0,0,0,0.03);
+            display: none;
         }
 
         md-tabs.md-default-theme md-ink-bar,
@@ -134,8 +132,8 @@
             width: 100%;
             height: 72px;
             background: lighten(#0078d7, 50);
-            display: none;
-            opacity: 0;
+            display: block;
+            opacity: 1;
             box-shadow: 0 3px 6px rgba(0,0,0,.1);
 
             @include respond-to-mobile {
@@ -217,15 +215,21 @@
             }
 
             &-icon {
-                width: 42px;
-                height: 40px;
-                line-height: 40px;
+                width: 48px;
+                height: 46px;
+                line-height: 48px;
                 text-align: center;
                 display: inline-block;
                 border: 1px dotted transparent;
                 cursor: pointer;
                 transition: background 0.3s linear 0s;
                 float: left;
+                border: 1px dotted lighten(#909090, 10);
+
+                &.ms-Icon--ReadingMode {
+                    font-size: x-large;
+                    opacity: 0.80;
+                }
 
                 &:hover {
                     background: lighten(#0078d7, 30);
@@ -240,29 +244,50 @@
                 &.active {
                     background: lighten(#0078d7, 40);
                     color: #0078d7;
+                    border-color:lighten(#0078d7, 40);
                 }
             }
 
             &-search {
                 margin-right: 9px;
                 position: relative;
-                top: 15px;
-                line-height: 42px;
-                height: 42px;
+                top: 12px;
+                line-height: 48px;
+                height: 48px;
                 z-index: 10;
                 width: calc(100% - 210px);
+
+                &-holder {
+                    width: calc(100% - 60px);
+                    position: relative;
+                    float: right;
+                    margin-left: 12px;
+
+                    .dashboard-view-header-icon {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 36px;
+                        opacity: 0.50;
+                        pointer-events: none;
+                        border: none;
+                    }
+                }
 
                 @include respond-to-mobile {
                     width: calc(100% - 120px);
                 }
 
+                @include respond-to-except-mobile {
+                    max-width: calc(50vw - 50px);
+                }
+
                 background: transparent;
-                border: 1px dotted lighten(#909090, 10);
+                border: none;
                 font-family: 'Open Sans', sans-serif;
                 font-size: medium;
                 display: inline-block;
                 float: right;
-                max-width: 1000px;
 
                 ::-webkit-input-placeholder {
                     color: #909090;
@@ -285,21 +310,22 @@
                 }
 
                 input {
-                    padding: 0 15px;
+                    padding: 0 15px 0 36px;
                     border: none;
                     font-family: 'Open Sans', sans-serif;
                     font-size: medium;
                     background: transparent;
-                    width: calc(100% - 84px);
+                    width: 100%;
                     border: 1px dotted transparent;
                     display: inline-block;
                     float: left;
-                    line-height: 40px;
-                    height: 40px;
+                    line-height: 46px;
+                    height: 46px;
                     float: left;
+                    border: 1px dotted lighten(#909090, 10);
 
                     @include respond-to-mobile {
-                        width: calc(100% - 42px);
+                        padding: 0 15px;
                     }
 
                     &:focus {
@@ -313,102 +339,13 @@
         &-top {
             z-index: 10;
             width: 100%;
-            height: 420px;
+            height: 380px;
             background-color: #0078d7;
             padding: 90px 0 30px 0;
 
             @include respond-to-mobile {
                 height: 240px;
                 padding: 30px 0;
-            }
-
-            &-search {
-                margin-right: 9px;
-                position: relative;
-                top: 15px;
-                width: 50%;
-                line-height: 45px;
-                height: 45px;
-                z-index: 10;
-                width: 50%;
-                text-align: center;
-                background: darken(#0078d7, 4);
-                border: 1px solid darken(#0078d7, 4);
-                font-family: 'Open Sans', sans-serif;
-                font-size: medium;
-                display: block;
-                margin: 50px auto;
-                /*-moz-box-shadow: 0px 0px 0px 0px darken(#0078d7, 0);*/
-                /*-webkit-box-shadow: 0px 0px 0px 0px darken(#0078d7,0);*/
-                box-shadow: 0 3px 3px rgba(0,0,0,.15);
-                border-radius: 40px;
-                color: #fff;
-
-                @include respond-to-mobile {
-                    margin: 15px auto;
-                }
-
-                ::-webkit-input-placeholder {
-                    color: #fff;
-                    opacity: 0.50;
-                }
-
-                :-moz-placeholder { /* Firefox 18- */
-                    color: #fff;
-                    opacity: 0.50;
-                }
-
-                ::-moz-placeholder { /* Firefox 19+ */
-                    color: #fff;
-                    opacity: 0.50;
-                }
-
-                :-ms-input-placeholder {
-                    color: #fff;
-                    opacity: 0.50;
-                }
-
-                &-icon {
-                    width: 50px;
-                    height: 40px;
-                    line-height: 40px;
-                    text-align: center;
-                    float: right;
-                    border: 1px dotted transparent;
-                    cursor: pointer;
-                    transition: background 0.3s linear 0s;
-                    opacity: 0.50;
-
-                    &:hover {
-                        background: #0078d7;
-                        color: #fff;
-                    }
-
-                    &:focus {
-                        outline: none;
-                        border: none;
-                    }
-                }
-
-                input {
-                    padding: 0 15px 0 20px;
-                    border: none;
-                    font-family: 'Open Sans', sans-serif;
-                    font-size: medium;
-                    background: transparent;
-                    width: 100%;
-                    border: 1px dotted transparent;
-                    display: inline-block;
-                    float: left;
-                    line-height: 44px;
-                    height: 44px;
-                    text-align: center;
-
-                    &:focus {
-                        outline: none;
-                        border: none;
-                    }
-                }
             }
 
             .app-title {
