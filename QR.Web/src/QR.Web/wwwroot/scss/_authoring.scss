@@ -145,8 +145,15 @@
                 position: relative;
 
                 label.title {
-                    width: calc(100% - 100px);
+                    font-size: small;
+                    font-weight: bold;
+                    width: 100%;
+                    margin-bottom: 15px;
                     text-align: left;
+
+                    span {
+                        text-transform: uppercase;
+                    }
                 }
 
                 &.draglist {
@@ -160,7 +167,7 @@
                         -webkit-user-select: none;
                         -ms-user-select: none;
                         user-select: none;
-                    }                    
+                    }
 
                     [ng-drag].drag-over {
                         &.drag-enter {
@@ -279,18 +286,7 @@
                         cursor: pointer;
                         background: transparent;
                     }
-                }
-
-                label.title {
-                    font-size: small;
-                    font-weight: bold;
-                    width: 100%;
-                    margin-bottom: 15px;
-
-                    span {
-                        text-transform: uppercase;
-                    }
-                }
+                }                
             }
 
             .CodeFlask {

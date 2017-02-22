@@ -105,11 +105,11 @@
                 var _holderElm = document.getElementById(_holder.id);
                 var _flasksToProcess = [];
                 if (_holderElm) {
-                    var _titleElm = _holderElm.querySelector('.codeview-container-actions-title');
+                    var _titleElm = _holderElm.querySelector('[data-tag="title"]');
                     if (_titleElm) {
                         _titleElm.textContent = _post.name
                     }
-                    var _imgElm = _holderElm.querySelector('img[data-show="preview"]');
+                    var _imgElm = _holderElm.querySelector('[data-tag="cat-logo"]');
                     if (_imgElm) {
                         var _imgElmSrc = '';
                         switch (_post.category) {
@@ -121,24 +121,24 @@
                         }
                         _imgElm.setAttribute('src', _imgElmSrc);
                     }
-                    var _chipContainerElm = _holderElm.querySelector('.md-chips-container');
+                    var _chipContainerElm = _holderElm.querySelector('[data-tag="chips"]');
                     if (_chipContainerElm) {
                         _.each(_post.tags, function (_tag) {
                             var _tmpl = '<div class="chip" data-show="preview">' + _tag + '</div>';
                             angular.element(_chipContainerElm).append(_tmpl);
                         });
                     }
-                    var _snippetViewContainer = _holderElm.querySelector('.snippetview-container');
+                    var _snippetViewContainer = _holderElm.querySelector('[data-tag="snippet-view"]');
                     if (_snippetViewContainer) {
                         var _contentTmpl = '';
                         _.each(_post.content, function (_content, _iter) {
                             if (_content.type == 'text') {
-                                var _tmpl = '<p class="snippetview">TEXTCONTENT</p>';
+                                var _tmpl = '<p class="snippets-p">TEXTCONTENT</p>';
                                 _tmpl = _tmpl.replace('TEXTCONTENT', _content.data);
                                 _contentTmpl = _contentTmpl + _tmpl;
                             }
                             else if (_content.type == 'flask') {
-                                var _tmpl = '<div class="codeview-container-flasks snippetview"><div class="codeview-container-flasks-item" id="_FLASK_ID"><pre class="snippetview language-_FLASK_LANG"><code></code></pre></div></div>';
+                                var _tmpl = '<div class="codeview-container-flasks codeview-container-flasks-snippets"><div class="codeview-container-flasks-item" id="_FLASK_ID"><pre class="snippetview language-_FLASK_LANG"><code></code></pre></div></div>';
                                 var _flaskId = _snippetViewerId + '_MOD_' + _iter;
                                 _tmpl = _tmpl.replace('_FLASK_ID', _flaskId);
                                 _tmpl = _tmpl.replace('_FLASK_LANG', _content.langExt);
@@ -154,7 +154,7 @@
                         });
                         angular.element(_snippetViewContainer).append(_contentTmpl);
                     }
-                    var _snippetPreviewElm = _holderElm.querySelector('.snippetview-preview[data-mode="loader"]');
+                    var _snippetPreviewElm = _holderElm.querySelector('[data-tag="snippet-view-main"]');
                     if (_snippetPreviewElm) {
                         _snippetPreviewElm.setAttribute('data-mode', 'preview');
                         if (_flasksToProcess.length > 0) {
@@ -181,7 +181,7 @@
             if (_viewTop && _setToDisappear && !self.headerPinned) {
                 TweenMax.to(_viewHeader, 0.1, {
                     opacity: 0, onComplete: function () {
-                        document.querySelector('.app-title').style.display = 'BLOCK';
+                        document.querySelector('[data-tag="app-title-main"]').style.display = 'BLOCK';
                         TweenMax.to(_viewTop, 0.3, {
                             y: _topHeight, onComplete: function () {
                                 _viewHeader.style.display = 'NONE';
@@ -197,9 +197,9 @@
             if (_viewTop && !_setToDisappear) {
                 TweenMax.to(_viewTop, 0.3, {
                     y: 72, onComplete: function () {
-                        document.querySelector('.app-title').style.display = 'NONE';                        
+                        document.querySelector('[data-tag="app-title-main"]').style.display = 'NONE';
                         self.headerPinned = true;
-                        document.querySelector('.dashboard-content-holder').classList.add('hideTabsHeader');
+                        document.querySelector('[data-tag="content-holder"]').classList.add('hideTabsHeader');
                     }
                 });
                 TweenMax.to(_viewBottom, 0.3, { height: window.innerHeight - 72, marginTop: 72 });
@@ -273,9 +273,9 @@
 
             self.timeout(function () {
                 var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
-                _viewTop = document.querySelector('.dashboard-view-top');
-                _viewBottom = document.querySelector('.dashboard-content-holder');
-                _viewHeader = document.getElementById('dashboardViewHeader');
+                _viewTop = document.querySelector('[data-tag="view-top"]');
+                _viewBottom = document.querySelector('[data-tag="content-holder"]');
+                _viewHeader = document.querySelector('[data-tag="view-header"]');
                 self.loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -_topHeight });

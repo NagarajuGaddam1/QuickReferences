@@ -1,4 +1,32 @@
-﻿.dashboard {
+﻿@mixin _READINGMODE_ONLY($name) {
+    @at-root .dashboard-content.readingMode #{$name} {
+        @content;
+    }
+}
+
+@mixin _EXCEPT_READINGMODE_ONLY($name) {
+    @at-root .dashboard-content:not(.readingMode) #{$name} {
+        @content;
+    }
+}
+
+[data-readingmode="on"] {
+    display: none;
+
+    @include _READINGMODE_ONLY(&) {
+        display: block;
+    }
+}
+
+[data-readingmode="off"] {
+    display: block;
+
+    @include _READINGMODE_ONLY(&) {
+        display: none;
+    }
+}
+
+.dashboard {
     width: 100%;
     height: 100%;
     padding: 0;
@@ -13,68 +41,6 @@
 
         @include respond-to-mobile {
             padding: 0 15px;
-        }
-
-        [data-readingmode="on"] {
-            display: none;
-        }
-
-        [data-readingmode="off"] {
-            display: block;
-        }
-
-        &.readingMode {
-
-            [data-readingmode="on"] {
-                display: block;
-            }
-
-            [data-readingmode="off"] {
-                display: none;
-            }
-
-            .snippet-loader-container {
-                width: 100%;
-
-                .snippetview-preview {
-                    width: 80%;
-                    display: block;
-                    margin: 0 auto;
-                    max-width: 991px;
-
-                    @include respond-to-mobile {
-                        width: 100%;
-                    }
-                }
-
-                .codeview-container-view {
-                    .snippetview-container,
-                    p.snippetview {
-                        height: auto;
-                    }
-
-                    .snippetview-container-overlay {
-                        display: none;
-                    }
-
-                    .codeview-container-flasks.snippetview {
-                        height: auto;
-                        overflow: auto;
-                    }
-                }
-            }
-
-            .snippetview {
-                &[data-mode="preview"] {
-                    .snippetview-container {
-                        height: auto;
-                    }
-
-                    .snippetview-container-overlay {
-                        display: none;
-                    }
-                }
-            }
         }
 
         &-holder {

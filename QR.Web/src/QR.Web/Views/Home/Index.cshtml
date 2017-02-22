@@ -10,11 +10,11 @@
             <div class="content-body-container">
                 <div class="container-fluid dashboard">
                     <div class="dashboard-view">
-                        <div class="dashboard-view-top">
-                            <div class="app-title">
+                        <div class="dashboard-view-top" data-tag="view-top">
+                            <div class="app-title" data-tag="app-title-main">
                                 <img src="/dist/images/quickRef.png" />                                
                             </div>
-                            <div class="dashboard-view-header" id="dashboardViewHeader">
+                            <div class="dashboard-view-header" data-tag="view-header">
                                 <md-input-container class="dashboard-view-header-category">
                                     <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()">
                                         <md-option ng-repeat="state in app.categories" ng-value="state.id">
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="dashboard-content-holder">
+                        <div class="dashboard-content-holder" data-tag="content-holder">
                             <md-content class="dashboard-content" ng-class="{'readingMode': app.readingMode}">
                                 <md-tabs md-dynamic-height="" md-border-bottom="" md-stretch-tabs="always" md-selected="app.selectedTabIndex">
                                     <md-tab label="All" md-on-select="app.onTabSelected('all')" md-on-deselect="app.onTabDeselected('all')">
