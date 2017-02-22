@@ -251,14 +251,17 @@
                 width: calc(100% - 210px);
 
                 &-holder {
-                    width: calc(100% - 48px);
+                    width: calc(100% - 60px);
                     position: relative;
-                    float: left;
+                    float: right;
+                    margin-left: 12px;
 
                     .dashboard-view-header-icon {
                         position: absolute;
                         top: 0;
                         left: 0;
+                        width: 36px;
+                        opacity: 0.50;
                         pointer-events: none;
                     }
                 }
@@ -299,7 +302,7 @@
                 }
 
                 input {
-                    padding: 0 15px 0 60px;
+                    padding: 0 15px 0 36px;
                     border: none;
                     font-family: 'Open Sans', sans-serif;
                     font-size: medium;
