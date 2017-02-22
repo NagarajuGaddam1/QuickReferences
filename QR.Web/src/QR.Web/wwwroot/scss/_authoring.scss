@@ -91,7 +91,7 @@
                 }
 
                 &:hover,
-                &.active {
+                &[data-active="true"] {
                     background-color: #303030;
                     border-color: #303030;
                     color: #fff;
@@ -206,7 +206,7 @@
                     }
                 }
 
-                &.redorderingActive {
+                &[data-reordering="true"] {
                     .flask-instance-content {
                         height: 100px;
                         overflow: hidden;

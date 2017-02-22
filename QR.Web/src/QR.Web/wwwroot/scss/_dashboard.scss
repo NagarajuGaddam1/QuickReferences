@@ -1,11 +1,11 @@
 ﻿@mixin _READINGMODE_ONLY($name) {
-    @at-root .dashboard-content.readingMode #{$name} {
+    @at-root .dashboard-content[data-readingmode="true"] #{$name} {
         @content;
     }
 }
 
 @mixin _EXCEPT_READINGMODE_ONLY($name) {
-    @at-root .dashboard-content:not(.readingMode) #{$name} {
+    @at-root .dashboard-content:not([data-readingmode="true"]) #{$name} {
         @content;
     }
 }
@@ -220,7 +220,7 @@
                 float: left;
                 border: 1px dotted lighten(#909090, 10);
 
-                &.ms-Icon--ReadingMode {
+                &-readingMode {
                     font-size: x-large;
                     opacity: 0.80;
                 }
@@ -235,7 +235,7 @@
                     border: 1px dotted #303030;
                 }
 
-                &.active {
+                &[data-active="true"] {
                     background: lighten(#0078d7, 40);
                     color: #0078d7;
                     border-color: lighten(#0078d7, 40);

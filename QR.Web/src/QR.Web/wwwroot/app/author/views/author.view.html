@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid authoring">
     <div class="authoring-flask-pane">
         <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">            
-            <div class="authoring-flask-pane-item tag" ng-click="app.enableFlaskReordering()" ng-class="{'active': app.flasksBeingReodered}">
+            <div class="authoring-flask-pane-item tag" ng-click="app.enableFlaskReordering()" ng-attr-data-active="{{app.flasksBeingReodered}}">
                 <i class="ms-Icon ms-Icon--SwitcherStartEnd"></i>
             </div>
             <div class="authoring-flask-pane-item tag" ng-click="app.addFlask('text')">
@@ -44,7 +44,7 @@
                     <md-chips ng-model="app.post.tags" readonly="false" md-removable="true"></md-chips>
                 </md-content>
             </div>
-            <div class="flask-instance draglist" ng-class="{'redorderingActive': app.flasksBeingReodered}">
+            <div class="flask-instance draglist" ng-attr-data-reordering="{{app.flasksBeingReodered}}">
                 <label class="title">Content</label>
                 <div class="flask-instance" ng-repeat="mod in app.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="app.flasksBeingReodered" ng-drop-success="app.onDropComplete($index, $data)" ng-drag="app.flasksBeingReodered" ng-drag-data="mod">
                     <i class="ms-Icon ms-Icon--Move" ng-drag-handle ng-show="app.flasksBeingReodered"></i>
