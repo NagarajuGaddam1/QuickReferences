@@ -224,6 +224,12 @@
                 cursor: pointer;
                 transition: background 0.3s linear 0s;
                 float: left;
+                border: 1px dotted lighten(#909090, 10);
+
+                &.ms-Icon--ReadingMode {
+                    font-size: x-large;
+                    opacity: 0.80;
+                }
 
                 &:hover {
                     background: lighten(#0078d7, 30);
@@ -238,6 +244,7 @@
                 &.active {
                     background: lighten(#0078d7, 40);
                     color: #0078d7;
+                    border-color:lighten(#0078d7, 40);
                 }
             }
 
@@ -263,6 +270,7 @@
                         width: 36px;
                         opacity: 0.50;
                         pointer-events: none;
+                        border: none;
                     }
                 }
 
