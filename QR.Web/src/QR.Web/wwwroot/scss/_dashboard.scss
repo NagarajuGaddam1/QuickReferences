@@ -19,6 +19,13 @@
             .snippet-loader-container {
                 width: 100%;
 
+                .snippetview-preview {
+                    width: 80%;
+                    display: block;
+                    margin: 0 auto;
+                    max-width: 1000px;
+                }
+
                 .codeview-container-view {
                     .snippetview-container,
                     p.snippetview {
@@ -244,7 +251,7 @@
                 &.active {
                     background: lighten(#0078d7, 40);
                     color: #0078d7;
-                    border-color:lighten(#0078d7, 40);
+                    border-color: lighten(#0078d7, 40);
                 }
             }
 
