@@ -10,11 +10,7 @@
 
     angular.module('QR.Web', [
         'QR.Web.Extensions',
-        'QR.Web.templates',
-        'QR.Web.Notify',
-        'ngAnimate',
-        'ui.bootstrap',
-        'ngSanitize',
+        'QR.Web.templates',        
         'ngMaterial'
     ]);
 

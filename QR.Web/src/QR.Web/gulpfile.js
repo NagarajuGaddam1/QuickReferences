@@ -69,7 +69,7 @@ gulp.task('default:minify:css', function () {
 });
 
 
-gulp.task('minify:lib:js', function (cb) {
+gulp.task('minify:lib:all:js', function (cb) {
     pump([
           gulp.src([
               webroot + 'lib/base/*.js',
@@ -80,6 +80,29 @@ gulp.task('minify:lib:js', function (cb) {
               webroot + 'lib/third-party/*min.js'
           ]),
           concat('lib.min.js'),
+          gulp.dest(webroot + 'dist/js')
+    ],
+      cb
+    );
+});
+
+
+gulp.task('minify:lib:explore:js', function (cb) {
+    pump([
+          gulp.src([
+              webroot + 'lib/base/angular.min.js',
+              webroot + 'lib/base/jquery-1.10.2.min.js',
+              webroot + 'lib/base/TweenMax.min.js',
+              webroot + 'lib/base/underscore-min.js',
+              webroot + 'lib/base/modernizr-custom.js',              
+              webroot + 'lib/addons/angular-aria.min.js',
+              webroot + 'lib/addons/angular-animate.min.js',
+              webroot + 'lib/addons/angular-material.min.js',
+              webroot + 'lib/addons/ng-draggable.min.js',              
+              webroot + 'lib/third-party/bootstrap.min.js',
+              webroot + 'lib/third-party/prism.js',
+          ]),          
+          concat('lib.explore.min.js'),
           gulp.dest(webroot + 'dist/js')
     ],
       cb
