@@ -13,10 +13,9 @@
     })();
 
     angular.module('QR.Web')
-    .controller('AppController', ['$uibModal', 'Notify', 'SharedService', 'SamplePosts', '$timeout', '$interval', "$compile", "$scope", function ($uibModal, notifyService, shared, SamplePosts, $timeout, $interval, $compile, $scope) {
+    .controller('AppController', ['SamplePosts', '$timeout', '$interval', "$compile", "$scope", function ( SamplePosts, $timeout, $interval, $compile, $scope) {
         var self = this;
-        var _loadedPosts = {};
-        self.shared = shared;
+        var _loadedPosts = {};        
         self.timeout = $timeout;
         self.interval = $interval
         self.compile = $compile;
