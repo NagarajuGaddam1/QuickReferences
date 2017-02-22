@@ -5,7 +5,7 @@
 }
 
 @mixin _EXCEPT_READINGMODE_ONLY($name) {
-    @at-root .dashboard-content:not([data-readingmode="true"]) #{$name} {
+    @at-root .dashboard-content[data-readingmode="false"] #{$name} {
         @content;
     }
 }

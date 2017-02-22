@@ -102,9 +102,16 @@
                 }
             }
 
+            &.snippets-chips{
+                .pull-left{
+                    @include _EXCEPT_READINGMODE_ONLY(&) {
+                        width:100%;
+                    }
+                }
+            }
 
             .pull-left {
-                width: calc(100% - 200px);
+                width: calc(100% - 145px);
                 min-height: 78px;
 
                 @include respond-to-mobile {
