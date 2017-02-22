@@ -10,10 +10,7 @@
                     <div class="dashboard-view">
                         <div class="dashboard-view-top">
                             <div class="app-title">
-                                <img src="/dist/images/quickRef.png" />
-                                <div class="dashboard-view-top-search">
-                                    <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />                                    
-                                </div>
+                                <img src="/dist/images/quickRef.png" />                                
                             </div>
                             <div class="dashboard-view-header" id="dashboardViewHeader">
                                 <md-input-container class="dashboard-view-header-category">
@@ -24,8 +21,10 @@
                                     </md-select>
                                 </md-input-container>
                                 <div class="dashboard-view-header-search">
-                                    <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
-                                    <i class="ms-Icon ms-Icon--Search dashboard-view-header-icon" tabindex="0" data-hide-on-mobile="true"></i>
+                                    <div class="dashboard-view-header-search-holder">
+                                        <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
+                                        <i class="ms-Icon ms-Icon--Search dashboard-view-header-icon" tabindex="0" data-hide-on-mobile="true"></i>
+                                    </div>                                    
                                     <i class="ms-Icon ms-Icon--ReadingMode dashboard-view-header-icon" tabindex="0" ng-class="{'active': app.readingMode}" ng-click="app.readingMode = !app.readingMode;"></i>
                                 </div>
                             </div>

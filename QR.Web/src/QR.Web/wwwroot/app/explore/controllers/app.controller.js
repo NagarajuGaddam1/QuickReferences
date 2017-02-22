@@ -78,9 +78,9 @@
         var _setToDisappear = false;
         self.loadLoaderElementsIntoContent = function (_content, _currentViewId) {
             var _elm = angular.element(_content);
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < 4; i++) {
                 var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                 _tmpl = _tmpl.replace('SLID', _id);
                 _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                 _elm.append(_tmpl);
@@ -138,7 +138,7 @@
                                 _tmpl = _tmpl.replace('TEXTCONTENT', _content.data);
                                 _contentTmpl = _contentTmpl + _tmpl;
                             }
-                            else if (_content.type == 'flask') {                                
+                            else if (_content.type == 'flask') {
                                 var _tmpl = '<div class="codeview-container-flasks snippetview"><div class="codeview-container-flasks-item" id="_FLASK_ID"><pre class="snippetview language-_FLASK_LANG"><code></code></pre></div></div>';
                                 var _flaskId = _snippetViewerId + '_MOD_' + _iter;
                                 _tmpl = _tmpl.replace('_FLASK_ID', _flaskId);
@@ -178,11 +178,11 @@
         }
 
         function tryToShowHeader() {
-            var _topHeight = window.innerWidth < 768 ? 240 : 420;
+            var _topHeight = window.innerWidth < 768 ? 240 : 380;
             if (_viewTop && _setToDisappear && !self.headerPinned) {
                 TweenMax.to(_viewHeader, 0.1, {
                     opacity: 0, onComplete: function () {
-                        document.querySelector('.app-title').style.display = 'BLOCK';                        
+                        document.querySelector('.app-title').style.display = 'BLOCK';
                         TweenMax.to(_viewTop, 0.3, {
                             y: _topHeight, onComplete: function () {
                                 _viewHeader.style.display = 'NONE';
@@ -198,9 +198,7 @@
             if (_viewTop && !_setToDisappear) {
                 TweenMax.to(_viewTop, 0.3, {
                     y: 72, onComplete: function () {
-                        document.querySelector('.app-title').style.display = 'NONE';
-                        _viewHeader.style.display = 'BLOCK';
-                        TweenMax.to(_viewHeader, 0.3, { opacity: 1 });
+                        document.querySelector('.app-title').style.display = 'NONE';                        
                         self.headerPinned = true;
                         document.querySelector('.dashboard-content-holder').classList.add('hideTabsHeader');
                     }
@@ -239,7 +237,7 @@
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 for (var i = 0; i < _paintLength - _emptyLength; i++) {
                     var _id = _.uniqueId('snippetLoader');
-                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                     _tmpl = _tmpl.replace('SLID', _id);
                     _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                     _elm.append(_tmpl);
@@ -275,7 +273,7 @@
             })
 
             self.timeout(function () {
-                var _topHeight = window.innerWidth < 768 ? 240 : 420;1
+                var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
                 _viewTop = document.querySelector('.dashboard-view-top');
                 _viewBottom = document.querySelector('.dashboard-content-holder');
                 _viewHeader = document.getElementById('dashboardViewHeader');
@@ -287,6 +285,13 @@
                 _viewBottom.addEventListener("scroll", function (e) {
                     self.debScrollFn(e.target.scrollTop);
                 });
+                window.addEventListener('resize', function (e) {                    
+                    if (self.headerPinned) {
+                        var _topHeight = window.innerWidth < 768 ? 240 : 380;
+                        _viewTop.style.marginTop = -_topHeight + 'px';
+                        _viewBottom.style.height = (window.innerHeight - 72) + 'px';
+                    }
+                })
             }, 33);
 
         }
