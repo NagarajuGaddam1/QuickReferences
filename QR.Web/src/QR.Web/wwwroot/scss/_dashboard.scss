@@ -314,7 +314,7 @@
                     border: 1px dotted lighten(#909090, 10);
 
                     @include respond-to-mobile {
-                        width: calc(100% - 48px);
+                        padding: 0 15px;
                     }
 
                     &:focus {
