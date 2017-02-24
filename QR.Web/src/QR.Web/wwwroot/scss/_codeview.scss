@@ -260,7 +260,7 @@
             }
 
             &[data-mode="loader"] {
-                [data-show="preview"] {
+                [data-show-on="preview"] {
                     display: none;
                 }
 
@@ -282,7 +282,7 @@
             }
 
             &[data-mode="preview"] {
-                [data-show="loader"] {
+                [data-show-on="loader"] {
                     display: none;
                 }
 

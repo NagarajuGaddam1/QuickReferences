@@ -51,8 +51,14 @@
             { id: 'others', name: 'Other(s)' }
         ];
         self.selectedCategory = 'all';
+        self.lastCategoryIsPost = false;
         self.selectCategory = function () {
             self.selectTab(self.selectedCategory);
+            if (self.lastCategoryIsPost == true) {
+                self.categories.splice(_.indexOf(self.categories, function (_category) {
+                    return _category.id = '_post';
+                }), 1)
+            }
         }
         self.selectTab = function (tabTitle) {
             switch (tabTitle) {
@@ -114,6 +120,9 @@
             self.compile(_elmToCompile.contents())($scope);
         }
         self.fnLoadPost = function (_holder) {
+            console.log(_holder);
+            if (self.selectedCategory == '_post')
+                self.activePostId = _holder.loadedId;
             self.postService.getDataForPost(_holder)
             .then(function (_data) {
                 var _holder = _data.holder;
@@ -141,7 +150,7 @@
                     var _chipContainerElm = _holderElm.querySelector('[data-tag="chips"]');
                     if (_chipContainerElm) {
                         _.each(_post.tags, function (_tag) {
-                            var _tmpl = '<div class="chip" data-show="preview">' + _tag + '</div>';
+                            var _tmpl = '<div class="chip" data-show-on="preview">' + _tag + '</div>';
                             angular.element(_chipContainerElm).append(_tmpl);
                         });
                     }
@@ -254,6 +263,8 @@
         }
         self.debScrollFn = _.throttle(self.onScrollFn, 20);
         self.enableReadingMode = function (_elem) {
+            if (self.selectedCategory == '_post')
+                return;
             if (self.readingMode == false) {
                 tryToHideHeader(_elem ? _elem.getAttribute('id') : null);
                 self.readingMode = true;
@@ -305,9 +316,24 @@
                     if (typeof self.fnLoadPost !== 'undefined' && typeof self.fnLoadPost === 'function')
                         self.fnLoadPost(_postHolder);
                 });
+            if (self.selectedCategory == '_post') {                
+                var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
+                var _tmpl = '<div class="col-xs-12" ng-if="app.selectedCategory == \'_post\'" data-tag="post-comments"><div class="comments-preview"><div id="disqus_thread" ng-init="app.initializeComments()"></div></div></div>';
+                _elm.append(_tmpl);
+                $compile(_elm.contents())($scope);
+            }
+        }
+        self.initializeComments = function () {
+            var disqus_config = function () {                
+                this.page.identifier = 'POST' + self.activePostId;
+            }
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//tl-dr-quickref.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
         }
         self.dataInit = function () {
-            console.log(self.constants["_IS_POST_SPECIFIC"]);
             if (self.constants["_IS_POST_SPECIFIC"] == false) {
                 self.currentTitle = 'all';
                 self.postService.get(self.currentTitle)
@@ -322,6 +348,7 @@
                 var index = self.categories.length - 1;
                 self.selectedCategory = '_post';
                 self.currentTitle = 'all';
+                self.lastCategoryIsPost = true;
                 self.postService.getSpecificPost()
                 .then(function (data) {
                     tryLoadingPostsForActiveContent(data);
@@ -362,7 +389,7 @@
                         var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-view-main"]');
                         var _postId = _loaderElm.getAttribute('data-uid');
                         if (_postId) {
-                            var _path = location.origin + '?id=' + _postId;                            
+                            var _path = location.origin + '?id=' + _postId;
                             window.open(_path, '_blank');
                         }
                     }
