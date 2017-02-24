@@ -13,9 +13,9 @@
     })();
 
     angular.module('QR.Web')
-    .controller('AppController', ['SamplePosts', '$timeout', '$interval', "$compile", "$scope", function ( SamplePosts, $timeout, $interval, $compile, $scope) {
+    .controller('AppController', ['SamplePosts', '$timeout', '$interval', "$compile", "$scope", function (SamplePosts, $timeout, $interval, $compile, $scope) {
         var self = this;
-        var _loadedPosts = {};        
+        var _loadedPosts = {};
         self.timeout = $timeout;
         self.interval = $interval
         self.compile = $compile;
@@ -284,11 +284,15 @@
                 _viewBottom.addEventListener("scroll", function (e) {
                     self.debScrollFn(e.target.scrollTop);
                 });
-                window.addEventListener('resize', function (e) {                    
-                    if (self.headerPinned) {
-                        var _topHeight = window.innerWidth < 768 ? 240 : 380;
-                        _viewTop.style.marginTop = -_topHeight + 'px';
+                window.addEventListener('resize', function (e) {
+                    var _topHeight = window.innerWidth < 768 ? 240 : 380;
+                    TweenLite.set(_viewTop, { marginTop: -_topHeight });
+                    TweenLite.set(_viewTop, { y: _topHeight });
+                    if (self.headerPinned) {                        
                         _viewBottom.style.height = (window.innerHeight - 72) + 'px';
+                    }
+                    else {                        
+                        TweenLite.set(_viewBottom, { marginTop: _topHeight });
                     }
                 })
             }, 33);
