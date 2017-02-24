@@ -12,6 +12,21 @@
           };
     })();
 
+    function collectionHas(a, b) { //helper function (see below)
+        for (var i = 0, len = a.length; i < len; i++) {
+            if (a[i] == b) return true;
+        }
+        return false;
+    }
+    function findParentBySelector(elm, selector) {
+        var all = document.querySelectorAll(selector);
+        var cur = elm.parentNode;
+        while (cur && !collectionHas(all, cur)) { //keep going up until you find a match
+            cur = cur.parentNode; //go up
+        }
+        return cur; //will return null if not found
+    }
+
     angular.module('QR.Web')
     .controller('AppController', ['SamplePosts', '$timeout', '$interval', "$compile", "$scope", function (SamplePosts, $timeout, $interval, $compile, $scope) {
         var self = this;
@@ -19,6 +34,7 @@
         self.timeout = $timeout;
         self.interval = $interval
         self.compile = $compile;
+        self.scope = $scope;
         self.headerPinned = false;
         self.samplePostsService = SamplePosts;
         self.currentTitle = '';
@@ -79,7 +95,7 @@
             var _elm = angular.element(_content);
             for (var i = 0; i < 6; i++) {
                 var _id = _.uniqueId('snippetLoader');
-                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" data-tag="snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                 _tmpl = _tmpl.replace('SLID', _id);
                 _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                 _elm.append(_tmpl);
@@ -193,7 +209,7 @@
                 _setToDisappear = false;
             }
         }
-        function tryToHideHeader() {
+        function tryToHideHeader(_elemId) {
             if (_viewTop && !_setToDisappear) {
                 TweenMax.to(_viewTop, 0.3, {
                     y: 72, onComplete: function () {
@@ -202,8 +218,26 @@
                         document.querySelector('[data-tag="content-holder"]').classList.add('hideTabsHeader');
                     }
                 });
-                TweenMax.to(_viewBottom, 0.3, { height: window.innerHeight - 72, marginTop: 72 });
+                TweenMax.to(_viewBottom, 0.3, {
+                    height: window.innerHeight - 72, marginTop: 72, onComplete: function () {
+                        if (_elemId) {
+                            var _elem = document.getElementById(_elemId);
+                            var _scrollTop = _elem.getBoundingClientRect().top - 60 > 0 ? _elem.getBoundingClientRect().top - 60 : 0;
+                            TweenMax.to(document.querySelector('[data-tag="content-holder"]'), 0.3, { scrollTop: _scrollTop })
+                        }
+                    }
+                });
                 _setToDisappear = true;
+            }
+            else {                
+                if (_elemId) {
+                    TweenMax.set(document.querySelector('[data-tag="content-holder"]'), { scrollTop: 0 });
+                    self.timeout(function () {
+                        var _elem = document.getElementById(_elemId);
+                        var _scrollTop = _elem.getBoundingClientRect().top - 60 > 0 ? _elem.getBoundingClientRect().top - 60 : 0;
+                        TweenMax.to(document.querySelector('[data-tag="content-holder"]'), 0.3, { scrollTop: _scrollTop })
+                    }, 100);
+                }
             }
         }
         self.onScrollFn = function (_top) {
@@ -217,6 +251,15 @@
             _lastTop = _top;
         }
         self.debScrollFn = _.throttle(self.onScrollFn, 20);
+        self.enableReadingMode = function (_elem) {
+            if (self.readingMode == false) {
+                tryToHideHeader(_elem ? _elem.getAttribute('id') : null);
+                self.readingMode = true;
+            }
+            else {
+                self.readingMode = false;
+            }
+        }
         function tryLoadingPostsForActiveContent(data) {
             var _currentViewId = data.filter;
             var _currentlyPostedIds = _.map(_.filter(_loadedPosts[_currentViewId], function (_pl) {
@@ -236,7 +279,7 @@
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 for (var i = 0; i < _paintLength - _emptyLength; i++) {
                     var _id = _.uniqueId('snippetLoader');
-                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
+                    var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" data-tag="snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                     _tmpl = _tmpl.replace('SLID', _id);
                     _tmpl = _tmpl.replace('SNIPPET_TMPL', window._extensionsAssets['templates/extensions/snippetloader.directive.tmpl.html'])
                     _elm.append(_tmpl);
@@ -286,13 +329,23 @@
                 });
                 window.addEventListener('resize', function (e) {
                     var _topHeight = window.innerWidth < 768 ? 240 : 380;
-                    TweenLite.set(_viewTop, { marginTop: -_topHeight });
-                    TweenLite.set(_viewTop, { y: _topHeight });
+                    TweenLite.set(_viewTop, { marginTop: -_topHeight });                    
                     if (self.headerPinned) {                        
-                        _viewBottom.style.height = (window.innerHeight - 72) + 'px';
+                        TweenLite.set(_viewBottom, { height: window.innerHeight - 72 });
                     }
-                    else {                        
+                    else {
+                        TweenLite.set(_viewTop, { y: _topHeight });
                         TweenLite.set(_viewBottom, { marginTop: _topHeight });
+                    }
+                })
+                document.addEventListener('click', function (e) {
+                    if (e.target.matches('[data-tag="snippet-view-action-openInNewWindow"]')) {
+                    }
+                    else if (e.target.matches('[data-tag="snippet-view-action-loadInReadingMode"]')) {
+                        var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-loader-container"]');
+                        self.scope.$apply(function () {
+                            self.enableReadingMode(_loaderElm);
+                        });
                     }
                 })
             }, 33);
