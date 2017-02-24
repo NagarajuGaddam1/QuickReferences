@@ -1,0 +1,72 @@
+﻿<div class="container-fluid authoring">
+    <div class="authoring-flask-pane">
+        <div class="authoring-flask-pane-holder" id="authoringFlaskPaneHolder">
+            <div class="authoring-flask-pane-item tag" ng-click="authoringPost.enableFlaskReordering()" ng-attr-data-active="{{authoringPost.flasksBeingReodered}}">
+                <i class="ms-Icon ms-Icon--SwitcherStartEnd"></i>
+            </div>
+            <div class="authoring-flask-pane-item tag" ng-click="authoringPost.addFlask('text')">
+                <i class="ms-Icon ms-Icon--InsertTextBox"></i>
+            </div>
+            <div class="authoring-flask-pane-item htm" ng-click="authoringPost.addFlask('markup')">
+                <label>htm</label>
+            </div>
+            <div class="authoring-flask-pane-item js" ng-click="authoringPost.addFlask('javascript')">
+                <label>js</label>
+            </div>
+            <div class="authoring-flask-pane-item css" ng-click="authoringPost.addFlask('css')">
+                <label>css</label>
+            </div>
+            <div class="authoring-flask-pane-item scss" ng-click="authoringPost.addFlask('scss')">
+                <label>scss</label>
+            </div>
+        </div>
+    </div>
+    <div class="authoring-flask-pane-after">
+        <div class="authoring-flask">
+            <div class="flask">
+                <div class="flask-instance tagged">
+                    <label class="title">Title for the post</label>
+                    <input ng-model="authoringPost.post.name" />
+                </div>
+                <div class="flask-instance tagged">
+                    <label class="title">Description for the post</label>
+                    <input ng-model="authoringPost.post.description" />
+                </div>
+                <div class="flask-instance tagged">
+                    <label class="title">Categorize post as </label>
+                    <div class="flask-instance-tag" ng-repeat="tag in authoringPost.mainTags" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="authoringPost.post.category = tag.id">
+                        <label ng-bind="tag.name"></label>
+                        <i class="ms-Icon ms-Icon--CheckMark" ng-show="tag.id == authoringPost.post.category"></i>
+                    </div>
+                </div>
+                <div class="flask-instance tagged">
+                    <label class="title">Tags</label>
+                    <md-content class="md-padding" layout="column">
+                        <md-chips ng-model="authoringPost.post.tags" readonly="false" md-removable="true"></md-chips>
+                    </md-content>
+                </div>
+                <div class="flask-instance draglist" ng-attr-data-reordering="{{authoringPost.flasksBeingReodered}}">
+                    <label class="title">Content</label>
+                    <div class="flask-instance" ng-repeat="mod in authoringPost.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="authoringPost.flasksBeingReodered" ng-drop-success="authoringPost.onDropComplete($index, $data)" ng-drag="authoringPost.flasksBeingReodered" ng-drag-data="mod">
+                        <i class="ms-Icon ms-Icon--Move" ng-drag-handle ng-show="authoringPost.flasksBeingReodered"></i>
+                        <i class="ms-Icon ms-Icon--Delete"></i>
+                        <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">
+                            <label class="title">Text</label>
+                            <textarea ng-model="mod.data"></textarea>
+                        </div>
+                        <div class="flask-instance-content" ng-if="mod.type == 'flask'">
+                            <label class="title"><span ng-bind="mod.lang"></span> Flask</label>
+                            <div data-flask="true" ng-init="authoringPost.loadFlask($index)"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="authoring-preview">
+            <codeview post="authoringPost.post" preview="true"></codeview>
+        </div>        
+        <div class="clearfix"></div>
+        <div ng-include="'templates/author/footer.tmpl.html'"></div>
+    </div>    
+    <div class="clearfix"></div>
+</div>
