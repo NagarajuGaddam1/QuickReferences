@@ -11,12 +11,9 @@
                     </div>
                     <div class="codeview-container-actions-title" ng-bind="codeViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
                 </div>
-                <div class="pull-right">
+                <div class="pull-right codeview-container-actions-user-logo show">
                     <div class="codeview-container-actions-action">
-                        <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
-                    </div>
-                    <div class="codeview-container-actions-action">
-                        <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                        <i class="ms-Icon ms-Icon--Contact" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -25,16 +22,26 @@
                 <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content track by $index" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
                     <p ng-if="mod.type == 'text'" ng-bind="mod.data"></p>
                     <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)" class="language-{{mod.langExt}}">
-                        <code></code>
+                    <code></code>
                     </pre>
+                </div>
+            </div>
+            <div class="codeview-container-actions snippets-chips">
+                <div class="pull-left">
+                    <md-content class="md-padding" layout="column">
+                        <md-chips ng-model="codeViewer.post.tags" readonly="true" md-removable="false"></md-chips>
+                    </md-content>
+                </div>
+                <div class="pull-right">
+                    <div class="codeview-container-actions-action">
+                        <i class="ms-Icon ms-Icon--Share" aria-hidden="true"></i>
+                    </div>
+                    <div class="codeview-container-actions-action">
+                        <i class="ms-Icon ms-Icon--Like" aria-hidden="true"></i>
+                    </div>
                 </div>                
-            </div>
-            <div class="codeview-container-actions">
-                <md-content class="md-padding" layout="column">
-                    <md-chips ng-model="codeViewer.post.tags" readonly="true" md-removable="false"></md-chips>
-                </md-content>
                 <div class="clearfix"></div>
-            </div>
+            </div>            
         </div>
     </div>
 </div>

@@ -88,6 +88,18 @@
             display: block;
             background: #fff;
 
+            &-user-logo {
+                display: none;
+
+                @include _READINGMODE_ONLY(&) {
+                    display: block;
+
+                    @include respond-to-mobile {
+                        display: none;
+                    }
+                }
+            }
+
             md-content {
                 background: transparent;
                 padding: 10px 16px;
@@ -102,10 +114,10 @@
                 }
             }
 
-            &.snippets-chips{
-                .pull-left{
+            &.snippets-chips {
+                .pull-left {
                     @include _EXCEPT_READINGMODE_ONLY(&) {
-                        width:100%;
+                        width: 100%;
                     }
                 }
             }
@@ -227,7 +239,7 @@
         &-loader {
             height: 20px;
             width: 100%;
-            background: lighten(#0078d7, 50);
+            background: lighten($standardBg, 50);
             display: inline-block;
             overflow: hidden;
             z-index: 2;
@@ -237,7 +249,7 @@
                 height: 100%;
                 width: 100%;
                 content: " ";
-                background: lighten(#0078d7, 40);
+                background: lighten($standardBg, 40);
                 display: block;
                 position: relative;
                 -webkit-animation: snippet-view-bg-anim 1s linear infinite;
@@ -381,7 +393,7 @@
                     }
 
                     .snippetview-container-popup {
-                        background: lighten(#0078d7, 50);
+                        background: lighten($standardBg, 50);
                     }
                 }
 
@@ -394,7 +406,7 @@
                     .icon-holder {
                         width: 120px;
                         height: 120px;
-                        background: lighten(#0078d7, 50);
+                        background: lighten($standardBg, 50);
                         border-radius: 50%;
                         cursor: pointer;
                         transition: opacity 0.2s ease-in 0s;
