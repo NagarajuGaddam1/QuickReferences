@@ -73,6 +73,7 @@ gulp.task('default:minify:css', function () {
 gulp.task('minify:lib:all:js', function (cb) {
     pump([
           gulp.src([
+              webroot + 'lib/base/jquery.min.js',
               webroot + 'lib/base/*.js',
               webroot + 'lib/base/*min.js',
               webroot + 'lib/addons/*.js',

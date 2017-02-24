@@ -36,6 +36,7 @@
     .controller('PostController', ['$uibModal', 'Notify', 'SharedService', 'SampleGet', '$timeout', function ($uibModal, notifyService, shared, SampleGet, $timeout) {
         var self = this;
         self.shared = shared;
+        self.shared.currentContext = 'Post';
         self.sampleGet = SampleGet;
         self.timeout = $timeout;
         self.flask = '';

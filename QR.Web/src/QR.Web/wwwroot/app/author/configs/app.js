@@ -17,7 +17,8 @@
         'ui.bootstrap',
         'ui.router',
         'ngSanitize',
-        'ngDraggable'
+        'ngDraggable',
+        'vx.grid.modules'
     ])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -37,7 +38,7 @@
                 controller: 'PostController',
                 controllerAs: 'authoringPost'
             });
-        $urlRouterProvider.otherwise('/post')
+        $urlRouterProvider.otherwise('/dashboard')
     }])
     .run();
 

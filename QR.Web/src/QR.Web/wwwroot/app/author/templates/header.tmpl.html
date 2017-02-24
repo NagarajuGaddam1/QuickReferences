@@ -1,37 +1,26 @@
 ﻿<div class="header">
-    <!--<div class="header-overlay"></div>-->
     <div class="header-appswitch">
-        <!--<div class="btn-group header-appswitch-toggler" uib-dropdown uib-keyboard-nav>
-            <button id="switch-apps-open" type="button" class="icon-container" uib-dropdown-toggle>
-                <i class="ms-Icon ms-Icon--GlobalNavButton" aria-hidden="true"></i>
-            </button>
-            <ul uib-dropdown-menu role="menu" aria-labelledby="switch-apps-open" class="header-appswitch-toggler-menu">
-                <div class="header-appswitch-toggler-arrow-up"></div>
-                <li ng-show="app.shared.serviceApps.length == 0" class="header-appswitch-toggler-menu-item-noitems"> No apps found ...</li>
-                <li role="menuitem" class="header-appswitch-toggler-menu-item" ng-repeat="app in app.shared.serviceApps">
-                    <a ng-href="{{app.appUrl}}" class="header-appswitch-toggler-menu-item-content">
-                        <label class="header-appswitch-toggler-menu-item-content-title-char">{{app.appChar}}</label>
-                        <label class="header-appswitch-toggler-menu-item-content-title">{{app.appName}}</label>
-                    </a>
-                </li>
-            </ul>
-        </div>-->        
         <div class="clearfix"></div>
-        <div class="pull-left">
-            <div class="header-appswitch-title header-appswitch-title--appname space-Out-Left">Quick References Authoring</div>
+        <div class="header-appswitch-title-holder">
+            <div class="header-appswitch-title header-appswitch-title--appname space-Out-Left">Quick References</div>
         </div>
-        <div class="pull-right">
-            <div class="icon-container">
-                <i class="ms-Icon ms-Icon--NewFolder"></i>
-            </div>
-            <div class="icon-container">
-                <i class="ms-Icon ms-Icon--RevToggleKey"></i>
-            </div>
-            <div class="icon-container">
-                <i class="ms-Icon ms-Icon--Save"></i>
-            </div>
-            <div class="icon-container">
-                <i class="ms-Icon ms-Icon--Delete"></i>
+        <div class="header-appswitch-actions">
+            <div class="pull-left">
+                <div class="header-appswitch-title header-appswitch-title--apptext space-Out-Left">Authoring - <span ng-bind="app.shared.currentContext"></span></div>
+            </div>            
+            <div class="pull-right">
+                <div class="icon-container">
+                    <i class="ms-Icon ms-Icon--NewFolder"></i>
+                </div>
+                <div class="icon-container">
+                    <i class="ms-Icon ms-Icon--RevToggleKey"></i>
+                </div>
+                <div class="icon-container">
+                    <i class="ms-Icon ms-Icon--Save"></i>
+                </div>
+                <div class="icon-container">
+                    <i class="ms-Icon ms-Icon--Delete"></i>
+                </div>
             </div>
         </div>
     </div>
