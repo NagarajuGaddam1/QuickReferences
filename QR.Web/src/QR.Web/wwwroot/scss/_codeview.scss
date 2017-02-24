@@ -88,6 +88,18 @@
             display: block;
             background: #fff;
 
+            &-user-logo {
+                display: none;
+
+                @include _READINGMODE_ONLY(&) {
+                    display: block;
+
+                    @include respond-to-mobile {
+                        display: none;
+                    }
+                }
+            }
+
             md-content {
                 background: transparent;
                 padding: 10px 16px;
@@ -102,10 +114,10 @@
                 }
             }
 
-            &.snippets-chips{
-                .pull-left{
+            &.snippets-chips {
+                .pull-left {
                     @include _EXCEPT_READINGMODE_ONLY(&) {
-                        width:100%;
+                        width: 100%;
                     }
                 }
             }
