@@ -17,8 +17,8 @@
         this.name = _.sample(['Rupesh Rawat', 'Asit Parida', 'Dhairya Vora']) + ' ' + _.sample(_.range(10));
         this.authenticationType = _.sample(['facebook', 'GitHub', 'LinkedIn']);
         this.authenticationUID = _.sample(['fb', 'git', 'lin']) + '_' + _.sample(_.range(10));
-        this.alias = _.sample(['ruprawat', 'asparida', 'dhvora']);       
-        this.activatedOn = new Date();        
+        this.alias = _.sample(['ruprawat', 'asparida', 'dhvora']);
+        this.activatedOn = new Date();
         this.suspended = _.sample([true, false]);
     }
 
@@ -27,8 +27,8 @@
         var self = this;
         self.timeout = $timeout;
         self.shared = SharedService;
-        self.shared.currentContext = 'Dashboard';                
-
+        self.shared.currentContext = 'Dashboard';
+        self.shared.actions = [];
         self.samplingForPosts = function (iter) {
             var _samples = [];
             self.sampleRowClasses = {};
@@ -72,7 +72,7 @@
             loaderGifSrc: '/dist/images/loaderBlue30.gif',
             columnDefConfigs: [
                 { id: 'id', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
-                { id: 'name', columnName: 'Name', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300' },
+                { id: 'name', columnName: 'Name', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300', renderHybridCellDefn: true },
                 { id: 'category', columnName: 'Category', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
                 { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150' },
                 { id: 'contentType', columnName: 'Type', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
@@ -84,6 +84,8 @@
 
         function hybridCellDefn(row, col) {
             var tmpl = '<span>VX_DATA_POINT</span>';
+            if (col.id == 'name')
+                tmpl = '<a class="vx-grid-a" href="#/post" title="' + row[col.id] + '">' + row[col.id] + '</a>';
             if (col.id == 'category')
                 tmpl = tmpl.replace('VX_DATA_POINT', row[col.id].name || '');
             if (col.id == 'published') {
@@ -95,7 +97,7 @@
             return tmpl;
         }
 
-        function randomRowFunction(row) {            
+        function randomRowFunction(row) {
         }
 
         self.openManageColumns = function () {
@@ -149,7 +151,7 @@
                 { id: 'authenticationType', columnName: 'Auth', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
                 { id: 'authenticationUID', columnName: 'AuthID', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, hidden: false, width: '150' },
                 { id: 'alias', columnName: 'Alias', ddSort: true, ddGroup: false, ddFilters: false, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
-                { id: 'activatedOn', columnName: 'Activated On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },                
+                { id: 'activatedOn', columnName: 'Activated On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
                 { id: 'suspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
             ]
         };

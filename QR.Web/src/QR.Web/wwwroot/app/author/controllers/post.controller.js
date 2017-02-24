@@ -37,6 +37,12 @@
         var self = this;
         self.shared = shared;
         self.shared.currentContext = 'Post';
+        self.shared.actions = [
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--NewFolder' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--RevToggleKey' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Save' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete' },
+        ];
         self.sampleGet = SampleGet;
         self.timeout = $timeout;
         self.flask = '';

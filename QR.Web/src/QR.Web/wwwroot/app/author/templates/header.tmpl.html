@@ -9,7 +9,10 @@
                 <div class="header-appswitch-title header-appswitch-title--apptext space-Out-Left">Authoring - <span ng-bind="app.shared.currentContext"></span></div>
             </div>            
             <div class="pull-right">
-                <div class="icon-container">
+                <div class="icon-container" ng-repeat="action in app.shared.actions">
+                    <i class="ms-Icon {{action.iconName}}"></i>
+                </div>
+                <!--<div class="icon-container">
                     <i class="ms-Icon ms-Icon--NewFolder"></i>
                 </div>
                 <div class="icon-container">
@@ -20,7 +23,7 @@
                 </div>
                 <div class="icon-container">
                     <i class="ms-Icon ms-Icon--Delete"></i>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

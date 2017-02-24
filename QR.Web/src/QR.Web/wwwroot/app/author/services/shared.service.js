@@ -2,12 +2,11 @@
     "use strict";
 
     angular.module('QR.Web.Author')
-    .service("SharedService", ["$http", "$q", "$uibModal", "Notify", "$window", SharedService]);
+    .service("SharedService", ["$http", "$q", "$window", SharedService]);
 
-    function SharedService($http, $q, $uibModal, notifyService, $window) {
+    function SharedService($http, $q, $window) {
         var self = this;
-        self.uibModal = $uibModal;
-        self.notify = notifyService;
+        self.actions = [];
         var _name = 'Harold E. Foley'
         self.profile = {
             'name': _name,
@@ -20,13 +19,13 @@
             success: false,
             failed: false,
             inProgress: true
-        };        
+        };
         self.breadcrumbs = [];
-        self.menuItems = [];       
+        self.menuItems = [];
         self.activeTopNav = 0;
         self.loadBreadCrumbs = function (data) {
             self.breadcrumbs = data;
-        }        
+        }
         self.serviceApps = [
         {
             'id': 1,
@@ -54,7 +53,7 @@
         }
         ];
 
-        self.sidebarCollapsed = false;        
+        self.sidebarCollapsed = false;
 
         return self;
     }
