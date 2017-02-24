@@ -28,19 +28,21 @@
     }
 
     angular.module('QR.Web')
-    .controller('AppController', ['SamplePosts', '$timeout', '$interval', "$compile", "$scope", function (SamplePosts, $timeout, $interval, $compile, $scope) {
+    .controller('AppController', ['PostsService', '$timeout', '$interval', "$compile", "$scope", "$constants", function (PostsService, $timeout, $interval, $compile, $scope, $constants) {
         var self = this;
         var _loadedPosts = {};
+        self.constants = $constants;
         self.timeout = $timeout;
         self.interval = $interval
         self.compile = $compile;
         self.scope = $scope;
         self.headerPinned = false;
-        self.samplePostsService = SamplePosts;
+        self.postService = PostsService;
         self.currentTitle = '';
         self.posts = {};
         self.initialized = false;
-        self.readingMode = false;
+        self.readingMode = self.constants["_IS_POST_SPECIFIC"];
+        self.disableCategorySelector = self.constants["_IS_POST_SPECIFIC"];
         self.categories = [
             { id: 'all', name: 'All Posts' },
             { id: 'javascript', name: 'JavaScript' },
@@ -68,7 +70,7 @@
                     self.loadLoaderElementsIntoAllContent(tabTitle);
                 }, 500);
                 self.currentTitle = tabTitle;
-                self.samplePostsService.get(self.currentTitle)
+                self.postService.get(self.currentTitle)
                 .then(function (data) {
                     console.log(data);
                     tryLoadingPostsForActiveContent(data);
@@ -77,7 +79,6 @@
             }
         }
         self.onTabDeselected = function (tabTitle) {
-            console.log('onTabDeselected');
             var _view = angular.element(document.getElementById('_mdContent_' + tabTitle));
             _.each(_loadedPosts[tabTitle], function (_lp) {
                 if (_lp.scope) _lp.scope.$destroy();
@@ -113,7 +114,7 @@
             self.compile(_elmToCompile.contents())($scope);
         }
         self.fnLoadPost = function (_holder) {
-            self.samplePostsService.getDataForPost(_holder)
+            self.postService.getDataForPost(_holder)
             .then(function (_data) {
                 var _holder = _data.holder;
                 var _post = _data.post;
@@ -173,6 +174,7 @@
                     var _snippetPreviewElm = _holderElm.querySelector('[data-tag="snippet-view-main"]');
                     if (_snippetPreviewElm) {
                         _snippetPreviewElm.setAttribute('data-mode', 'preview');
+                        _snippetPreviewElm.setAttribute('data-uid', _post.id);
                         if (_flasksToProcess.length > 0) {
                             _.each(_flasksToProcess, function (_flask) {
                                 var _elem = document.getElementById(_flask.id);
@@ -229,7 +231,7 @@
                 });
                 _setToDisappear = true;
             }
-            else {                
+            else {
                 if (_elemId) {
                     TweenMax.set(document.querySelector('[data-tag="content-holder"]'), { scrollTop: 0 });
                     self.timeout(function () {
@@ -304,22 +306,39 @@
                         self.fnLoadPost(_postHolder);
                 });
         }
+        self.dataInit = function () {
+            console.log(self.constants["_IS_POST_SPECIFIC"]);
+            if (self.constants["_IS_POST_SPECIFIC"] == false) {
+                self.currentTitle = 'all';
+                self.postService.get(self.currentTitle)
+                .then(function (data) {
+                    tryLoadingPostsForActiveContent(data);
+                    self.initialized = true;
+                }, function (data) {
+                })
+            }
+            else {
+                self.categories.push({ id: '_post', name: 'Post' });
+                var index = self.categories.length - 1;
+                self.selectedCategory = '_post';
+                self.currentTitle = 'all';
+                self.postService.getSpecificPost()
+                .then(function (data) {
+                    tryLoadingPostsForActiveContent(data);
+                    self.initialized = true;
+                }, function (data) {
+                })
+            }
+        }
         self.init = function () {
-
-            self.currentTitle = 'all';
-            self.samplePostsService.get(self.currentTitle)
-            .then(function (data) {
-                tryLoadingPostsForActiveContent(data);
-                self.initialized = true;
-            }, function (data) {
-            })
-
+            self.dataInit();
             self.timeout(function () {
                 var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
                 _viewTop = document.querySelector('[data-tag="view-top"]');
                 _viewBottom = document.querySelector('[data-tag="content-holder"]');
                 _viewHeader = document.querySelector('[data-tag="view-header"]');
-                self.loadLoaderElementsIntoAllContent('all');
+                if (self.constants["_IS_POST_SPECIFIC"] == false)
+                    self.loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -_topHeight });
                 TweenLite.set(_viewTop, { y: _topHeight });
@@ -329,8 +348,8 @@
                 });
                 window.addEventListener('resize', function (e) {
                     var _topHeight = window.innerWidth < 768 ? 240 : 380;
-                    TweenLite.set(_viewTop, { marginTop: -_topHeight });                    
-                    if (self.headerPinned) {                        
+                    TweenLite.set(_viewTop, { marginTop: -_topHeight });
+                    if (self.headerPinned) {
                         TweenLite.set(_viewBottom, { height: window.innerHeight - 72 });
                     }
                     else {
@@ -340,6 +359,12 @@
                 })
                 document.addEventListener('click', function (e) {
                     if (e.target.matches('[data-tag="snippet-view-action-openInNewWindow"]')) {
+                        var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-view-main"]');
+                        var _postId = _loaderElm.getAttribute('data-uid');
+                        if (_postId) {
+                            var _path = location.origin + '?id=' + _postId;                            
+                            window.open(_path, '_blank');
+                        }
                     }
                     else if (e.target.matches('[data-tag="snippet-view-action-loadInReadingMode"]')) {
                         var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-loader-container"]');

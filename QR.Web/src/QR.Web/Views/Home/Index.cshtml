@@ -1,6 +1,13 @@
 ﻿@{
     ViewData["Title"] = "quickRef Home";
 }
+
+<script type="text/javascript">    
+    var _value = '@ViewData["_IS_POST_SPECIFIC"].ToString().ToLower()';    
+    console.log('@ViewData["_IS_POST_SPECIFIC"]');
+    window["_IS_POST_SPECIFIC"] = _value == "false" ? false : true;
+</script>
+
 <script src="~/dist/js/lib.min.js"></script>
 <script src="~/dist/js/app.extensions.min.js"></script>
 <script src="~/dist/js/app.explore.min.js"></script>
@@ -12,12 +19,12 @@
                     <div class="dashboard-view">
                         <div class="dashboard-view-top" data-tag="view-top">
                             <div class="app-title" data-tag="app-title-main">
-                                <img src="/dist/images/quickRef.png" />                                
+                                <img src="/dist/images/quickRef.png" />
                             </div>
                             <div class="dashboard-view-header" data-tag="view-header">
                                 <div class="dashboard-view-header-content" ng-attr-data-readingmode="{{app.readingMode}}">
                                     <md-input-container class="dashboard-view-header-category">
-                                        <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()">
+                                        <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()" >
                                             <md-option ng-repeat="state in app.categories" ng-value="state.id">
                                                 {{state.name}}
                                             </md-option>
@@ -30,7 +37,7 @@
                                         </div>
                                         <i class="ms-Icon ms-Icon--ReadingMode dashboard-view-header-icon dashboard-view-header-icon-readingMode" tabindex="0" ng-attr-data-active="{{app.readingMode}}" ng-click="app.enableReadingMode()"></i>
                                     </div>
-                                </div>                                
+                                </div>
                             </div>
                         </div>
                         <div class="dashboard-content-holder" data-tag="content-holder">
@@ -57,7 +64,7 @@
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
         </div>
     </div>
 </div>
