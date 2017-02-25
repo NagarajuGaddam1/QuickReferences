@@ -40,7 +40,7 @@
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
         padding: 0;
-        border: 1px solid $standardBg;
+        border: 1px solid lighten($standardBg, 50);
 
         &.attrPaneOpen {
             height: calc(100% - 60px);
@@ -225,11 +225,11 @@
 
     .vxTable .vxHead tr th {
         &:nth-child(2n+1) {
-            background-color: $standardBg;
+            background-color: lighten($standardBg, 55);
         }
 
         &:nth-child(2n) {
-            background-color: lighten($standardBg, 2);
+            background-color: lighten($standardBg, 53);
         }
     }
 
@@ -509,7 +509,7 @@
             background-position-y: -231px;
 
             &.white {
-                background-position-x: -28px;
+                // background-position-x: -28px;
                 width: 24px;
                 height: 24px;
                 position: relative;
@@ -522,7 +522,7 @@
             background-position-y: -257px;
 
             &.white {
-                background-position-x: -28px;
+                // background-position-x: -28px;
                 width: 24px;
                 height: 24px;
                 position: relative;
@@ -721,7 +721,7 @@
 
                     .dropdown-toggle {
                         background: none;
-                        color: #fff;
+                        color: $standardBg;
                         border: none;
                         width: 100%;
                         text-align: left;
@@ -771,7 +771,7 @@
 
                         .icon.icon-ScrollChevronDownLegacy,
                         .icon.icon-ScrollChevronUpLegacy {
-                            background-position-x: -28px;
+                            // background-position-x: -28px;
                         }
                     }
 
