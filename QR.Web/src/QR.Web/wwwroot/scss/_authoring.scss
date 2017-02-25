@@ -26,6 +26,12 @@
                 background-color: $standardBg;
             }
 
+            md-tab-item{
+                span{
+                    color: $standardBg;
+                }
+            }
+
             .vx-container {
                 height: calc(100vh - 220px);
                 width: 100%;
@@ -33,6 +39,28 @@
 
                 .vx-grid-a{
                     color:darken($standardBg, 15);
+                }
+
+                .vx-grid-action{
+                    margin:0 -9px;
+                    padding:0;
+                    width: 48px;
+                    text-align: center;
+                    border: none;
+                    color:#303030;
+                    i{
+                        display: block;
+                        margin: 0 auto;
+                        line-height: 36px;
+                        opacity: 0.65;
+                    }
+                    &.publish{
+                        color:$standardBg;
+                        font-size: x-large;
+                        i{
+                            line-height: 40px;
+                        }
+                    }
                 }
 
                 .vx-grid-p {
@@ -51,7 +79,7 @@
                     }
 
                     i.green {
-                        color: #25b678;
+                        color: $standardBg;
                     }
 
                     i.red {

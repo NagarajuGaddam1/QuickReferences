@@ -36,12 +36,13 @@
     .controller('PostController', ['$uibModal', 'Notify', 'SharedService', 'SampleGet', '$timeout', function ($uibModal, notifyService, shared, SampleGet, $timeout) {
         var self = this;
         self.shared = shared;
-        self.shared.currentContext = 'Post';
+        self.shared.currentContext = 'Edit Post';
         self.shared.actions = [
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--NewFolder' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--RevToggleKey' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Save' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--DecreaseIndentLegacy', click: 'goToDashboard', show:true, title: 'Go To Dashboard' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--RevToggleKey', click: 'revertChangesPost', show:true, title:'Revert Changes' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Save', click: 'savePost', show:true, title:'Save Changes' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show:true, title:'Delete Post' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Blocked2', click: 'suspendPost', show:true, title:'Suspend Post'  },
         ];
         self.sampleGet = SampleGet;
         self.timeout = $timeout;
@@ -55,6 +56,20 @@
             { id: 'scss', name: 'scss', forecolor: '#ffffff', backcolor: '#d2679e' }
         ];
         var _paneHolder = 'authoringFlaskPaneHolder';
+        self.flasks = [];
+        self.post = {};
+        self.shared.revertChangesPost = function(){
+            console.log('revertChangesPost');
+        }
+        self.shared.deletePost = function(){
+            console.log('suspendPost');
+        }
+        self.shared.suspendPost = function(){
+            console.log('suspendPost');
+        }
+        self.shared.savePost = function(){
+            console.log('savePost');
+        }
         self.onDropComplete = function (_dropIndex, data) {
             self.swapContent(_dropIndex, data.index)
         }
@@ -66,8 +81,6 @@
                 _content.index = _iter;
             });            
         }
-        self.flasks = [];
-        self.post = {};
         self.enableFlaskReordering = function () {
             if (!self.flasksBeingReodered) {
                 self.flasksBeingReodered = true;
