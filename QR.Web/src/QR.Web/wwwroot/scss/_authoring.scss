@@ -62,6 +62,23 @@
                         }
                     }
                 }
+                .vx-grid-picture{
+                    border-radius:50%;
+                    height:36px;
+                    width:36px;
+                    margin: 0;
+                    border: 1px solid #303030;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    opacity: 0.50;
+
+                    i{
+                        text-align: center;
+                        width: 34px;
+                        height:34px;
+                        line-height: 36px;
+                    }
+                }
 
                 .vx-grid-p {
                     margin: 0;

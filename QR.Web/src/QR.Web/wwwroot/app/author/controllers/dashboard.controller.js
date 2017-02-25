@@ -219,6 +219,7 @@
             columnDefConfigs: [
                 { id: 'id', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
                 { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
+                { id: 'authorPic', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
                 { id: 'name', columnName: 'Name', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300' },
                 { id: 'authenticationType', columnName: 'Auth', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
                 { id: 'authenticationUID', columnName: 'AuthID', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, hidden: false, width: '150' },
@@ -230,10 +231,7 @@
 
         function hybridCellDefnForAuthors(row, col) {
             var tmpl = '<span>VX_DATA_POINT</span>';
-            if (col.id == 'name'){
-                tmpl = '<a class="vx-grid-a" href="#/post" title="' + row[col.id] + '">' + row[col.id] + '</a>';
-            }
-            else if (col.id == 'category')
+            if (col.id == 'category')
                 tmpl = tmpl.replace('VX_DATA_POINT', row[col.id].name || '');
             else if (col.id == 'published') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck green"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
@@ -243,6 +241,9 @@
             }
             else if(col.id == 'edit'){
                 tmpl = '<div class="icon-container vx-grid-action" title="Edit Author"><i class="ms-Icon ms-Icon--Edit" tabindex="0" uid="' + row.id  + '" data-tag="edit-author" ></i></div>';
+            }
+            else if(col.id == 'authorPic'){
+                tmpl = '<div class="vx-grid-picture" title="' + row['name'] + '"><i class="ms-Icon ms-Icon--Contact" ></i></div>';
             }
             return tmpl;
         }
