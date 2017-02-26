@@ -10,7 +10,9 @@
 
     angular.module('QR.Web.Constants', [])
         .value('$constants', {
-            "_IS_POST_SPECIFIC": window["_IS_POST_SPECIFIC"]
+            "_IS_POST_SPECIFIC": window["_IS_POST_SPECIFIC"],
+            "_IS_CATEGORY_SPECIFIC": window["_IS_CATEGORY_SPECIFIC"],
+            "_CATEGORY": window["_CATEGORY"]
         });
 
     angular.module('QR.Web', [

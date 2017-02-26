@@ -53,12 +53,15 @@
         //self.selectedCategory = 'all';
         self.lastCategoryIsPost = false;
         self.selectCategory = function () {
-            self.selectTab(self.selectedCategory);
             if (self.lastCategoryIsPost == true) {
                 self.categories.splice(_.indexOf(self.categories, function (_category) {
                     return _category.id = '_post';
                 }), 1)
+                var _path = location.origin + '/Home/Index?category=' + self.selectedCategory;
+                window.open(_path, '_self');
             }
+            else
+                self.selectTab(self.selectedCategory);
         }
         self.selectTab = function (tabTitle) {
             switch (tabTitle) {
@@ -69,18 +72,14 @@
                 default: self.selectedTabIndex = 4; break;
             }
         }
-        self.selectedTabIndex = 0;
         self.onTabSelected = function (tabTitle) {
-            console.log('onTabSelected called');
             if (self.currentTitle != tabTitle && self.initialized) {
                 self.timeout(function () {
-                    console.log(' loadLoaderElementsIntoAllContent inside onTabSelected called');
                     self.loadLoaderElementsIntoAllContent(tabTitle);
                 }, 500);
                 self.currentTitle = tabTitle;
                 self.postService.get(self.currentTitle)
                 .then(function (data) {
-                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
                 }, function (data) {
                 })
@@ -126,12 +125,10 @@
                 self.activePostId = _holder.loadedId;
             self.postService.getDataForPost(_holder)
             .then(function (_data) {
-                console.log(_data);
                 var _holder = _data.holder;
                 var _post = _data.post;
                 var _snippetViewerId = _.uniqueId('_cd_');
                 var _holderElm = document.getElementById(_holder.id);
-                console.log(_holderElm)
                 var _flasksToProcess = [];
                 if (_holderElm) {
                     var _titleElm = _holderElm.querySelector('[data-tag="title"]');
@@ -307,18 +304,14 @@
             else if (_paintLength < _emptyLength) {
                 for (var i = 0; i < _emptyLength - _paintLength; i++) {
                     var _popped = _loadedPosts[_currentViewId].pop();
-                    console.log('destroy' + _popped);
                     var _elem = angular.element(document.getElementById(_popped.id));
                     _elem.remove();
                 }
             }
-            console.log(_currentViewId);
-            console.log(_loadedPosts[_currentViewId]);
             _.each(_.filter(_loadedPosts[_currentViewId],
                 function (_postHolder) {
                     return _postHolder.loaded == false
                 }), function (_postHolder, _iter) {
-                    console.log(_postHolder);
                     _postHolder.loadedId = _posts[_iter];
                     if (typeof self.fnLoadPost !== 'undefined' && typeof self.fnLoadPost === 'function')
                         self.fnLoadPost(_postHolder);
@@ -342,13 +335,12 @@
         }
         self.dataInit = function () {
             if (self.constants["_IS_POST_SPECIFIC"] == false) {
-                self.currentTitle = 'all';
-                self.selectedCategory = 'all';
-                console.log('dataInit for all called');
+                console.log(self);
+                self.selectedCategory = self.currentTitle;
                 self.postService.get(self.currentTitle)
                 .then(function (data) {
+                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
-                    console.log('dataInit 1 tryLoadingPostsForActiveContent initialized set to true');
                     self.initialized = true;
                 }, function (data) {
                 })
@@ -362,7 +354,6 @@
                 self.postService.getSpecificPost()
                 .then(function (data) {
                     tryLoadingPostsForActiveContent(data);
-                    console.log('dataInit 2 tryLoadingPostsForActiveContent initialized set to true');
                     self.initialized = true;
                 }, function (data) {
                 })
@@ -370,9 +361,18 @@
         }
         self.init = function () {         
             self.timeout(function () {
-                console.log('loadLoaderElementsIntoAllContent inside timeout called')
                 if (self.constants["_IS_POST_SPECIFIC"] == false)
-                    self.loadLoaderElementsIntoAllContent('all');
+                {
+                    if(self.constants["_IS_CATEGORY_SPECIFIC"] == false){
+                        self.currentTitle = 'all';
+                    }
+                    else
+                    {
+                        self.currentTitle = self.constants["_CATEGORY"];
+                    }
+                    self.selectTab(self.currentTitle);
+                    self.loadLoaderElementsIntoAllContent(self.currentTitle);
+                }
                 self.dataInit();
                 var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
                 _viewTop = document.querySelector('[data-tag="view-top"]');
@@ -401,7 +401,7 @@
                         var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-view-main"]');
                         var _postId = _loaderElm.getAttribute('data-uid');
                         if (_postId) {
-                            var _path = location.origin + '?id=' + _postId;
+                            var _path = location.origin + '/Home/Post?id=' + _postId;
                             window.open(_path, '_blank');
                         }
                     }
