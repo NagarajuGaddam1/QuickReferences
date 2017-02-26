@@ -2,8 +2,8 @@
     ViewData["Title"] = "quickRef Home";
 }
 
-<script type="text/javascript">    
-    var _value = '@ViewData["_IS_POST_SPECIFIC"].ToString().ToLower()';    
+<script type="text/javascript">
+    var _value = '@ViewData["_IS_POST_SPECIFIC"].ToString().ToLower()';
     console.log('@ViewData["_IS_POST_SPECIFIC"]');
     window["_IS_POST_SPECIFIC"] = _value == "false" ? false : true;
 </script>
@@ -24,7 +24,7 @@
                             <div class="dashboard-view-header" data-tag="view-header">
                                 <div class="dashboard-view-header-content" ng-attr-data-readingmode="{{app.readingMode}}">
                                     <md-input-container class="dashboard-view-header-category">
-                                        <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()" >
+                                        <md-select ng-model="app.selectedCategory" ng-change="app.selectCategory()">
                                             <md-option ng-repeat="state in app.categories" ng-value="state.id">
                                                 {{state.name}}
                                             </md-option>
@@ -35,7 +35,7 @@
                                             <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
                                             <i class="ms-Icon ms-Icon--Search dashboard-view-header-icon" tabindex="0" data-hide-on-mobile="true"></i>
                                         </div>
-                                        <i class="ms-Icon ms-Icon--ReadingMode dashboard-view-header-icon dashboard-view-header-icon-readingMode" tabindex="0" ng-attr-data-active="{{app.readingMode}}" ng-click="app.enableReadingMode()"></i>
+                                        <i class="ms-Icon ms-Icon--ViewAll dashboard-view-header-icon dashboard-view-header-icon-readingMode" tabindex="0" ng-attr-data-active="{{!app.readingMode}}" ng-click="app.enableReadingMode()"></i>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                     <md-tab label="Other(s)" md-on-select="app.onTabSelected('others')" md-on-deselect="app.onTabDeselected('others')">
                                         <md-content class="md-padding" id="_mdContent_others"></md-content>
                                     </md-tab>
-                                </md-tabs>
+                                </md-tabs>                                
                             </md-content>
                             <div ng-include="'templates/explore/footer.tmpl.html'"></div>
                         </div>

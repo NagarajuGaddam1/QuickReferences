@@ -50,9 +50,15 @@
             { id: 'css', name: 'CSS' },
             { id: 'others', name: 'Other(s)' }
         ];
-        self.selectedCategory = 'all';
+        //self.selectedCategory = 'all';
+        self.lastCategoryIsPost = false;
         self.selectCategory = function () {
             self.selectTab(self.selectedCategory);
+            if (self.lastCategoryIsPost == true) {
+                self.categories.splice(_.indexOf(self.categories, function (_category) {
+                    return _category.id = '_post';
+                }), 1)
+            }
         }
         self.selectTab = function (tabTitle) {
             switch (tabTitle) {
@@ -65,8 +71,10 @@
         }
         self.selectedTabIndex = 0;
         self.onTabSelected = function (tabTitle) {
+            console.log('onTabSelected called');
             if (self.currentTitle != tabTitle && self.initialized) {
                 self.timeout(function () {
+                    console.log(' loadLoaderElementsIntoAllContent inside onTabSelected called');
                     self.loadLoaderElementsIntoAllContent(tabTitle);
                 }, 500);
                 self.currentTitle = tabTitle;
@@ -114,12 +122,16 @@
             self.compile(_elmToCompile.contents())($scope);
         }
         self.fnLoadPost = function (_holder) {
+            if (self.selectedCategory == '_post')
+                self.activePostId = _holder.loadedId;
             self.postService.getDataForPost(_holder)
             .then(function (_data) {
+                console.log(_data);
                 var _holder = _data.holder;
                 var _post = _data.post;
                 var _snippetViewerId = _.uniqueId('_cd_');
                 var _holderElm = document.getElementById(_holder.id);
+                console.log(_holderElm)
                 var _flasksToProcess = [];
                 if (_holderElm) {
                     var _titleElm = _holderElm.querySelector('[data-tag="title"]');
@@ -141,7 +153,7 @@
                     var _chipContainerElm = _holderElm.querySelector('[data-tag="chips"]');
                     if (_chipContainerElm) {
                         _.each(_post.tags, function (_tag) {
-                            var _tmpl = '<div class="chip" data-show="preview">' + _tag + '</div>';
+                            var _tmpl = '<div class="chip" data-show-on="preview">' + _tag + '</div>';
                             angular.element(_chipContainerElm).append(_tmpl);
                         });
                     }
@@ -191,7 +203,7 @@
                         }
                     }
                 }
-            });
+            }, function(data){console.log('error');console.log(data);});
         }
 
         function tryToShowHeader() {
@@ -254,6 +266,8 @@
         }
         self.debScrollFn = _.throttle(self.onScrollFn, 20);
         self.enableReadingMode = function (_elem) {
+            if (self.selectedCategory == '_post')
+                return;
             if (self.readingMode == false) {
                 tryToHideHeader(_elem ? _elem.getAttribute('id') : null);
                 self.readingMode = true;
@@ -293,26 +307,48 @@
             else if (_paintLength < _emptyLength) {
                 for (var i = 0; i < _emptyLength - _paintLength; i++) {
                     var _popped = _loadedPosts[_currentViewId].pop();
+                    console.log('destroy' + _popped);
                     var _elem = angular.element(document.getElementById(_popped.id));
                     _elem.remove();
                 }
             }
+            console.log(_currentViewId);
+            console.log(_loadedPosts[_currentViewId]);
             _.each(_.filter(_loadedPosts[_currentViewId],
                 function (_postHolder) {
                     return _postHolder.loaded == false
                 }), function (_postHolder, _iter) {
+                    console.log(_postHolder);
                     _postHolder.loadedId = _posts[_iter];
                     if (typeof self.fnLoadPost !== 'undefined' && typeof self.fnLoadPost === 'function')
                         self.fnLoadPost(_postHolder);
                 });
+            if (self.selectedCategory == '_post') {                
+                var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
+                var _tmpl = '<div class="col-xs-12" ng-if="app.selectedCategory == \'_post\'" data-tag="post-comments"><div class="comments-preview"><div id="disqus_thread" ng-init="app.initializeComments()"></div></div></div>';
+                _elm.append(_tmpl);
+                $compile(_elm.contents())($scope);
+            }
+        }
+        self.initializeComments = function () {
+            var disqus_config = function () {                
+                this.page.identifier = 'POST' + self.activePostId;
+            }
+            var d = document;
+            var s = d.createElement('script');
+            s.src = '//tl-dr-quickref.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
         }
         self.dataInit = function () {
-            console.log(self.constants["_IS_POST_SPECIFIC"]);
             if (self.constants["_IS_POST_SPECIFIC"] == false) {
                 self.currentTitle = 'all';
+                self.selectedCategory = 'all';
+                console.log('dataInit for all called');
                 self.postService.get(self.currentTitle)
                 .then(function (data) {
                     tryLoadingPostsForActiveContent(data);
+                    console.log('dataInit 1 tryLoadingPostsForActiveContent initialized set to true');
                     self.initialized = true;
                 }, function (data) {
                 })
@@ -322,23 +358,26 @@
                 var index = self.categories.length - 1;
                 self.selectedCategory = '_post';
                 self.currentTitle = 'all';
+                self.lastCategoryIsPost = true;
                 self.postService.getSpecificPost()
                 .then(function (data) {
                     tryLoadingPostsForActiveContent(data);
+                    console.log('dataInit 2 tryLoadingPostsForActiveContent initialized set to true');
                     self.initialized = true;
                 }, function (data) {
                 })
             }
         }
-        self.init = function () {
-            self.dataInit();
+        self.init = function () {         
             self.timeout(function () {
+                console.log('loadLoaderElementsIntoAllContent inside timeout called')
+                if (self.constants["_IS_POST_SPECIFIC"] == false)
+                    self.loadLoaderElementsIntoAllContent('all');
+                self.dataInit();
                 var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
                 _viewTop = document.querySelector('[data-tag="view-top"]');
                 _viewBottom = document.querySelector('[data-tag="content-holder"]');
                 _viewHeader = document.querySelector('[data-tag="view-header"]');
-                if (self.constants["_IS_POST_SPECIFIC"] == false)
-                    self.loadLoaderElementsIntoAllContent('all');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
                 TweenLite.set(_viewTop, { marginTop: -_topHeight });
                 TweenLite.set(_viewTop, { y: _topHeight });
@@ -362,7 +401,7 @@
                         var _loaderElm = findParentBySelector(e.target, '[data-tag="snippet-view-main"]');
                         var _postId = _loaderElm.getAttribute('data-uid');
                         if (_postId) {
-                            var _path = location.origin + '?id=' + _postId;                            
+                            var _path = location.origin + '?id=' + _postId;
                             window.open(_path, '_blank');
                         }
                     }

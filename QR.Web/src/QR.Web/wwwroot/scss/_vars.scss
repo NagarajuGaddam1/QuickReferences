@@ -54,7 +54,7 @@ $content-foreground: #222222;
 
         &.disabled,
         &[disabled] {
-            opacity: 0.6;
+            opacity: 0.33;
 
             &:active, &:hover {
                 background: transparent;
@@ -86,7 +86,7 @@ $content-foreground: #222222;
 
         &.disabled,
         &[disabled] {
-            opacity: 0.6;
+            opacity: 0.33;
 
             &:active, &:hover {
                 background: transparent;
@@ -120,6 +120,9 @@ $break-mob: 320px;
 $break-tablet: 768px;
 $break-desktop: 1024px;
 
+
+$standardBg : #0078d7;
+//lighten($standardBg, 50)
 @mixin respond-to-mobile {
     @media only screen and (max-width:768px) {
         @content;

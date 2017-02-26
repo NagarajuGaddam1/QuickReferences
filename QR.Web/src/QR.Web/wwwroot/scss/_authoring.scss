@@ -3,23 +3,144 @@
     height: 100%;
     padding: 0;
 
+    &-dashboard {
+        &-content {
+            background-color: transparent;
+            padding: 0 15px;
+
+            &-post {
+                padding: 15px 0;
+            }
+
+            md-tabs-wrapper {
+                border-color: lighten($standardBg, 50);
+            }
+
+            md-content {
+                background-color: transparent;
+            }
+
+            md-tabs.md-default-theme md-ink-bar,
+            md-tabs md-ink-bar {
+                color: $standardBg;
+                background-color: $standardBg;
+            }
+
+            md-tab-item{
+                span{
+                    color: $standardBg;
+                }
+            }
+
+            .vx-container {
+                height: calc(100vh - 220px);
+                width: 100%;
+                padding: 0;
+
+                .vx-grid-a{
+                    color:darken($standardBg, 15);
+                }
+
+                .vx-grid-action{
+                    margin:0 -9px;
+                    padding:0;
+                    width: 48px;
+                    text-align: center;
+                    border: none;
+                    color:#303030;
+                    i{
+                        display: block;
+                        margin: 0 auto;
+                        line-height: 36px;
+                        opacity: 0.65;
+                    }
+                    &.publish{
+                        color:$standardBg;
+                        font-size: x-large;
+                        i{
+                            line-height: 40px;
+                        }
+                    }
+                }
+                .vx-grid-picture{
+                    border-radius:50%;
+                    height:36px;
+                    width:36px;
+                    margin: 0;
+                    border: 1px solid #303030;
+                    box-sizing: border-box;
+                    overflow: hidden;
+                    opacity: 0.50;
+
+                    i{
+                        text-align: center;
+                        width: 34px;
+                        height:34px;
+                        line-height: 36px;
+                    }
+                }
+
+                .vx-grid-p {
+                    margin: 0;
+                    padding: 0 15px;
+                    text-transform: uppercase;
+                    text-align: left;
+                    width: 100%;
+
+                    span {
+                        margin-left: 9px;
+                    }
+
+                    i {
+                        font-size: x-large;
+                    }
+
+                    i.green {
+                        color: $standardBg;
+                    }
+
+                    i.red {
+                        color: #e74c3c;
+                    }
+                }
+            }
+        }
+    }
+
+    &.content-body {
+        height: calc(100vh - 144px);
+
+        .content-body-container {
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+    }
+
     &-flask {
         width: 50%;
-        height: 100%;
         float: left;
         position: relative;
         z-index: 1;
 
         &-pane {
             width: 60px;
-            height: calc(100% - 60px);
+            height: 100%;
             float: left;
             position: absolute;
-            background: #f0f0f0;
-            padding: 4px 6px;
+            background: #fff;
+            padding: 4px 0 4px 6px;
             display: table;
             table-layout: fixed;
             z-index: 2;
+
+            &-after {
+                height: 100%;
+                width: 100%;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar;
+            }
 
             &-holder {
                 position: relative;
@@ -171,7 +292,7 @@
 
                     [ng-drag].drag-over {
                         &.drag-enter {
-                            border: solid 5px #0078d7;
+                            border: solid 5px $standardBg;
                             opacity: 1;
                         }
                     }
@@ -185,7 +306,7 @@
                     }
 
                     [ng-drop].drag-enter {
-                        border: solid 5px lighten(#0078d7, 33);
+                        border: solid 5px lighten($standardBg, 33);
                         opacity: 0.50;
                     }
 
@@ -286,7 +407,7 @@
                         cursor: pointer;
                         background: transparent;
                     }
-                }                
+                }
             }
 
             .CodeFlask {

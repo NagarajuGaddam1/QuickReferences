@@ -1,0 +1,21 @@
+﻿<div class="container-fluid authoring-dashboard">
+    <md-content class="authoring-dashboard-content">
+        <md-tabs md-dynamic-height="" md-border-bottom="" md-selected="authoringDashboard.selectedTabIndex">
+            <md-tab label="Posts">
+                <md-content class="md-padding authoring-dashboard-content-post">                    
+                    <div class="vx-container post"  ng-if="authoringDashboard.selectedTabIndex == 0" >
+                        <vx-grid config="authoringDashboard.postsGridConfig" scroll-parent="'.vx-container.post .vxTableContainer'"></vx-grid>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab label="Authors">
+                <md-content class="md-padding authoring-dashboard-content-post">
+                    <div class="vx-container authors" ng-if="authoringDashboard.selectedTabIndex == 1">
+                        <vx-grid config="authoringDashboard.authorsGridConfig" scroll-parent="'.vx-container.authors .vxTableContainer'"></vx-grid>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
+    <div class="clearfix"></div>
+</div>
