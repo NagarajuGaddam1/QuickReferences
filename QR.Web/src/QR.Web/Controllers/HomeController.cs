@@ -22,7 +22,6 @@ namespace QR.Web.Controllers
                 {
                     ViewData["_IS_CATEGORY_SPECIFIC"] = true;
                     ViewData["_CATEGORY"] = HttpContext.Request.Query["category"].ToString();
-
                 }
             }
             return View();

@@ -6,7 +6,7 @@
         <div class="content-body full-height" auto-height="{{app.shared.hideFooter == true ? 0 : 48}}">
             <div class="content-body-container">
                 <div class="container-fluid dashboard">
-                    <div class="dashboard-view">
+                    <div class="dashboard-view" ng-attr-data-category={{app.selectedCategory}}>
                         <div class="dashboard-view-top" data-tag="view-top">
                             <div class="app-title" data-tag="app-title-main">
                                 <img src="/dist/images/quickRef.png" />
@@ -23,9 +23,13 @@
                                     <div class="dashboard-view-header-search">
                                         <div class="dashboard-view-header-search-holder">
                                             <input ng-model="app.searchToken" placeholder="Search in titles, tags & descriptions ..." />
-                                            <i class="ms-Icon ms-Icon--Search dashboard-view-header-icon" tabindex="0" data-hide-on-mobile="true"></i>
+                                            <i class="ms-Icon ms-Icon--Search dashboard-view-header-icon" tabindex="0" data-hide-on-mobile="true" ></i>
                                         </div>
-                                        <i class="ms-Icon ms-Icon--ViewAll dashboard-view-header-icon dashboard-view-header-icon-readingMode" tabindex="0" ng-attr-data-active="{{!app.readingMode}}" ng-click="app.enableReadingMode()"></i>
+                                        <i class="ms-Icon ms-Icon--ViewAll dashboard-view-header-icon dashboard-view-header-icon-readingMode" 
+                                        tabindex="0" 
+                                        ng-attr-data-active="{{!app.readingMode}}"
+                                        data-hide-on-category="POST" 
+                                        ng-click="app.enableReadingMode()"></i>
                                     </div>
                                 </div>
                             </div>
