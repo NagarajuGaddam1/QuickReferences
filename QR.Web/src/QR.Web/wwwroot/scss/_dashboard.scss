@@ -10,6 +10,18 @@
     }
 }
 
+@mixin _SHOW_ON_CATEGORY_POST($name) {
+    @at-root .dashboard-view[data-category="_post"] #{$name} {
+        @content;
+    }
+}
+
+@mixin _HIDE_ON_CATEGORY_POST($name) {
+    @at-root .dashboard-view[data-category="_post"] #{$name} {
+        @content;
+    }
+}
+
 [data-readingmode="on"] {
     display: none;
 
@@ -22,6 +34,20 @@
     display: block;
 
     @include _READINGMODE_ONLY(&) {
+        display: none;
+    }
+}
+
+[data-show-on-category="POST"]{
+    display: none;
+    @include _SHOW_ON_CATEGORY_POST(&){
+        display: block;
+    }
+}
+
+[data-hide-on-category="POST"]{
+    display: block;
+    @include _HIDE_ON_CATEGORY_POST(&){
         display: none;
     }
 }
