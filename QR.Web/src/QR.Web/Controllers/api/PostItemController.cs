@@ -36,8 +36,8 @@ namespace QR.Web.Controllers.api
         {
             //todo:
             //Add validations and other stuff
-
-            return Repo.FindPostById(id);
+            return new PostItem();
+            //return Repo.FindPostById(id);
         }
 
         // POST api/values
@@ -56,6 +56,7 @@ namespace QR.Web.Controllers.api
         {
             //todo:
             //Add validations and other stuff
+
             return new ObjectResult(Repo.UpdatePost(value));
         }
 
