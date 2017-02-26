@@ -143,7 +143,7 @@
             height: 72px;
             background: lighten($standardBg, 50);
             display: block;
-            opacity: 1;
+            opacity: 0;
             box-shadow: 0 3px 6px rgba(0,0,0,.1);
 
             &-content {

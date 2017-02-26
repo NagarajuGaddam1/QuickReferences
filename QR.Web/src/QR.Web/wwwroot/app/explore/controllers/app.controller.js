@@ -379,9 +379,10 @@
                 _viewBottom = document.querySelector('[data-tag="content-holder"]');
                 _viewHeader = document.querySelector('[data-tag="view-header"]');
                 _activeContentView = document.getElementById('_mdContent_' + self.currentTitle);
+                TweenLite.set(_viewBottom, { marginTop: _topHeight });
                 TweenLite.set(_viewTop, { marginTop: -_topHeight });
                 TweenLite.set(_viewTop, { y: _topHeight });
-                TweenLite.set(_viewBottom, { marginTop: _topHeight });
+                TweenLite.to(_viewHeader, 0.2, { opacity: 1 });
                 _viewBottom.addEventListener("scroll", function (e) {
                     self.debScrollFn(e.target.scrollTop);
                 });
