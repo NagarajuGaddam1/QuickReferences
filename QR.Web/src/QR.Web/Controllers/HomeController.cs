@@ -11,6 +11,26 @@ namespace QR.Web.Controllers
     {
         public IActionResult Index()
         {
+
+            ValuesController.PostDetails.PostDetailsPresent = false;
+            ViewData["_IS_POST_SPECIFIC"] = ValuesController.PostDetails.PostDetailsPresent;
+            ViewData["_IS_CATEGORY_SPECIFIC"] = false;
+            ViewData["_CATEGORY"] = "";
+            if (HttpContext.Request.QueryString.HasValue)
+            {
+                if (HttpContext.Request.Query["category"].ToString() != null)
+                {
+                    ViewData["_IS_CATEGORY_SPECIFIC"] = true;
+                    ViewData["_CATEGORY"] = HttpContext.Request.Query["category"].ToString();
+
+                }
+            }
+            return View();
+
+        }        
+
+        public IActionResult Post()
+        {
             ValuesController.PostDetails.PostDetailsPresent = false;
             if (HttpContext.Request.QueryString.HasValue)
             {
@@ -27,7 +47,7 @@ namespace QR.Web.Controllers
             }
             ViewData["_IS_POST_SPECIFIC"] = ValuesController.PostDetails.PostDetailsPresent;
             return View();
-        }        
+        }
 
         public IActionResult Error()
         {

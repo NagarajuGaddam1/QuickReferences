@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "quickRef Home";
+}
+
+<script type="text/javascript">
+    var _value = '@ViewData["_IS_POST_SPECIFIC"].ToString().ToLower()';
+    window["_IS_POST_SPECIFIC"] = _value == "false" ? false : true;
+</script>
+
+@Html.Partial("_PostView")
+
+<a class="jump-link" href="/Author">Authoring</a>
