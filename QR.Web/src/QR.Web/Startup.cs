@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using QR.DataAccess.Repository;
+using Swashbuckle.AspNetCore.Swagger;
+using QR.Common.Resources;
 
 namespace QR.Web
 {
@@ -27,6 +30,15 @@ namespace QR.Web
             // Add framework services.
             ConfigureAuthServices(services);
             services.AddMvc();
+
+            //Add our repository type
+            services.AddSingleton<IPostItemRepository, PostItemRepository>();
+
+            // Register the Swagger generator, defining one or more Swagger documents
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = StringConstants.ApiName, Version = StringConstants.ApiVersion });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +67,15 @@ namespace QR.Web
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS etc.), specifying the Swagger JSON endpoint.
+            app.UseSwaggerUi(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{StringConstants.ApiName} {StringConstants.ApiVersion}");
             });
         }
         
