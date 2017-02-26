@@ -56,7 +56,6 @@ namespace QR.Web.Controllers.api
         {
             //todo:
             //Add validations and other stuff
-
             return new ObjectResult(Repo.UpdatePost(value));
         }
 

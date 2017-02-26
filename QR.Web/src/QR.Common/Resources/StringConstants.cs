@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace QR.Common.Resources
+﻿namespace QR.Common.Resources
 {
     public static class StringConstants
     {
