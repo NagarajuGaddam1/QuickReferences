@@ -114,6 +114,7 @@ gulp.task('minify:lib:explore:js', function (cb) {
 gulp.task('minify:app:explore:js', ['jessify:views:explore:js'], function (cb) {
     pump([
           gulp.src([
+              webroot + 'app/shared/**/*.js',
               webroot + 'app/explore/jessify/jessify.views.explore.js',
               webroot + 'app/explore/providers/**/*.js',
               webroot + 'app/explore/config/app.js',
@@ -144,7 +145,8 @@ gulp.task('default:app:explore:js', function () {
 
 gulp.task('minify:app:author:js', ['jessify:views:author:js'], function (cb) {
     pump([
-          gulp.src([              
+          gulp.src([
+              webroot + 'app/shared/**/*.js',
               webroot + 'app/author/jessify/jessify.views.author.js',              
               webroot + 'app/author/providers/**/*.js',
               webroot + 'app/author/config/app.js',
