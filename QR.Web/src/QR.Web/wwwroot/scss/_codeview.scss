@@ -16,11 +16,12 @@
             background: #f6f8fc;
             width: 100%;
             display: block;
-            box-shadow: 0 3px 6px rgba(0,0,0,.1);
+            box-shadow: 0 1px 6px rgba(0,0,0,.1);
 
             p {
                 padding: 20px;
                 font-size: 14px;
+                margin-bottom: 0;
 
                 @include respond-to-mobile {
                     margin-bottom: 0;
@@ -60,6 +61,20 @@
 
                 code {
                     padding: 0;
+                }
+            }
+
+            ul {
+                list-style-type: circle;
+                margin-bottom: 0;
+
+                &.type-list {
+                    padding: 20px 20px 20px 40px;
+                    font-size: 14px;
+
+                    li {
+                        padding-left: 3px;
+                    }
                 }
             }
         }
@@ -131,6 +146,10 @@
                     padding: 0 10px;
                     min-height: 60px;
                     display: table;
+
+                    @include _READINGMODE_ONLY(&) {
+                        width: calc(100% - 145px);
+                    }
                 }
             }
 
@@ -276,17 +295,19 @@
                     display: none;
                 }
 
-                .codeview-container-actions {
-                    height: 70px;
+                .codeview-container {
+                    &-actions {
+                        height: 78px;
 
-                    &-action {
-                        overflow: hidden;
-                        box-shadow: none;
+                        &-action {
+                            overflow: hidden;
+                            box-shadow: none;
 
-                        .snippetview {
-                            &-loader {
-                                height: 100%;
-                                border-radius: 50%;
+                            .snippetview {
+                                &-loader {
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
                             }
                         }
                     }
@@ -298,8 +319,27 @@
                     display: none;
                 }
 
-                .codeview-container-actions {
-                    height: auto;
+                .codeview-container {
+                    @include _EXCEPT_READINGMODE_ONLY(&) {
+                        .md-chips-container {
+                            @include respond-to-except-mobile {
+                                white-space: nowrap;
+                                overflow-x: hidden;
+                            }
+                        }
+                    }
+
+                    &-actions {
+                        height: auto;
+                    }
+
+                    &-view {
+                        pre {
+                            code {
+                                overflow-x: hidden;
+                            }
+                        }
+                    }
                 }
             }
 

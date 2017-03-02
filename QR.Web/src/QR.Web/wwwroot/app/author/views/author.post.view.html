@@ -54,9 +54,13 @@
                             <label class="title">Text</label>
                             <textarea ng-model="mod.data"></textarea>
                         </div>
-                        <div class="flask-instance-content" ng-if="mod.type == 'flask'">
+                        <div class="flask-instance-content type-flask" ng-if="mod.type == 'flask'">
                             <label class="title"><span ng-bind="mod.lang"></span> Flask</label>
                             <div data-flask="true" ng-init="authoringPost.loadFlask($index)"></div>
+                        </div>
+                        <div class="flask-instance-content tagged" ng-if="mod.type == 'list'">
+                            <label class="title">List</label>
+                            <textarea ng-model="mod.data"></textarea>                            
                         </div>
                     </div>
                 </div>

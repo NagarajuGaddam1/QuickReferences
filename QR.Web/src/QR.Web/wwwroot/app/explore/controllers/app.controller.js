@@ -31,6 +31,14 @@
     .controller('AppController', ['PostsService', '$timeout', '$interval', "$compile", "$scope", "$constants", function (PostsService, $timeout, $interval, $compile, $scope, $constants) {
         var self = this;
         var _loadedPosts = {};
+        var _viewTop = null;
+        var _viewBottom = null;
+        var _viewHeader = null;
+        var _activeContentView = null;
+        var _lastTop = 0;
+        var _setToDisappear = false;
+        var _noOfPostsLoaded = 0;
+        var _currentFetchInProgress = false;
         self.constants = $constants;
         self.timeout = $timeout;
         self.interval = $interval
@@ -50,7 +58,6 @@
             { id: 'css', name: 'CSS' },
             { id: 'others', name: 'Other(s)' }
         ];
-        //self.selectedCategory = 'all';
         self.lastCategoryIsPost = false;
         self.selectCategory = function () {
             if (self.lastCategoryIsPost == true) {
@@ -80,6 +87,7 @@
                 self.currentTitle = tabTitle;
                 self.postService.get(self.currentTitle)
                 .then(function (data) {
+                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
                 }, function (data) {
                 })
@@ -93,15 +101,12 @@
             _view.empty();
             _loadedPosts[tabTitle] = [];
         }
-        var _viewTop = null;
-        var _viewBottom = null;
-        var _viewHeader = null;
-        var _activeContentView = null;
-        var _lastTop = 0;
-        var _setToDisappear = false;
-        self.loadLoaderElementsIntoContent = function (_content, _currentViewId) {
+        self.loadLoaderElementsIntoContent = function (_content, _currentViewId, _noOfElementsToAppend) {
+            console.log(_noOfElementsToAppend);
             var _elm = angular.element(_content);
-            for (var i = 0; i < 6; i++) {
+            if (!_noOfElementsToAppend)
+                _noOfElementsToAppend = 6;
+            for (var i = 0; i < _noOfElementsToAppend; i++) {
                 var _id = _.uniqueId('snippetLoader');
                 var _tmpl = '<div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 snippet-loader-container" data-tag="snippet-loader-container" id="SLID">SNIPPET_TMPL</div>';
                 _tmpl = _tmpl.replace('SLID', _id);
@@ -114,11 +119,21 @@
         }
         self.loadLoaderElementsIntoAllContent = function (_categoryId) {
             var _view = document.getElementById('_mdContent_' + _categoryId);
+            var _noOfElementsPerRow = 0;
+            if (window.innerWidth > 1200) {
+                _noOfElementsPerRow = 12 / 4;
+            }
+            else if (window.innerWidth > 992) {
+                _noOfElementsPerRow = 12 / 6;
+            }
+            else
+                _noOfElementsPerRow = 12 / 12;            
+            var _fraction = Math.ceil(_noOfPostsLoaded / _noOfElementsPerRow);
+            var _extraAppend = (_noOfElementsPerRow * _fraction) - _noOfPostsLoaded;
+            var _noOfElementsToAppend = (_noOfElementsPerRow == 3 ? 2 * _noOfElementsPerRow : 3 * _noOfElementsPerRow) + _extraAppend;
             window.requestAnimationFrame(function () {
-                self.loadLoaderElementsIntoContent(_view, _categoryId);
+                self.loadLoaderElementsIntoContent(_view, _categoryId, _noOfElementsToAppend);
             });
-            var _elmToCompile = angular.element(_view);
-            self.compile(_elmToCompile.contents())($scope);
         }
         self.fnLoadPost = function (_holder) {
             if (self.selectedCategory == '_post')
@@ -158,6 +173,17 @@
                     if (_snippetViewContainer) {
                         var _contentTmpl = '';
                         _.each(_post.content, function (_content, _iter) {
+                            if (_content.type == 'list') {
+                                var _tmpl = '<ul class="type-list">LIST_CONTENT</ul>';
+                                var _listTmpl = '';
+                                _.each(_content.data.split("\n"), function (_text) {
+                                    var _textTmpl = '<li><span>SPAN_TEXT</span></li>'
+                                    _textTmpl = _textTmpl.replace('SPAN_TEXT', _text);
+                                    _listTmpl = _listTmpl + _textTmpl;
+                                });                                
+                                _tmpl = _tmpl.replace('LIST_CONTENT', _listTmpl);
+                                _contentTmpl = _contentTmpl + _tmpl;
+                            }
                             if (_content.type == 'text') {
                                 var _tmpl = '<p class="snippets-p">TEXTCONTENT</p>';
                                 _tmpl = _tmpl.replace('TEXTCONTENT', _content.data);
@@ -200,9 +226,8 @@
                         }
                     }
                 }
-            }, function(data){console.log('error');console.log(data);});
+            }, function (data) { console.log('error'); console.log(data); });
         }
-
         function tryToShowHeader() {
             var _topHeight = window.innerWidth < 768 ? 240 : 380;
             if (_viewTop && _setToDisappear && !self.headerPinned) {
@@ -255,11 +280,29 @@
             var _top = _top;
             if (_top > _lastTop) {
                 tryToHideHeader();
+                var _props = _viewBottom.getBoundingClientRect();
+                var _currentTotalHeight = document.querySelector('[data-tag="content-holder"] md-content').getBoundingClientRect().height;
+                if ((_top + _props.height) > (_currentTotalHeight - 100) && !_currentFetchInProgress)
+                    self.insertPostsFromSameCategory();
             }
             else if (_top < 48) {
                 //tryToShowHeader()
             }
             _lastTop = _top;
+        }
+        self.insertPostsFromSameCategory = function () {
+            if (self.selectedCategory != '_post') {
+                _currentFetchInProgress = true;
+                console.log('insertPostsFromSameCategory')
+                self.loadLoaderElementsIntoAllContent(self.selectedCategory);
+                self.postService.getWithDelay(self.currentTitle)
+               .then(function (data) {
+                   console.log(data);
+                   var _negateCurrentFetch = true;
+                   tryLoadingPostsForActiveContent(data, _negateCurrentFetch);
+               }, function (data) {
+               })
+            }
         }
         self.debScrollFn = _.throttle(self.onScrollFn, 20);
         self.enableReadingMode = function (_elem) {
@@ -273,8 +316,10 @@
                 self.readingMode = false;
             }
         }
-        function tryLoadingPostsForActiveContent(data) {
+        function tryLoadingPostsForActiveContent(data, _negateCurrentFetch) {
             var _currentViewId = data.filter;
+            if (typeof _negateCurrentFetch === 'undefined' || _negateCurrentFetch == null)
+                _negateCurrentFetch = false;
             var _currentlyPostedIds = _.map(_.filter(_loadedPosts[_currentViewId], function (_pl) {
                 return _pl.loaded == true
             }), function (_post) {
@@ -315,8 +360,16 @@
                     _postHolder.loadedId = _posts[_iter];
                     if (typeof self.fnLoadPost !== 'undefined' && typeof self.fnLoadPost === 'function')
                         self.fnLoadPost(_postHolder);
+                    _postHolder.loaded = true;
                 });
-            if (self.selectedCategory == '_post') {                
+            _noOfPostsLoaded = _.filter(_loadedPosts[_currentViewId],
+                function (_postHolder) {
+                    return _postHolder.loaded == true
+                }).length;
+            if (_negateCurrentFetch) {
+                _currentFetchInProgress = false;
+            }
+            if (self.selectedCategory == '_post') {
                 var _elm = angular.element(document.getElementById('_mdContent_' + _currentViewId));
                 var _tmpl = '<div class="col-xs-12" ng-if="app.selectedCategory == \'_post\'" data-tag="post-comments"><div class="comments-preview"><div id="disqus_thread" ng-init="app.initializeComments()"></div></div></div>';
                 _elm.append(_tmpl);
@@ -324,7 +377,7 @@
             }
         }
         self.initializeComments = function () {
-            var disqus_config = function () {                
+            var disqus_config = function () {
                 this.page.identifier = 'POST' + self.activePostId;
             }
             var d = document;
@@ -335,7 +388,6 @@
         }
         self.dataInit = function () {
             if (self.constants["_IS_POST_SPECIFIC"] == false) {
-                console.log(self);
                 self.selectedCategory = self.currentTitle;
                 self.postService.get(self.currentTitle)
                 .then(function (data) {
@@ -359,15 +411,13 @@
                 })
             }
         }
-        self.init = function () {         
+        self.init = function () {
             self.timeout(function () {
-                if (self.constants["_IS_POST_SPECIFIC"] == false)
-                {
-                    if(self.constants["_IS_CATEGORY_SPECIFIC"] == false){
+                if (self.constants["_IS_POST_SPECIFIC"] == false) {
+                    if (self.constants["_IS_CATEGORY_SPECIFIC"] == false) {
                         self.currentTitle = 'all';
                     }
-                    else
-                    {
+                    else {
                         self.currentTitle = self.constants["_CATEGORY"];
                     }
                     self.selectTab(self.currentTitle);
