@@ -277,7 +277,7 @@
                 }
 
                 .codeview-container-actions {
-                    height: 70px;
+                    height: 78px;
 
                     &-action {
                         overflow: hidden;
@@ -298,8 +298,23 @@
                     display: none;
                 }
 
-                .codeview-container-actions {
-                    height: auto;
+                .codeview-container {
+                    .md-chips-container {
+                        white-space: nowrap;
+                        overflow-x: hidden;
+                    }
+
+                    &-actions {
+                        height: auto;
+                    }
+
+                    &-view {
+                        pre {
+                            code {
+                                overflow-x: hidden;
+                            }
+                        }
+                    }
                 }
             }
 
