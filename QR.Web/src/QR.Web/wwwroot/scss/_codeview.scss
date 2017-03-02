@@ -16,7 +16,7 @@
             background: #f6f8fc;
             width: 100%;
             display: block;
-            box-shadow: 0 3px 6px rgba(0,0,0,.1);
+            box-shadow: 0 1px 6px rgba(0,0,0,.1);
 
             p {
                 padding: 20px;
@@ -131,6 +131,10 @@
                     padding: 0 10px;
                     min-height: 60px;
                     display: table;
+
+                    @include _READINGMODE_ONLY(&) {
+                        width: calc(100% - 145px);
+                    }
                 }
             }
 
@@ -276,17 +280,19 @@
                     display: none;
                 }
 
-                .codeview-container-actions {
-                    height: 78px;
+                .codeview-container {
+                    &-actions {
+                        height: 78px;
 
-                    &-action {
-                        overflow: hidden;
-                        box-shadow: none;
+                        &-action {
+                            overflow: hidden;
+                            box-shadow: none;
 
-                        .snippetview {
-                            &-loader {
-                                height: 100%;
-                                border-radius: 50%;
+                            .snippetview {
+                                &-loader {
+                                    height: 100%;
+                                    border-radius: 50%;
+                                }
                             }
                         }
                     }
@@ -299,9 +305,13 @@
                 }
 
                 .codeview-container {
-                    .md-chips-container {
-                        white-space: nowrap;
-                        overflow-x: hidden;
+                    @include _EXCEPT_READINGMODE_ONLY(&) {
+                        .md-chips-container {
+                            @include respond-to-except-mobile {
+                                white-space: nowrap;
+                                overflow-x: hidden;
+                            }
+                        }
                     }
 
                     &-actions {
