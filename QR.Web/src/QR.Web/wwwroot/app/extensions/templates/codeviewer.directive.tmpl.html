@@ -22,8 +22,11 @@
                 <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content track by $index" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
                     <p ng-if="mod.type == 'text'" ng-bind="mod.data"></p>
                     <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)" class="language-{{mod.langExt}}">
-                    <code></code>
+                        <code></code>
                     </pre>
+                    <ul class="type-list" ng-if="mod.type == 'list'">
+                        <li ng-repeat="item in codeViewer.splitText(mod.data) track by $index"><span ng-bind="item"></span></li>
+                    </ul>                    
                 </div>
             </div>
             <div class="codeview-container-actions snippets-chips">

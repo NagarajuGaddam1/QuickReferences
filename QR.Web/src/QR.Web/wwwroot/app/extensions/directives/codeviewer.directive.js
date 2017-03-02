@@ -13,6 +13,9 @@
                 var self = this;
                 self.timeout = $timeout;
                 self.codeViewerId = _.uniqueId('_cd_');
+                self.splitText = function (txt) {
+                    return txt.split("\n");
+                }
                 self.loadViewer = function (e, _flaskId) {
                     if (typeof self.post !== 'undefined' && typeof self.post.content !== 'undefined' && self.post.content.length > 0) {
                         _.each(self.post.content, function (_content, _iter) {

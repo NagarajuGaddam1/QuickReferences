@@ -38,11 +38,11 @@
         self.shared = shared;
         self.shared.currentContext = 'Edit Post';
         self.shared.actions = [
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--DecreaseIndentLegacy', click: 'goToDashboard', show:true, title: 'Go To Dashboard' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--RevToggleKey', click: 'revertChangesPost', show:true, title:'Revert Changes' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Save', click: 'savePost', show:true, title:'Save Changes' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show:true, title:'Delete Post' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Blocked2', click: 'suspendPost', show:true, title:'Suspend Post'  },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--DecreaseIndentLegacy', click: 'goToDashboard', show: true, title: 'Go To Dashboard' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--RevToggleKey', click: 'revertChangesPost', show: true, title: 'Revert Changes' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Save', click: 'savePost', show: true, title: 'Save Changes' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show: true, title: 'Delete Post' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Blocked2', click: 'suspendPost', show: true, title: 'Suspend Post' },
         ];
         self.sampleGet = SampleGet;
         self.timeout = $timeout;
@@ -58,28 +58,28 @@
         var _paneHolder = 'authoringFlaskPaneHolder';
         self.flasks = [];
         self.post = {};
-        self.shared.revertChangesPost = function(){
+        self.shared.revertChangesPost = function () {
             console.log('revertChangesPost');
         }
-        self.shared.deletePost = function(){
+        self.shared.deletePost = function () {
             console.log('suspendPost');
         }
-        self.shared.suspendPost = function(){
+        self.shared.suspendPost = function () {
             console.log('suspendPost');
         }
-        self.shared.savePost = function(){
+        self.shared.savePost = function () {
             console.log('savePost');
         }
         self.onDropComplete = function (_dropIndex, data) {
             self.swapContent(_dropIndex, data.index)
         }
-        self.swapContent = function (_dropIndex, _pickIndex) {            
+        self.swapContent = function (_dropIndex, _pickIndex) {
             var _temp = self.post.content[_pickIndex];
             self.post.content.splice(_pickIndex, 1);
-            self.post.content.splice(_dropIndex, 0, _temp);            
+            self.post.content.splice(_dropIndex, 0, _temp);
             _.each(self.post.content, function (_content, _iter) {
                 _content.index = _iter;
-            });            
+            });
         }
         self.enableFlaskReordering = function () {
             if (!self.flasksBeingReodered) {
@@ -148,11 +148,10 @@
             self._originalPost = angular.copy(_data);
             _.each(_data.content, function (_content, _iter) {
                 _content.uid = _.uniqueId('_FLASK_CONTENT_');
-                _content.index = _iter;
-            });
+                _content.index = _iter;                
+            });            
             return _data;
-        }
-
+        }        
         self.init = function () {
 
             self.sampleGet.get().then(function (data) {
@@ -175,6 +174,10 @@
                         {
                             "type": "text",
                             "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                        },
+                        {
+                            "type": "list",
+                            "data": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat \nDuis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur \nExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                         },
                         {
                             "type": "flask",

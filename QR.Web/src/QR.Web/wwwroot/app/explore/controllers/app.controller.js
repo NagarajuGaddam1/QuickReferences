@@ -173,6 +173,17 @@
                     if (_snippetViewContainer) {
                         var _contentTmpl = '';
                         _.each(_post.content, function (_content, _iter) {
+                            if (_content.type == 'list') {
+                                var _tmpl = '<ul class="type-list">LIST_CONTENT</ul>';
+                                var _listTmpl = '';
+                                _.each(_content.data.split("\n"), function (_text) {
+                                    var _textTmpl = '<li><span>SPAN_TEXT</span></li>'
+                                    _textTmpl = _textTmpl.replace('SPAN_TEXT', _text);
+                                    _listTmpl = _listTmpl + _textTmpl;
+                                });                                
+                                _tmpl = _tmpl.replace('LIST_CONTENT', _listTmpl);
+                                _contentTmpl = _contentTmpl + _tmpl;
+                            }
                             if (_content.type == 'text') {
                                 var _tmpl = '<p class="snippets-p">TEXTCONTENT</p>';
                                 _tmpl = _tmpl.replace('TEXTCONTENT', _content.data);
