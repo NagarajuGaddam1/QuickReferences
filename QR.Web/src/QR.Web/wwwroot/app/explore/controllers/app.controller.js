@@ -102,6 +102,7 @@
             _loadedPosts[tabTitle] = [];
         }
         self.loadLoaderElementsIntoContent = function (_content, _currentViewId, _noOfElementsToAppend) {
+            console.log(_noOfElementsToAppend);
             var _elm = angular.element(_content);
             if (!_noOfElementsToAppend)
                 _noOfElementsToAppend = 6;
@@ -126,7 +127,7 @@
                 _noOfElementsPerRow = 12 / 6;
             }
             else
-                _noOfElementsPerRow = 12 / 12;
+                _noOfElementsPerRow = 12 / 12;            
             var _fraction = Math.ceil(_noOfPostsLoaded / _noOfElementsPerRow);
             var _extraAppend = (_noOfElementsPerRow * _fraction) - _noOfPostsLoaded;
             var _noOfElementsToAppend = (_noOfElementsPerRow == 3 ? 2 * _noOfElementsPerRow : 3 * _noOfElementsPerRow) + _extraAppend;
@@ -281,6 +282,7 @@
         self.insertPostsFromSameCategory = function () {
             if (self.selectedCategory != '_post') {
                 _currentFetchInProgress = true;
+                console.log('insertPostsFromSameCategory')
                 self.loadLoaderElementsIntoAllContent(self.selectedCategory);
                 self.postService.getWithDelay(self.currentTitle)
                .then(function (data) {
@@ -351,7 +353,7 @@
                 });
             _noOfPostsLoaded = _.filter(_loadedPosts[_currentViewId],
                 function (_postHolder) {
-                    return _postHolder.loaded == false
+                    return _postHolder.loaded == true
                 }).length;
             if (_negateCurrentFetch) {
                 _currentFetchInProgress = false;
