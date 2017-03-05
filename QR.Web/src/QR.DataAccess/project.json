@@ -5,7 +5,8 @@
     "Microsoft.NETCore.App": {
       "version": "1.1.0",
       "type": "platform"
-    }
+    },
+    "QR.Models": "1.0.0-*"
   },
 
   "frameworks": {
