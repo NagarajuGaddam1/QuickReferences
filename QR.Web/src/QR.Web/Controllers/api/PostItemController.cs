@@ -20,7 +20,7 @@ namespace QR.Web.Controllers.api
             Repo = repository;
         }
 
-        // GET: api/values
+        // GET: api/PostItem
         [HttpGet]
         public IEnumerable<PostItem> Get()
         {
@@ -30,17 +30,53 @@ namespace QR.Web.Controllers.api
             return Repo.GetAllPosts();
         }
 
-        // GET api/values/5
+        // GET api/PostItem/someguid
         [HttpGet("{id}")]
-        public PostItem Get(ulong id)
+        public async Task<PostItem> Get(Guid id)
         {
             //todo:
             //Add validations and other stuff
-            return new PostItem();
-            //return Repo.FindPostById(id);
+
+            return await Repo.FindPostById(id);
         }
 
-        // POST api/values
+        [HttpGet("authors/{author}")]
+        public IEnumerable<PostItem> SearchByAuthor(string author)
+        {
+            //todo:
+            //Add validations and other stuff
+
+            return Repo.GetAllPostByAuthor(author);
+        }
+
+        [HttpGet("tags/{tag}")]
+        public IEnumerable<PostItem> SearchByTag(string tag)
+        {
+            //todo:
+            //Add validations and other stuff
+
+            return Repo.GetAllPostByTag(tag);
+        }
+
+        [HttpGet("categories/{category}")]
+        public IEnumerable<PostItem> SearchByCategory(string category)
+        {
+            //todo:
+            //Add validations and other stuff
+
+            return Repo.GetAllPostByCategory(category);
+        }
+
+        [HttpGet("title/{title}")]
+        public IEnumerable<PostItem> SearchByTitle(string title)
+        {
+            //todo:
+            //Add validations and other stuff
+
+            return Repo.GetAllPostByTitleText(title);
+        }
+
+        // POST api/PostItem
         [HttpPost]
         public IActionResult Post([FromBody]PostItem value)
         {
@@ -50,9 +86,9 @@ namespace QR.Web.Controllers.api
             return new ObjectResult(Repo.AddPost(value));
         }
 
-        // PUT api/values/5
+        // PUT api/PostItem/5
         [HttpPut("{id}")]
-        public IActionResult Put(ulong id, [FromBody]PostItem value)
+        public IActionResult Put(Guid id, [FromBody]PostItem value)
         {
             //todo:
             //Add validations and other stuff
@@ -60,14 +96,14 @@ namespace QR.Web.Controllers.api
             return new ObjectResult(Repo.UpdatePost(value));
         }
 
-        // DELETE api/values/5
+        // DELETE api/PostItem/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(ulong id)
+        public IActionResult Delete(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
             return new ObjectResult(Repo.DeletePostById(id));
-        }
+        }       
     }
 }

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Azure.Documents;
 
 namespace QR.Models
 {
-    public class PostItem
+    public class PostItem : Document
     {
         public PostItem()
         {
             
         }
 
-        public ulong Id { get; set; }
+        public Guid PostId { get; set; }
         public string Title { get; set; }
         public string PostItemText { get; set; }
         public List<Category> Categories { get; set; }

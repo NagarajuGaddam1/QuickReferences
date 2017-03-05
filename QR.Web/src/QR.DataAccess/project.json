@@ -2,10 +2,13 @@
   "version": "1.0.0-*",
 
   "dependencies": {
+    "Microsoft.Azure.DocumentDB.Core": "1.1.0",
+    "Microsoft.Extensions.Configuration.Abstractions": "1.1.0",
     "Microsoft.NETCore.App": {
       "version": "1.1.0",
       "type": "platform"
     },
+    "QR.Common": "1.0.0-*",
     "QR.Models": "1.0.0-*"
   },
 
