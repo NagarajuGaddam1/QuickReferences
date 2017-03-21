@@ -18,6 +18,11 @@ namespace QR.Web.Controllers
             return View();
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         public async Task<JsonResult> GetTextFileContents()
         {
             try

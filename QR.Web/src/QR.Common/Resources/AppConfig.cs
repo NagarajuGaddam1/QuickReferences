@@ -21,7 +21,7 @@ namespace QR.Common.Resources
             Instance.DocDbPrimaryKey = config["DocumentDb:PrimaryKey"];
             Instance.DocDbDatabaseName = config["DocumentDb:DatabaseName"];
             Instance.DocDbCollectionName = config["DocumentDb:CollectionName"];
-
+            Instance.AuthEnableAdminAuth = bool.Parse(config["Authentication:EnableAdminAuth"]);
             return Instance;
         }
 
@@ -29,5 +29,6 @@ namespace QR.Common.Resources
         public string DocDbPrimaryKey { get; set; }
         public string DocDbDatabaseName { get; set; }
         public string DocDbCollectionName { get; set; }
+        public bool AuthEnableAdminAuth { get; set; }
     }
 }
