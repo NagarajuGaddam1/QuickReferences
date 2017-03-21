@@ -6,7 +6,7 @@ using QR.Common.Resources;
 
 namespace QR.Web.Filters
 {
-    public class AdminOnly : ActionFilterAttribute
+    public class AdminAuthorized : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

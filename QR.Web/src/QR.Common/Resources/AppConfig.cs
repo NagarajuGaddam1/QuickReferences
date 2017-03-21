@@ -12,7 +12,7 @@ namespace QR.Common.Resources
         public static AppConfig Instance { get { return lazy.Value; } }
 
         private AppConfig()
-        {           
+        {
         }
 
         public static AppConfig InitializeConfigurations(IConfigurationRoot config)
@@ -22,6 +22,11 @@ namespace QR.Common.Resources
             Instance.DocDbDatabaseName = config["DocumentDb:DatabaseName"];
             Instance.DocDbCollectionName = config["DocumentDb:CollectionName"];
             Instance.AuthEnableAdminAuth = bool.Parse(config["Authentication:EnableAdminAuth"]);
+            Instance.Admins = config
+                .GetSection("Authentication")
+                .GetSection("Admins")
+                .GetChildren()
+                .Select(c => c.Value).ToList<string>();
             return Instance;
         }
 
@@ -30,5 +35,6 @@ namespace QR.Common.Resources
         public string DocDbDatabaseName { get; set; }
         public string DocDbCollectionName { get; set; }
         public bool AuthEnableAdminAuth { get; set; }
+        public List<string> Admins { get; set; }
     }
 }

@@ -12,23 +12,5 @@
             <input type="hidden" name="ReturnUrl" value="@ViewBag.ReturnUrl" />
             <button class="btn btn-lg btn-success" type="submit">Connect using @description.DisplayName</button>
         </form>
-    }
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        <div class="row">
-            <div class="col-md-12">
-                <ul>
-                    @foreach (var claim in User.Claims)
-                    {
-                        <li>@claim.Type = @claim.Value</li>
-                    }
-                </ul>
-            </div>
-        </div>
-    }
-    else
-    {
-        <h1>Not Authneticated</h1>
-    }
+    }    
 </div>

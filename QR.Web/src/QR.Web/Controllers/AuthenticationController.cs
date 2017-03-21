@@ -7,7 +7,10 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using QR.Common.Resources;
 using QR.Web.Extensions;
+using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace QR.Web.Controllers
 {
@@ -16,8 +19,25 @@ namespace QR.Web.Controllers
         [HttpGet("~/signin")]
         public IActionResult SignIn()
         {
-             
-            return View("SignIn", HttpContext.GetExternalProviders());
+            if (AppConfig.Instance.AuthEnableAdminAuth && HttpContext.User.Identity.IsAuthenticated)
+            {
+                if (HttpContext.User.Identity.AuthenticationType == "GitHub")
+                {
+                    if (HttpContext.User.HasClaim(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"))
+                    {
+                        var _gitHubUID = (HttpContext.User.Identity as ClaimsIdentity)?.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name");
+                        if (_gitHubUID != null)
+                        {
+                            var _exists = AppConfig.Instance.Admins.Contains(_gitHubUID.Value);
+                            if (_exists)
+                                return Redirect("~/Author/Index");
+                        }
+                    }                    
+                }
+                return Redirect("~/Author/Error");
+            }
+            else
+                return View("SignIn", HttpContext.GetExternalProviders());
         }
 
         [HttpPost("~/signin")]

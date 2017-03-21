@@ -77,7 +77,7 @@ namespace QR.Web.Controllers.api
 
         // POST api/PostItem
         [HttpPost]
-        [AdminOnly]
+        [AdminAuthorized]
         public IActionResult Post([FromBody]PostItem value)
         {
             //todo:
@@ -88,7 +88,7 @@ namespace QR.Web.Controllers.api
 
         // PUT api/PostItem/5
         [HttpPut("{id}")]
-        [AdminOnly]
+        [AdminAuthorized]
         public IActionResult Put(Guid id, [FromBody]PostItem value)
         {
             //todo:
@@ -99,7 +99,7 @@ namespace QR.Web.Controllers.api
 
         // DELETE api/PostItem/5
         [HttpDelete("{id}")]
-        [AdminOnly]
+        [AdminAuthorized]
         public IActionResult Delete(Guid id)
         {
             //todo:

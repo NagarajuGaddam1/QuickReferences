@@ -5,17 +5,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.IO;
+using QR.Common.Resources;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace QR.Web.Controllers
 {
     public class AuthorController : Controller
-    {
-        // GET: /<controller>/
+    {        
         public IActionResult Index()
         {
-            return View();
+            if (AppConfig.Instance.AuthEnableAdminAuth && HttpContext.User.Identity.IsAuthenticated == false)
+                return Redirect("~/signin");
+            else
+                return View();
         }
 
         public IActionResult Error()
@@ -44,8 +47,8 @@ namespace QR.Web.Controllers
             catch (Exception e)
             {
                 Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                return Json(e.Message);                
-            }            
+                return Json(e.Message);
+            }
         }
     }
 }
