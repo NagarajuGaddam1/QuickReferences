@@ -159,3 +159,48 @@ button {
         min-height: calc(100% - 60px);
     }
 }
+
+.error {
+    &-view {
+        &-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: $standardBg;
+            padding: 20vh 20vw 0 20vw;
+
+            &-title {
+                width: 100%;
+                padding-bottom: 45px;
+                margin-bottom: 45px;
+                border-bottom: 1px dotted lighten($standardBg, 33);
+                color: #fff;
+                font-size: xx-large;
+                font-weight: 300;
+                box-sizing: border-box;
+            }
+
+            &-message {
+                width: 100%;
+                color: #fff;
+                font-weight: 300;
+                font-size: large;
+                line-height:normal;
+
+                a {
+                    color: $standardBg;
+                    background: #fff;
+                    padding: 0 5px;
+                    margin-right: 5px;
+                    transition:background-color 0.2s linear 0s, color 0.2s linear 0s;
+                    text-decoration:none;
+
+                    &:hover {
+                        background: #000;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}

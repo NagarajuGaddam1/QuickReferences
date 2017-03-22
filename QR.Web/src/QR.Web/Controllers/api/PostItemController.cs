@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using QR.Models;
 using QR.DataAccess.Repository;
+using QR.Web.Filters;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,7 +20,7 @@ namespace QR.Web.Controllers.api
         }
 
         // GET: api/PostItem
-        [HttpGet]
+        [HttpGet]        
         public IEnumerable<PostItem> Get()
         {
             //todo:
@@ -78,6 +77,7 @@ namespace QR.Web.Controllers.api
 
         // POST api/PostItem
         [HttpPost]
+        [AdminAuthorized]
         public IActionResult Post([FromBody]PostItem value)
         {
             //todo:
@@ -88,6 +88,7 @@ namespace QR.Web.Controllers.api
 
         // PUT api/PostItem/5
         [HttpPut("{id}")]
+        [AdminAuthorized]
         public IActionResult Put(Guid id, [FromBody]PostItem value)
         {
             //todo:
@@ -98,6 +99,7 @@ namespace QR.Web.Controllers.api
 
         // DELETE api/PostItem/5
         [HttpDelete("{id}")]
+        [AdminAuthorized]
         public IActionResult Delete(Guid id)
         {
             //todo:
