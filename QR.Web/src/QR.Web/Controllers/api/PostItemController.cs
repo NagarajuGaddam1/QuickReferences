@@ -14,98 +14,104 @@ namespace QR.Web.Controllers.api
     public class PostItemController : Controller
     {
         public IPostItemRepository Repo { get; set; }
-        public PostItemController(IPostItemRepository repository)
+        public IAuthorItemRepository AuthorRepo { get; set; }
+        public PostItemController(IPostItemRepository repository, IAuthorItemRepository authorRepository)
         {
             Repo = repository;
+            AuthorRepo = authorRepository;
         }
 
         // GET: api/PostItem
         [HttpGet]        
-        public IEnumerable<PostItem> Get()
+        public IActionResult Get()
         {
             //todo:
             //Add validations and other stuff
-
-            return Repo.GetAllPosts();
+            return Json(Repo.GetAllPosts());
         }
 
         // GET api/PostItem/someguid
         [HttpGet("{id}")]
-        public async Task<PostItem> Get(Guid id)
+        public IActionResult Get(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return await Repo.FindPostById(id);
+            return Json(Repo.FindPostById(id).Result);
         }
 
         [HttpGet("authors/{author}")]
-        public IEnumerable<PostItem> SearchByAuthor(string author)
+        public IActionResult SearchByAuthor(string author)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByAuthor(author);
+            return Json(Repo.GetAllPostByAuthor(author));
         }
 
         [HttpGet("tags/{tag}")]
-        public IEnumerable<PostItem> SearchByTag(string tag)
+        public IActionResult SearchByTag(string tag)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByTag(tag);
+            return Json(Repo.GetAllPostByTag(tag));
         }
 
         [HttpGet("categories/{category}")]
-        public IEnumerable<PostItem> SearchByCategory(string category)
+        public IActionResult SearchByCategory(string category)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByCategory(category);
+            return Json(Repo.GetAllPostByCategory(category));
         }
 
         [HttpGet("title/{title}")]
-        public IEnumerable<PostItem> SearchByTitle(string title)
+        public IActionResult SearchByTitle(string title)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByTitleText(title);
+            return Json(Repo.GetAllPostByTitleText(title));
         }
 
         // POST api/PostItem
         [HttpPost]
-        [AdminAuthorized]
+        //[AdminAuthorized]
         public IActionResult Post([FromBody]PostItem value)
         {
             //todo:
             //Add validations and other stuff
-
-            return new ObjectResult(Repo.AddPost(value));
+            var author = AuthorRepo.FindAuthorByAlias(value.Author.Alias);
+            var authorMap = new AuthorMapForPost()
+            {
+                Alias = author.Alias,
+                AuthorDocumentId  = author.id,
+                ImgSrc = author.ImgSrc
+            };
+            return Json(Repo.AddPost(value, authorMap));
         }
 
         // PUT api/PostItem/5
         [HttpPut("{id}")]
-        [AdminAuthorized]
-        public IActionResult Put(Guid id, [FromBody]PostItem value)
+        //[AdminAuthorized]
+        public IActionResult Put(Guid id, [FromBody]PostItemResponse value)
         {
             //todo:
             //Add validations and other stuff
-
-            return new ObjectResult(Repo.UpdatePost(value));
+            return Json(Repo.UpdatePost(value));
         }
 
         // DELETE api/PostItem/5
         [HttpDelete("{id}")]
-        [AdminAuthorized]
+        //[AdminAuthorized]
         public IActionResult Delete(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return new ObjectResult(Repo.DeletePostById(id));
-        }       
+            return Json(Repo.DeletePostById(id));
+        }
     }
 }

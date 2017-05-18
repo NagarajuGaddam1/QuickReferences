@@ -8,14 +8,14 @@ namespace QR.DataAccess.Repository
 {
     public interface IPostItemRepository
     {
-        Task<Guid> AddPost(PostItem item);
-        IEnumerable<PostItem> GetAllPosts();
-        IEnumerable<PostItem> GetAllPostByAuthor(string author);
-        IEnumerable<PostItem> GetAllPostByCategory(string category);
-        IEnumerable<PostItem> GetAllPostByTag(string tag);
-        IEnumerable<PostItem> GetAllPostByTitleText(string titletext);
-        Task<PostItem> FindPostById(Guid id);
+        Task<Guid> AddPost(PostItem item, AuthorMapForPost author);
+        IEnumerable<PostItemResponse> GetAllPosts();
+        IEnumerable<PostItemResponse> GetAllPostByAuthor(string author);
+        IEnumerable<PostItemResponse> GetAllPostByCategory(string category);
+        IEnumerable<PostItemResponse> GetAllPostByTag(string tag);
+        IEnumerable<PostItemResponse> GetAllPostByTitleText(string titletext);
+        Task<PostItemResponse> FindPostById(Guid id);
         Task<bool> DeletePostById(Guid id);
-        Task<Guid> UpdatePost(PostItem item);
+        Task<Guid> UpdatePost(PostItemResponse item);
     }
 }

@@ -33,6 +33,7 @@ namespace QR.Web
 
             //Add our repository type
             services.AddSingleton<IPostItemRepository, PostItemRepository>();
+            services.AddSingleton<IAuthorItemRepository, AuthorItemRepository>();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>
