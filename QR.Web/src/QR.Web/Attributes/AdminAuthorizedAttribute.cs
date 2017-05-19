@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Routing;
 using QR.Common.Resources;
+using System.Net;
 
 namespace QR.Web.Filters
 {
@@ -19,7 +20,9 @@ namespace QR.Web.Filters
                 if (_isAuthenticated)
                     base.OnActionExecuting(context);
                 else
-                    context.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Author" }, { "action", "Error" } });
+                {
+                    context.Result = new StatusCodeResult((int) HttpStatusCode.Forbidden);
+                }
             }
         }
     }

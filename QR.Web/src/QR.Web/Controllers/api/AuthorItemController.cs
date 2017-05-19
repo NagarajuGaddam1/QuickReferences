@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QR.DataAccess.Repository;
 using QR.Models;
+using QR.Web.Filters;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace QR.Web.Controllers.api
 {
+
     [Route("api/[controller]")]
     public class AuthorItemController : Controller
     {
@@ -22,6 +21,7 @@ namespace QR.Web.Controllers.api
 
         // GET: api/values
         [HttpGet]
+        [AdminAuthorized]
         public IActionResult Get()
         {
             return Json(Repo.GetAllAuthors());
@@ -36,6 +36,7 @@ namespace QR.Web.Controllers.api
 
         // POST api/values
         [HttpPost]
+        [AdminAuthorized]
         public IActionResult Post([FromBody]AuthorItem value)
         {
             return Json(Repo.AddAuthor(value));
@@ -43,6 +44,7 @@ namespace QR.Web.Controllers.api
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [AdminAuthorized]
         public IActionResult Put(Guid id, [FromBody]AuthorItemResponse value)
         {
             return Json(Repo.UpdateAuthor(value));
@@ -50,6 +52,7 @@ namespace QR.Web.Controllers.api
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [AdminAuthorized]
         public IActionResult Delete(Guid id)
         {
             return Json(Repo.DeleteAuthorById(id));
