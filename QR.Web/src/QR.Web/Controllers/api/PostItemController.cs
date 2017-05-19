@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using QR.Models;
 using QR.DataAccess.Repository;
 using QR.Web.Filters;
+using QR.Web.Services;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,12 +14,10 @@ namespace QR.Web.Controllers.api
     [Route("api/[controller]")]
     public class PostItemController : Controller
     {
-        public IPostItemRepository Repo { get; set; }
-        public IAuthorItemRepository AuthorRepo { get; set; }
-        public PostItemController(IPostItemRepository repository, IAuthorItemRepository authorRepository)
+        public IPostItemService PostService { get; set; }
+        public PostItemController(IPostItemService postService)
         {
-            Repo = repository;
-            AuthorRepo = authorRepository;
+            PostService = postService;
         }
 
         // GET: api/PostItem
@@ -27,17 +26,17 @@ namespace QR.Web.Controllers.api
         {
             //todo:
             //Add validations and other stuff
-            return Json(Repo.GetAllPosts());
+            return PostService.GetAllPosts();
         }
 
         // GET api/PostItem/someguid
         [HttpGet("{id}")]
-        public IActionResult Get(Guid id)
+        public Task<IActionResult> Get(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.FindPostById(id).Result);
+            return PostService.GetPostById(id);
         }
 
         [HttpGet("authors/{author}")]
@@ -46,7 +45,7 @@ namespace QR.Web.Controllers.api
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.GetAllPostByAuthor(author));
+            return PostService.GetPostsByAuthor(author);
         }
 
         [HttpGet("tags/{tag}")]
@@ -55,7 +54,7 @@ namespace QR.Web.Controllers.api
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.GetAllPostByTag(tag));
+            return PostService.GetPostsTaggedWith(tag);
         }
 
         [HttpGet("categories/{category}")]
@@ -64,7 +63,7 @@ namespace QR.Web.Controllers.api
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.GetAllPostByCategory(category));
+            return PostService.GetPostsInCategory(category);
         }
 
         [HttpGet("title/{title}")]
@@ -73,45 +72,36 @@ namespace QR.Web.Controllers.api
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.GetAllPostByTitleText(title));
+            return PostService.GetPostsWithTitle(title);
         }
 
         // POST api/PostItem
         [HttpPost]
         [AdminAuthorized]
-        public IActionResult Post([FromBody]PostItem value)
+        public Task<IActionResult> Post([FromBody]PostItem value)
         {
-            //todo:
-            //Add validations and other stuff
-            var author = AuthorRepo.FindAuthorByAlias(value.Author.Alias);
-            var authorMap = new AuthorMapForPost()
-            {
-                Alias = author.Alias,
-                AuthorDocumentId  = author.id,
-                ImgSrc = author.ImgSrc
-            };
-            return Json(Repo.AddPost(value, authorMap));
+            return PostService.CreatePost(value);
         }
 
         // PUT api/PostItem/5
         [HttpPut("{id}")]
         [AdminAuthorized]
-        public IActionResult Put(Guid id, [FromBody]PostItemResponse value)
+        public Task<IActionResult> Put(Guid id, [FromBody]PostItemResponse value)
         {
             //todo:
             //Add validations and other stuff
-            return Json(Repo.UpdatePost(value));
+            return PostService.UpdatePost(value);
         }
 
         // DELETE api/PostItem/5
         [HttpDelete("{id}")]
         [AdminAuthorized]
-        public IActionResult Delete(Guid id)
+        public Task<IActionResult> Delete(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return Json(Repo.DeletePostById(id));
+            return PostService.DeletePostById(id);
         }
     }
 }

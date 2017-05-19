@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using QR.DataAccess.Repository;
 using QR.Models;
 using QR.Web.Filters;
+using QR.Web.Services;
+using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,10 +15,10 @@ namespace QR.Web.Controllers.api
     public class AuthorItemController : Controller
     {
 
-        public IAuthorItemRepository Repo { get; set; }
-        public AuthorItemController(IAuthorItemRepository repository)
+        public IAuthorItemService AuthorService { get; set; }
+        public AuthorItemController(IAuthorItemService service)
         {
-            Repo = repository;
+            AuthorService = service;
         }
 
         // GET: api/values
@@ -24,38 +26,38 @@ namespace QR.Web.Controllers.api
         [AdminAuthorized]
         public IActionResult Get()
         {
-            return Json(Repo.GetAllAuthors());
+            return AuthorService.GetAllAuthors();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public IActionResult Get(Guid id)
         {
-            return Json(Repo.FindAuthorById(id));
+            return AuthorService.GetAuthorById(id);
         }
 
         // POST api/values
         [HttpPost]
         [AdminAuthorized]
-        public IActionResult Post([FromBody]AuthorItem value)
+        public Task<IActionResult> Post([FromBody]AuthorItem value)
         {
-            return Json(Repo.AddAuthor(value));
+            return AuthorService.CreateAuthor(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         [AdminAuthorized]
-        public IActionResult Put(Guid id, [FromBody]AuthorItemResponse value)
+        public Task<IActionResult> Put(Guid id, [FromBody]AuthorItemResponse value)
         {
-            return Json(Repo.UpdateAuthor(value));
+            return AuthorService.UpdateAuthor(value);
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         [AdminAuthorized]
-        public IActionResult Delete(Guid id)
+        public Task<IActionResult> Delete(Guid id)
         {
-            return Json(Repo.DeleteAuthorById(id));
+            return AuthorService.DeleteAuthor(id);
         }
     }
 }
