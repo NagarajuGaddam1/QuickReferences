@@ -158,8 +158,8 @@
         }
 
         self.init = function () {
-            if (typeof self.stateParams.postId !== 'undefined' && self.stateParams.postId != null && self.stateParams.postId != '') {
-                self.postsService.getPostData(self.stateParams['postId'])
+            if (typeof self.stateParams.id !== 'undefined' && self.stateParams.id != null && self.stateParams.id != '') {
+                self.postsService.getPostData(self.stateParams['id'])
                 .then(function (data) {
                     self.post = data;
                     self.currentFlaskIndex = self.post.contentItems.length;

@@ -212,7 +212,7 @@
             if (e.target.matches('[data-tag="edit-post"]')) 
             {
                 var _postId = e.target.getAttribute('uid');
-                var _path = location.origin + '/Author/#post/' + _postId;
+                var _path = location.origin + '/Author/#post?id=' + _postId;
                 window.open(_path, '_self');
             }
             else if (e.target.matches('[data-tag="publish-post"]')) 
