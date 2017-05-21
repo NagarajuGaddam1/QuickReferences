@@ -212,7 +212,7 @@
             if (e.target.matches('[data-tag="edit-post"]')) 
             {
                 var _postId = e.target.getAttribute('uid');
-                var _path = location.origin + '/Author/#post';
+                var _path = location.origin + '/Author/#post/' + _postId;
                 window.open(_path, '_self');
             }
             else if (e.target.matches('[data-tag="publish-post"]')) 
@@ -243,6 +243,21 @@
                 console.log(data);
             })
         }
+
+        self.shared['suspendAuthor'] = function () {
+            _.each(self.selectedAuthors, function (_selectedAuthorId) {
+                var author = _.find(self.authorsGridConfig.data, function (item) { return item['id'].localeCompare(_selectedAuthorId) == 0 });
+                if (author) {
+                    self.authorsService.suspendAuthor(author)
+                    .then(function (data) {
+                        console.log('Suspended', author);
+                    }, function (error) {
+                        console.log(error);
+                    });
+                }
+            });
+        };
+
         self.init();
     }]);
 })();

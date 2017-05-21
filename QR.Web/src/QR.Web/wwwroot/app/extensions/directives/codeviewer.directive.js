@@ -17,18 +17,18 @@
                     return txt.split("\n");
                 }
                 self.loadViewer = function (e, _flaskId) {
-                    if (typeof self.post !== 'undefined' && typeof self.post.content !== 'undefined' && self.post.content.length > 0) {
-                        _.each(self.post.content, function (_content, _iter) {
+                    if (typeof self.post !== 'undefined' && typeof self.post.contentItems !== 'undefined' && self.post.contentItems.length > 0) {
+                        _.each(self.post.contentItems, function (_content, _iter) {
                             if (_content.type == 'flask') {
                                 self.timeout(function () {
                                     var _elem = document.getElementById(self.codeViewerId + '_MOD_' + _iter);
                                     if (_elem) {
                                         var _codeElm = _elem.querySelector('code');
                                         if (_codeElm) {
-                                            _codeElm.classList.add('language-' + _content.langExt);
+                                            _codeElm.classList.add('language-' + _content.flaskLang);
                                             _codeElm.setAttribute('id', '_CE_' + self.codeViewerId + '_MOD_' + _iter);
                                             _codeElm.setAttribute('uid', _content.uid);
-                                            _codeElm.innerHTML = Prism.highlight(_content.data, Prism.languages[_content.langExt]);
+                                            _codeElm.innerHTML = Prism.highlight(_content.data, Prism.languages[_content.flaskLang]);
                                         }
                                     }
                                 }, 33);
@@ -38,7 +38,7 @@
                 };
                 self.buildFns = function () {
                     self.post.updateFlask = function (html, uid) {
-                        _.each(self.post.content, function (_content, _iter) {
+                        _.each(self.post.contentItems, function (_content, _iter) {
                             if (_content.type == 'flask' && _content.uid == uid) {
                                 var _elem = document.getElementById('_CE_' + self.codeViewerId + '_MOD_' + _iter);
                                 if (_elem) {

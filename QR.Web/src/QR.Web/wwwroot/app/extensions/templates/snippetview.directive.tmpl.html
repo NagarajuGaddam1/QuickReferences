@@ -4,7 +4,7 @@
             <div class="codeview-container-actions">
                 <div class="pull-left">
                     <div class="codeview-container-actions-logo"><img /></div>
-                    <div class="codeview-container-actions-title" ng-bind="::snippetViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
+                    <div class="codeview-container-actions-title" ng-bind="::snippetViewer.post.title">Lorem Ipsum Dolor Sit Amet</div>
                 </div>
                 <div class="pull-right">
                     <div class="codeview-container-actions-action">
@@ -20,7 +20,7 @@
                 <p class="snippets-p" ng-bind="::snippetViewer.post.description"></p>
                 <div class="codeview-container-flasks codeview-container-flasks-snippets" ng-init="snippetViewer.loadSnippet()">
                     <div class="codeview-container-flasks-item" ng-repeat="mod in ::snippetViewer.previewContent" id="{{::snippetViewer.snippetViewerId + '_MOD_' + $index}}">
-                        <pre ng-if="::mod.type == 'flask'" class="snippetview language-{{::mod.langExt}}" ng-init="snippetViewer.loadViewer($index)">
+                        <pre ng-if="::mod.type == 'flask'" class="snippetview language-{{::mod.flaskLang}}" ng-init="snippetViewer.loadViewer($index)">
                         <code></code>
                     </pre>
                     </div>

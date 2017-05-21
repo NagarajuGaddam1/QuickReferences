@@ -21,7 +21,7 @@ namespace QR.Models
         public DateTime ModifiedOn { get; set; }
         public DateTime ActivatedOn { get; set; }
         public Boolean IsSuspended { get; set; }
-        public Uri ImgSrc { get; set; }
+        public string ImgSrc { get; set; }
     }
 
     public class AuthorItemResponse : AuthorItem, GenericDocument
@@ -37,9 +37,11 @@ namespace QR.Models
     {
         public AuthorMapForPost()
         {
+            AuthorDocumentId = null;
+            ImgSrc = null;
         }
-        public Guid AuthorDocumentId { get; set; }
+        public Guid? AuthorDocumentId { get; set; }
         public string Alias { get; set; }
-        public Uri ImgSrc { get; set; }
+        public string ImgSrc { get; set; }
     }
 }

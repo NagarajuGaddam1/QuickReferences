@@ -7,8 +7,9 @@ namespace QR.Models
         HTML = 0,
         JS = 1,
         CSS = 2,
-        CSHARP = 3,
-        AZURE = 4
+        SCSS = 3,
+        CSHARP = 4,
+        AZURE = 5
     }
 
     public enum PostItemState

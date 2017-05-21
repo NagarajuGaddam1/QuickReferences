@@ -4,12 +4,12 @@
             <div class="codeview-container-actions">
                 <div class="pull-left">
                     <div class="codeview-container-actions-logo">
-                        <img src="/dist/images/css3.png" ng-show="codeViewer.post.category == 'css'" />
-                        <img src="/dist/images/js.png" ng-show="codeViewer.post.category == 'javascript'" />
-                        <img src="/dist/images/html5.png" ng-show="codeViewer.post.category == 'markup'" />
-                        <img src="/dist/images/scss.png" ng-show="codeViewer.post.category == 'scss'" />
+                        <img src="/dist/images/css3.png" ng-show="codeViewer.post.category == 'CSS'" />
+                        <img src="/dist/images/js.png" ng-show="codeViewer.post.category == 'JS'" />
+                        <img src="/dist/images/html5.png" ng-show="codeViewer.post.category == 'MARKUP' || codeViewer.post.category == 'HTML'" />
+                        <img src="/dist/images/scss.png" ng-show="codeViewer.post.category == 'SCSS'" />
                     </div>
-                    <div class="codeview-container-actions-title" ng-bind="codeViewer.post.name">Lorem Ipsum Dolor Sit Amet</div>
+                    <div class="codeview-container-actions-title" ng-bind="codeViewer.post.title">Lorem Ipsum Dolor Sit Amet</div>
                 </div>
                 <div class="pull-right codeview-container-actions-user-logo show">
                     <div class="codeview-container-actions-action">
@@ -19,9 +19,9 @@
                 <div class="clearfix"></div>
             </div>
             <div class="codeview-container-flasks">
-                <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.content track by $index" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
+                <div class="codeview-container-flasks-item" ng-repeat="mod in codeViewer.post.contentItems track by $index" id="{{codeViewer.codeViewerId + '_MOD_' + $index}}">
                     <p ng-if="mod.type == 'text'" ng-bind="mod.data"></p>
-                    <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)" class="language-{{mod.langExt}}">
+                    <pre ng-if="mod.type == 'flask'" ng-init="codeViewer.loadViewer($index)" class="language-{{mod.flaskLang}}">
                         <code></code>
                     </pre>
                     <ul class="type-list" ng-if="mod.type == 'list'">

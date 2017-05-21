@@ -14,9 +14,9 @@
                 self.snippetViewerId = _.uniqueId('_cd_');
                 self.previewContent = [];
                 self.loadSnippet = function () {
-                    if (typeof self.post !== 'undefined' && typeof self.post.content !== 'undefined' && self.post.content.length > 0) {
-                        var _flask = _.first(_.filter(self.post.content, function (_mod) { return _mod.type == 'flask' })) || {};
-                        var _text = _.first(_.filter(self.post.content, function (_mod) { return _mod.type == 'text' })) || {};
+                    if (typeof self.post !== 'undefined' && typeof self.post.contentItems !== 'undefined' && self.post.contentItems.length > 0) {
+                        var _flask = _.first(_.filter(self.post.contentItems, function (_mod) { return _mod.type == 'flask' })) || {};
+                        var _text = _.first(_.filter(self.post.contentItems, function (_mod) { return _mod.type == 'text' })) || {};
                         self.previewContent.push(_text);
                         self.previewContent.push(_flask);
                     }
@@ -29,10 +29,10 @@
                                 if (_elem) {
                                     var _codeElm = _elem.querySelector('code');
                                     if (_codeElm) {
-                                        _codeElm.classList.add('language-' + _content.langExt);
+                                        _codeElm.classList.add('language-' + _content.flaskLang);
                                         _codeElm.setAttribute('id', '_CE_' + self.snippetViewerId + '_MOD_' + _iter);
                                         _codeElm.setAttribute('uid', _content.uid);
-                                        _codeElm.innerHTML = Prism.highlight(_content.data, Prism.languages[_content.langExt]);
+                                        _codeElm.innerHTML = Prism.highlight(_content.data, Prism.languages[_content.flaskLang]);
                                     }
                                 }
                             }, 33);
@@ -46,10 +46,11 @@
                 var _imgElm = $(element).find('.codeview-container-actions-logo img');
                 var _imgElmSrc = '';
                 switch (scope.snippetViewer.post.category) {
-                    case 'css': _imgElmSrc = '/dist/images/css3.png'; break;
-                    case 'javascript': _imgElmSrc = '/dist/images/js.png'; break;
-                    case 'scss': _imgElmSrc = '/dist/images/scss.png'; break;
-                    case 'markup': _imgElmSrc = '/dist/images/html5.png'; break;
+                    case 'CSS': _imgElmSrc = '/dist/images/css3.png'; break;
+                    case 'JAVASCRIPT': _imgElmSrc = '/dist/images/js.png'; break;
+                    case 'SCSS': _imgElmSrc = '/dist/images/scss.png'; break;
+                    case 'MARKUP': _imgElmSrc = '/dist/images/html5.png'; break;
+                    case 'HTML5': _imgElmSrc = '/dist/images/html5.png'; break;
                     default: _imgElmSrc = '/dist/images/css3.png'; break;
                 }
                 if (_imgElm)

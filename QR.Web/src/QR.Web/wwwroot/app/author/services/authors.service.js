@@ -23,10 +23,26 @@
             return $http({
                 url: "/api/AuthorItem",
                 method: "GET"
+            }).then(handleSuccessAndMap, handleError);
+        }
+
+        var suspendAuthor = function (data) {
+
+            delete data.authenticationType
+            delete data.authenticationUID;
+            data['isSuspended'] = true;
+            return $http({
+                url: "/api/AuthorItem/" + data['id'],
+                method: "PUT",
+                data: JSON.stringify(data)
             }).then(handleSuccess, handleError);
         }
 
         var handleSuccess = function (response) {
+            return response.data;
+        }
+
+        var handleSuccessAndMap = function (response) {
             _.each(response.data, function (item) {
                 item.authenticationType = AUTHENTICATION[item['authType']];
                 item.authenticationUID = item['sourceId']
@@ -36,10 +52,11 @@
 
         var handleError = function (error) {
             console.log(error);
-        }        
+        }  
 
         return {
-            getAll: getData            
+            getAll: getData,
+            suspendAuthor: suspendAuthor
         }
     }
 

@@ -26,7 +26,7 @@
             <div class="flask">
                 <div class="flask-instance tagged">
                     <label class="title">Title for the post</label>
-                    <input ng-model="authoringPost.post.name" />
+                    <input ng-model="authoringPost.post.title" />
                 </div>
                 <div class="flask-instance tagged">
                     <label class="title">Description for the post</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="flask-instance tagged">
                     <label class="title">Categorize post as </label>
-                    <div class="flask-instance-tag" ng-repeat="tag in authoringPost.mainTags" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="authoringPost.post.category = tag.id">
+                    <div class="flask-instance-tag" ng-repeat="tag in authoringPost.mainCategories" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="authoringPost.post.category = tag.id">
                         <label ng-bind="tag.name"></label>
                         <i class="ms-Icon ms-Icon--CheckMark" ng-show="tag.id == authoringPost.post.category"></i>
                     </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="flask-instance draglist" ng-attr-data-reordering="{{authoringPost.flasksBeingReodered}}">
                     <label class="title">Content</label>
-                    <div class="flask-instance" ng-repeat="mod in authoringPost.post.content track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="authoringPost.flasksBeingReodered" ng-drop-success="authoringPost.onDropComplete($index, $data)" ng-drag="authoringPost.flasksBeingReodered" ng-drag-data="mod">
+                    <div class="flask-instance" ng-repeat="mod in authoringPost.post.contentItems track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="authoringPost.flasksBeingReodered" ng-drop-success="authoringPost.onDropComplete($index, $data)" ng-drag="authoringPost.flasksBeingReodered" ng-drag-data="mod">
                         <i class="ms-Icon ms-Icon--Move" ng-drag-handle ng-show="authoringPost.flasksBeingReodered"></i>
                         <i class="ms-Icon ms-Icon--Delete"></i>
                         <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">

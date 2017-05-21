@@ -15,7 +15,7 @@ namespace QR.Models
         public Guid PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<Category> Categories { get; set; }
+        public Category Category { get; set; }
         public List<string> Tags { get; set; }
         public List<ContentItem> ContentItems { get; set; }
         public PostItemState State { get; set; }
@@ -47,7 +47,7 @@ namespace QR.Models
         public Guid PostId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public List<Category> Categories { get; set; }
+        public Category Category { get; set; }
         public DateTime ModifiedOn { get; set; }
         public Boolean IsPublished { get; set; }
         public Boolean IsSuspended { get; set; }

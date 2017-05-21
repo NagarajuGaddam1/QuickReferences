@@ -59,7 +59,7 @@ namespace QR.DataAccess.Repository
 
         public IEnumerable<PostItemResponse> GetAllPostByCategory(string category)
         {
-            string query = $"select * from {collectionName} p where Array_Contains(p.Categories,{(int)Utils.GetEnumIntValue<Category>(category)})";
+            string query = $"select * from {collectionName} p where p.Category = {(int)Utils.GetEnumIntValue<Category>(category)}";
             return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 

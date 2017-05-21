@@ -193,10 +193,10 @@
                                 var _tmpl = '<div class="codeview-container-flasks codeview-container-flasks-snippets"><div class="codeview-container-flasks-item" id="_FLASK_ID"><pre class="snippetview language-_FLASK_LANG"><code></code></pre></div></div>';
                                 var _flaskId = _snippetViewerId + '_MOD_' + _iter;
                                 _tmpl = _tmpl.replace('_FLASK_ID', _flaskId);
-                                _tmpl = _tmpl.replace('_FLASK_LANG', _content.langExt);
+                                _tmpl = _tmpl.replace('_FLASK_LANG', _content.flaskLang);
                                 _flasksToProcess.push({
                                     id: _flaskId,
-                                    langExt: _content.langExt,
+                                    flaskLang: _content.flaskLang,
                                     codeViewId: '_CE_' + _snippetViewerId + '_MOD_' + _iter,
                                     uid: _content.uid,
                                     data: _content.data
@@ -216,10 +216,10 @@
                                 if (_elem) {
                                     var _codeElm = _elem.querySelector('code');
                                     if (_codeElm) {
-                                        _codeElm.classList.add('language-' + _flask.langExt);
+                                        _codeElm.classList.add('language-' + _flask.flaskLang);
                                         _codeElm.setAttribute('id', _flask.codeViewId);
                                         _codeElm.setAttribute('uid', _flask.uid);
-                                        _codeElm.innerHTML = Prism.highlight(_flask.data, Prism.languages[_flask.langExt]);
+                                        _codeElm.innerHTML = Prism.highlight(_flask.data, Prism.languages[_flask.flaskLang]);
                                     }
                                 }
                             });
