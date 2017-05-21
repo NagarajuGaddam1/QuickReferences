@@ -97,5 +97,11 @@ namespace QR.Web.Services
             else
                 return new BadRequestResult();
         }
+
+        public IActionResult GetAllPostBriefs()
+        {
+            var items = PostRepo.GetAllPostBriefs();
+            return new OkObjectResult(items);
+        }
     }
 }

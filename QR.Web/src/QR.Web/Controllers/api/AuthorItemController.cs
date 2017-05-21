@@ -23,7 +23,6 @@ namespace QR.Web.Controllers.api
 
         // GET: api/values
         [HttpGet]
-        [AdminAuthorized]
         public IActionResult Get()
         {
             return AuthorService.GetAllAuthors();

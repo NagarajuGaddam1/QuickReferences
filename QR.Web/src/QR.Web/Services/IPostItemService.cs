@@ -8,6 +8,7 @@ namespace QR.Web.Services
     public interface IPostItemService
     {
         IActionResult GetAllPosts();
+        IActionResult GetAllPostBriefs();
         Task<IActionResult> GetPostById(Guid id);
         IActionResult GetPostsByAuthor(string alias);
         IActionResult GetPostsTaggedWith(string tag);

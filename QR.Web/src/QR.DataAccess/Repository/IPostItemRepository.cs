@@ -10,6 +10,7 @@ namespace QR.DataAccess.Repository
     {
         Task<Guid> AddPost(PostItem item, AuthorMapForPost author);
         IEnumerable<PostItemResponse> GetAllPosts();
+        IEnumerable<PostItemBrief> GetAllPostBriefs();
         IEnumerable<PostItemResponse> GetAllPostByAuthor(string author);
         IEnumerable<PostItemResponse> GetAllPostByCategory(string category);
         IEnumerable<PostItemResponse> GetAllPostByTag(string tag);

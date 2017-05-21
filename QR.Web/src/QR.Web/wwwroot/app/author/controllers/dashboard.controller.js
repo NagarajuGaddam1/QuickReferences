@@ -1,32 +1,13 @@
 ﻿(function () {
     "use strict";
 
-    function SamplePost() {
-        this.id = _.uniqueId('_ORIG_POST');
-        this.name = 'Lorem ipsum dolor sit amet';
-        this.category = _.sample(['html', 'css', 'js', 'scss', 'others']);
-        this.author = _.sample(['Rupesh Rawat', 'Asit Parida', 'Dhairya Vora']);
-        this.contentType = _.sample(['tl-dr', 'article']);
-        this.createdDate = new Date();
-        this.published = _.sample([true, false]);
-        this.suspended = _.sample([true, false]);
-    }
-
-    function SampleAuthor() {
-        this.id = _.uniqueId('_ORIG_AUTHOR');
-        this.name = _.sample(['Rupesh Rawat', 'Asit Parida', 'Dhairya Vora']) + ' ' + _.sample(_.range(10));
-        this.authenticationType = _.sample(['facebook', 'GitHub', 'LinkedIn']);
-        this.authenticationUID = _.sample(['fb', 'git', 'lin']) + '_' + _.sample(_.range(10));
-        this.alias = _.sample(['ruprawat', 'asparida', 'dhvora']);
-        this.activatedOn = new Date();
-        this.suspended = _.sample([true, false]);
-    }
-
     angular.module('QR.Web.Author')
-    .controller('DashboardController', ['$timeout', 'SharedService','$scope', function ($timeout, SharedService, $scope) {
+    .controller('DashboardController', ['$timeout', 'SharedService', '$scope', 'PostsService', 'AuthorsService', function ($timeout, SharedService, $scope, postsService, authorsService) {
         var self = this;
         self.timeout = $timeout;
         self.shared = SharedService;
+        self.postsService = postsService;
+        self.authorsService = authorsService;
         self.shared.currentContext = 'Dashboard';
         self.shared.actions = [
             { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show : false, title : 'Delete Post' },
@@ -40,15 +21,6 @@
         ];
         self.selectedAuthors  = [];
         self.selectedPosts = [];
-        self.samplingForPosts = function (iter) {
-            var _samples = [];
-            self.sampleRowClasses = {};
-            for (var i = 0; i < iter; i++) {
-                var _post = new SamplePost();
-                _samples.push(_post);
-            }
-            return _samples;
-        }
         self.processForPostRelatedActions = function()
         {
                 //Save
@@ -81,7 +53,7 @@
             showGridStats: false,
             showGridOptions: false,
             latchExcess: 20,
-            data: self.samplingForPosts(100),
+            data: [],
             jsonEditorEnabled: false,
             vxFilteredData: [],
             hybrid: true,
@@ -108,36 +80,38 @@
             emptyFill: 'No records in the grid',
             loaderGifSrc: '/dist/images/loaderBlue30.gif',
             columnDefConfigs: [
-                { id: 'id', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
+                { id: 'postId', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
                 { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
                 { id: 'publish', columnName: 'Publish', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
-                { id: 'name', columnName: 'Name', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300', renderHybridCellDefn: true },
+                { id: 'title', columnName: 'Title', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300', renderHybridCellDefn: true },
                 { id: 'category', columnName: 'Category', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
-                { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150' },
-                { id: 'contentType', columnName: 'Type', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
-                { id: 'createdDate', columnName: 'Created On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
-                { id: 'published', columnName: 'Is Published', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, headTabIndex: -1, renderHybridCellDefn: true, width: '200' },
-                { id: 'suspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
+                { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150', renderHybridCellDefn : true },
+                //{ id: 'contentType', columnName: 'Type', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
+                { id: 'modifiedOn', columnName: 'Modified On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
+                { id: 'isPublished', columnName: 'Is Published', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, headTabIndex: -1, renderHybridCellDefn: true, width: '200' },
+                { id: 'isSuspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
             ]
         };
 
         function hybridCellDefnForPosts(row, col) {
             var tmpl = '<span>VX_DATA_POINT</span>';
-            if (col.id == 'name')
+            if (col.id == 'title')
                 tmpl = '<a class="vx-grid-a" href="#/post" title="' + row[col.id] + '">' + row[col.id] + '</a>';
             else if (col.id == 'category')
-                tmpl = tmpl.replace('VX_DATA_POINT', row[col.id].name || '');
-            else if (col.id == 'published') {
+                tmpl = tmpl.replace('VX_DATA_POINT', row[col.id] || '');
+            else if (col.id == 'author')
+                tmpl = tmpl.replace('VX_DATA_POINT', row[col.id].alias || '');
+            else if (col.id == 'isPublished') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck green"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
             }
-            else if (col.id == 'suspended') {
+            else if (col.id == 'isSuspended') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck red"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
             }
             else if(col.id == 'edit'){
                 tmpl = '<div class="icon-container vx-grid-action" title="Edit Post"><i tabindex="0" class="ms-Icon ms-Icon--EditNote" uid="' + row.id  + '" data-tag="edit-post" ></i></div>';
             }
             else if(col.id == 'publish'){
-                tmpl = row['published'] == false ? '<div class="icon-container vx-grid-action publish" title="Publish Post"><i tabindex="0" class="ms-Icon ms-Icon--CloudUpload" uid="' + row.id  + '" data-tag="publish-post" ></i></div>' : '';
+                tmpl = row['isPublished'] == false ? '<div class="icon-container vx-grid-action publish" title="Publish Post"><i tabindex="0" class="ms-Icon ms-Icon--CloudUpload" uid="' + row.id  + '" data-tag="publish-post" ></i></div>' : '';
             }
             return tmpl;
         }
@@ -149,15 +123,6 @@
             self.postsGridConfig.openManageColumns();
         }
 
-        self.samplingForAuthors = function (iter) {
-            var _samples = [];
-            self.sampleRowClasses = {};
-            for (var i = 0; i < iter; i++) {
-                var _post = new SampleAuthor();
-                _samples.push(_post);
-            }
-            return _samples;
-        }
         self.processForAuthorRelatedActions = function()
         {
             //Save
@@ -190,7 +155,7 @@
             showGridStats: false,
             showGridOptions: false,
             latchExcess: 20,
-            data: self.samplingForAuthors(100),
+            data: [],
             jsonEditorEnabled: false,
             vxFilteredData: [],
             hybrid: true,
@@ -225,18 +190,13 @@
                 { id: 'authenticationUID', columnName: 'AuthID', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, hidden: false, width: '150' },
                 { id: 'alias', columnName: 'Alias', ddSort: true, ddGroup: false, ddFilters: false, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
                 { id: 'activatedOn', columnName: 'Activated On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
-                { id: 'suspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
+                { id: 'isSuspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
             ]
         };
 
         function hybridCellDefnForAuthors(row, col) {
             var tmpl = '<span>VX_DATA_POINT</span>';
-            if (col.id == 'category')
-                tmpl = tmpl.replace('VX_DATA_POINT', row[col.id].name || '');
-            else if (col.id == 'published') {
-                tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck green"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
-            }
-            else if (col.id == 'suspended') {
+            if (col.id == 'isSuspended') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck red"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
             }
             else if(col.id == 'edit'){
@@ -269,5 +229,20 @@
             }
         })
 
+        self.init = function () {
+            self.postsService.getAllBriefs()
+            .then(function (data) {
+                self.postsGridConfig.data = data;
+            }, function (error) {
+                console.log(data);
+            });
+            self.authorsService.getAll()
+            .then(function (data) {
+                self.authorsGridConfig.data = data;
+            }, function (error) {
+                console.log(data);
+            })
+        }
+        self.init();
     }]);
 })();

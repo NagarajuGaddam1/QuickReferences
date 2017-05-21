@@ -65,7 +65,7 @@ namespace QR.DataAccess.Repository
 
         public IEnumerable<PostItemResponse> GetAllPostByTag(string tag)
         {
-            string query = $"select * from {collectionName} p where Array_Contains(p.Tags,{(int)Utils.GetEnumIntValue<Tag>(tag)})";
+            string query = $"select * from {collectionName} p where Array_Contains(p.Tags,{tag})";
             return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 
@@ -100,6 +100,12 @@ namespace QR.DataAccess.Repository
         public async Task<bool> DeletePostById(Guid id)
         {
             return await _db.DeleteDocumentByIdAsync<PostItemResponse>(dbName, collectionName, id);
+        }
+
+        public IEnumerable<PostItemBrief> GetAllPostBriefs()
+        {
+            var items = _db.GetDocuments<PostItemBrief>(dbName, collectionName);
+            return items;
         }
     }
 }

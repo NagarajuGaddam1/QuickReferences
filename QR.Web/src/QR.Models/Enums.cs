@@ -2,20 +2,13 @@
 
 namespace QR.Models
 {
-    public enum Tag
+    public enum Category
     {
         HTML = 0,
         JS = 1,
         CSS = 2,
         CSHARP = 3,
         AZURE = 4
-    }
-
-    public enum Category
-    {
-        WebDevlopment = 0,
-        Azure = 1,
-        CodeSnippet = 2
     }
 
     public enum PostItemState
