@@ -43,6 +43,7 @@
         }
 
         var handleSuccessAndMap = function (response) {
+            console.log(response);
             _.each(response.data, function (item) {
                 item.authenticationType = AUTHENTICATION[item['authType']];
                 item.authenticationUID = item['sourceId']

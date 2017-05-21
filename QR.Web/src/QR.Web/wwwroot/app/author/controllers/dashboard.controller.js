@@ -10,30 +10,27 @@
         self.authorsService = authorsService;
         self.shared.currentContext = 'Dashboard';
         self.shared.actions = [
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show : false, title : 'Delete Post' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Blocked2', click: 'suspendPost', show : false, title : 'Suspend Post'  },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeopleBlock', click: 'deleteAuthor', disabled: true, show : false, title : 'Delete Author' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeoplePause', click: 'suspendAuthor', show : false, title : 'Suspend Author'  },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PageAdd', click: 'addNewPost',show : true, title: 'New Post' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--SyncFolder', click: 'syncPosts', show : true, title : 'Sync Posts' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--AddFriend', click: 'addNewAuthor',show : true, title: 'Invite Author' },
-            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeopleRepeat', click: 'syncAuthors', show : true, title : 'Sync Authors' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Delete', click: 'deletePost', disabled: true, show: false, title: 'Delete Post' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--Blocked2', click: 'suspendPost', show: false, title: 'Suspend Post' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeopleBlock', click: 'deleteAuthor', disabled: true, show: false, title: 'Delete Author' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeoplePause', click: 'suspendAuthor', show: false, title: 'Suspend Author' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PageAdd', click: 'addNewPost', show: true, title: 'New Post' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--SyncFolder', click: 'syncPosts', show: true, title: 'Sync Posts' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--AddFriend', click: 'addNewAuthor', show: true, title: 'Invite Author' },
+            { id: _.uniqueId('_POST_ACTION'), iconName: 'ms-Icon--PeopleRepeat', click: 'syncAuthors', show: true, title: 'Sync Authors' },
         ];
-        self.selectedAuthors  = [];
+        self.selectedAuthors = [];
         self.selectedPosts = [];
-        self.processForPostRelatedActions = function()
-        {
-                //Save
-                //Delete
-                //Suspend
-             _.each(self.shared.actions, function(_action){
-                if(_action.click  == 'savePost' || _action.click  == 'deletePost' || _action.click  == 'suspendPost')
-                {
-                    _action.show = self.selectedPosts.length > 0; 
+        self.processForPostRelatedActions = function () {
+            //Save
+            //Delete
+            //Suspend
+            _.each(self.shared.actions, function (_action) {
+                if (_action.click == 'savePost' || _action.click == 'deletePost' || _action.click == 'suspendPost') {
+                    _action.show = self.selectedPosts.length > 0;
                 }
-                else if(_action.click  == 'saveAuthor' || _action.click  == 'deleteAuthor' || _action.click  == 'suspendAuthor')
-                {
-                    _action.show = false; 
+                else if (_action.click == 'saveAuthor' || _action.click == 'deleteAuthor' || _action.click == 'suspendAuthor') {
+                    _action.show = false;
                 }
             });
             $scope.$apply();
@@ -60,15 +57,13 @@
             rowClassFn: randomRowFunction,
             hybridCellDefn: hybridCellDefnForPosts,
             rowSelectionCallback: function (data) {
-                if(data.value == true)
-                {
-                    if(_.contains(self.selectedPosts, data.key) == false){
+                if (data.value == true) {
+                    if (_.contains(self.selectedPosts, data.key) == false) {
                         self.selectedPosts.push(data.key);
                     }
                 }
-                else
-                {
-                    self.selectedPosts = _.filter(self.selectedPosts, function(_pid){ return _pid != data.key})
+                else {
+                    self.selectedPosts = _.filter(self.selectedPosts, function (_pid) { return _pid != data.key })
                 }
                 self.processForPostRelatedActions()
             },
@@ -81,11 +76,11 @@
             loaderGifSrc: '/dist/images/loaderBlue30.gif',
             columnDefConfigs: [
                 { id: 'postId', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
-                { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
-                { id: 'publish', columnName: 'Publish', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
+                { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
+                { id: 'publish', columnName: 'Publish', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
                 { id: 'title', columnName: 'Title', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300', renderHybridCellDefn: true },
                 { id: 'category', columnName: 'Category', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
-                { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150', renderHybridCellDefn : true },
+                { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150', renderHybridCellDefn: true },
                 //{ id: 'contentType', columnName: 'Type', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
                 { id: 'modifiedOn', columnName: 'Modified On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
                 { id: 'isPublished', columnName: 'Is Published', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, headTabIndex: -1, renderHybridCellDefn: true, width: '200' },
@@ -107,11 +102,11 @@
             else if (col.id == 'isSuspended') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck red"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
             }
-            else if(col.id == 'edit'){
-                tmpl = '<div class="icon-container vx-grid-action" title="Edit Post"><i tabindex="0" class="ms-Icon ms-Icon--EditNote" uid="' + row.id  + '" data-tag="edit-post" ></i></div>';
+            else if (col.id == 'edit') {
+                tmpl = '<div class="icon-container vx-grid-action" title="Edit Post"><i tabindex="0" class="ms-Icon ms-Icon--EditNote" uid="' + row.id + '" data-tag="edit-post" ></i></div>';
             }
-            else if(col.id == 'publish'){
-                tmpl = row['isPublished'] == false ? '<div class="icon-container vx-grid-action publish" title="Publish Post"><i tabindex="0" class="ms-Icon ms-Icon--CloudUpload" uid="' + row.id  + '" data-tag="publish-post" ></i></div>' : '';
+            else if (col.id == 'publish') {
+                tmpl = row['isPublished'] == false ? '<div class="icon-container vx-grid-action publish" title="Publish Post"><i tabindex="0" class="ms-Icon ms-Icon--CloudUpload" uid="' + row.id + '" data-tag="publish-post" ></i></div>' : '';
             }
             return tmpl;
         }
@@ -123,19 +118,16 @@
             self.postsGridConfig.openManageColumns();
         }
 
-        self.processForAuthorRelatedActions = function()
-        {
+        self.processForAuthorRelatedActions = function () {
             //Save
             //Delete
             //Suspend
-            _.each(self.shared.actions, function(_action){
-                if(_action.click  == 'savePost' || _action.click  == 'deletePost' || _action.click  == 'suspendPost')
-                {
-                    _action.show = false; 
-                }                    
-                else if(_action.click  == 'saveAuthor' || _action.click  == 'deleteAuthor' || _action.click  == 'suspendAuthor')
-                {
-                    _action.show = self.selectedAuthors.length > 0; 
+            _.each(self.shared.actions, function (_action) {
+                if (_action.click == 'savePost' || _action.click == 'deletePost' || _action.click == 'suspendPost') {
+                    _action.show = false;
+                }
+                else if (_action.click == 'saveAuthor' || _action.click == 'deleteAuthor' || _action.click == 'suspendAuthor') {
+                    _action.show = self.selectedAuthors.length > 0;
                 }
             });
             $scope.$apply();
@@ -162,15 +154,13 @@
             rowClassFn: randomRowFunction,
             hybridCellDefn: hybridCellDefnForAuthors,
             rowSelectionCallback: function (data) {
-                if(data.value == true)
-                {
-                    if(_.contains(self.selectedAuthors, data.key) == false){
+                if (data.value == true) {
+                    if (_.contains(self.selectedAuthors, data.key) == false) {
                         self.selectedAuthors.push(data.key);
                     }
                 }
-                else
-                {
-                    self.selectedAuthors = _.filter(self.selectedAuthors, function(_pid){ return _pid != data.key})
+                else {
+                    self.selectedAuthors = _.filter(self.selectedAuthors, function (_pid) { return _pid != data.key })
                 }
                 self.processForAuthorRelatedActions();
             },
@@ -183,8 +173,8 @@
             loaderGifSrc: '/dist/images/loaderBlue30.gif',
             columnDefConfigs: [
                 { id: 'id', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
-                { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
-                { id: 'authorPic', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn : true },
+                { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
+                { id: 'authorPic', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
                 { id: 'name', columnName: 'Name', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300' },
                 { id: 'authenticationType', columnName: 'Auth', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
                 { id: 'authenticationUID', columnName: 'AuthID', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, hidden: false, width: '150' },
@@ -199,49 +189,54 @@
             if (col.id == 'isSuspended') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck red"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
             }
-            else if(col.id == 'edit'){
-                tmpl = '<div class="icon-container vx-grid-action" title="Edit Author"><i class="ms-Icon ms-Icon--Edit" tabindex="0" uid="' + row.id  + '" data-tag="edit-author" ></i></div>';
+            else if (col.id == 'edit') {
+                tmpl = '<div class="icon-container vx-grid-action" title="Edit Author"><i class="ms-Icon ms-Icon--Edit" tabindex="0" uid="' + row.id + '" data-tag="edit-author" ></i></div>';
             }
-            else if(col.id == 'authorPic'){
+            else if (col.id == 'authorPic') {
                 tmpl = '<div class="vx-grid-picture" title="' + row['name'] + '"><i class="ms-Icon ms-Icon--Contact" ></i></div>';
             }
             return tmpl;
         }
 
-        document.addEventListener('click', function(e){
-            if (e.target.matches('[data-tag="edit-post"]')) 
-            {
+        document.addEventListener('click', function (e) {
+            if (e.target.matches('[data-tag="edit-post"]')) {
                 var _postId = e.target.getAttribute('uid');
                 var _path = location.origin + '/Author/#post?id=' + _postId;
                 window.open(_path, '_self');
             }
-            else if (e.target.matches('[data-tag="publish-post"]')) 
-            {
+            else if (e.target.matches('[data-tag="publish-post"]')) {
                 var _postId = e.target.getAttribute('uid');
                 var _path = location.origin + '/Home/Index';
                 window.open(_path, '_self');
             }
-            else if (e.target.matches('[data-tag="edit-author"]')) 
-            {
+            else if (e.target.matches('[data-tag="edit-author"]')) {
                 var _postId = e.target.getAttribute('uid');
                 var _path = location.origin + '/Author/#post';
                 window.open(_path, '_self');
             }
         })
 
+        self.onTabSelected = function (tab) {
+            if (tab == 'authors') {
+                self.authorsService.getAll()
+                .then(function (data) {
+                    self.authorsGridConfig.data = data;
+                }, function (error) {
+                    console.log(data);
+                })
+            }
+            else if (tab == 'posts') {
+                self.postsService.getAllBriefs()
+                .then(function (data) {
+                    self.postsGridConfig.data = data;
+                }, function (error) {
+                    console.log(data);
+                });
+            }
+        }
+
         self.init = function () {
-            self.postsService.getAllBriefs()
-            .then(function (data) {
-                self.postsGridConfig.data = data;
-            }, function (error) {
-                console.log(data);
-            });
-            self.authorsService.getAll()
-            .then(function (data) {
-                self.authorsGridConfig.data = data;
-            }, function (error) {
-                console.log(data);
-            })
+
         }
 
         self.shared['suspendAuthor'] = function () {
