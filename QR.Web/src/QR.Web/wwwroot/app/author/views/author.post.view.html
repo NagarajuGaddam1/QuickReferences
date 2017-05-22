@@ -49,7 +49,7 @@
                     <label class="title">Content</label>
                     <div class="flask-instance" ng-repeat="mod in authoringPost.post.contentItems track by $index" id="_FLASK_{{$index}}" uid="{{mod.uid}}" ng-drop="authoringPost.flasksBeingReodered" ng-drop-success="authoringPost.onDropComplete($index, $data)" ng-drag="authoringPost.flasksBeingReodered" ng-drag-data="mod">
                         <i class="ms-Icon ms-Icon--Move" ng-drag-handle ng-show="authoringPost.flasksBeingReodered"></i>
-                        <i class="ms-Icon ms-Icon--Delete"></i>
+                        <i class="ms-Icon ms-Icon--Delete" ng-click="authoringPost.deleteFlask($index, mod.uid)"></i>
                         <div class="flask-instance-content tagged" ng-if="mod.type == 'text'">
                             <label class="title">Text</label>
                             <textarea ng-model="mod.data"></textarea>

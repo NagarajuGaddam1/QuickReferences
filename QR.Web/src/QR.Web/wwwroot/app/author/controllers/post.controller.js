@@ -8,7 +8,7 @@
         },
         'javascript': {
             "type": "flask",
-            "lang": "js",
+            "lang": "javascript",
             "flaskLang": "javascript",
             "data": "function(){\nconsole.log('hello');\n}"
         },
@@ -20,7 +20,7 @@
         },
         'css': {
             "type": "flask",
-            "lang": "scss",
+            "lang": "css",
             "flaskLang": "css",
             "data": "@mixin respond-to($media) {\n    @content;\n        }\n    }\n}        \n                              \n.dashboard {\n   display:\"bloc\";\n}"
         },
@@ -74,7 +74,7 @@
             .then(function (data) { console.log('update success', data) }, function (error) { console.log(error) });
         }
         self.shared.savePost = function () {
-            if (typeof self.stateParams.postId !== 'undefined' && self.stateParams.postId != null && self.stateParams.postId != '') {
+            if (typeof self.stateParams.id !== 'undefined' && self.stateParams.id != null && self.stateParams.id != '') {
                 self.postsService.updatePost(self.post)
                 .then(function (data) { console.log('update success', data) }, function(error){ console.log(error) });
             }
@@ -155,6 +155,10 @@
                     }
                 });
             }, 33);
+        }
+
+        self.deleteFlask = function (iter, uid) {            
+            self.post.contentItems.splice(iter, 1);            
         }
 
         self.init = function () {

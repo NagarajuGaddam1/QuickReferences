@@ -56,8 +56,8 @@
         b[b["javascript"] = 0] = "javascript";
         b[b["markup"] = 1] = "markup";
         b[b["css"] = 2] = "css";
-        b[b["htm"] = 2] = "htm";
-        b[b["scss"] = 2] = "scss";
+        b[b["htm"] = 3] = "htm";
+        b[b["scss"] = 4] = "scss";
     })(ContentItemLanguage || (ContentItemLanguage = {}));
 
     function PostsService($http, $q) {
@@ -135,8 +135,6 @@
                     if (typeof _content.flaskLang !== 'undefined' && _content.flaskLang != null) _content.flaskLang = ContentItemFlaskType[_content.flaskLang];
                 });
             }
-            console.log(JSON.stringify(response.data));
-            console.log(JSON.stringify(response.data.author));
             return response.data;
         }
 

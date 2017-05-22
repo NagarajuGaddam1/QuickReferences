@@ -77,7 +77,7 @@
             columnDefConfigs: [
                 { id: 'postId', columnName: 'ID', hidden: true, ddSort: true, width: '160', primary: true },
                 { id: 'edit', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
-                { id: 'publish', columnName: 'Publish', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
+                { id: 'publish', columnName: '', ddSort: false, ddGroup: false, ddFilters: false, dropDownEnabled: false, width: '60', renderHybridCellDefn: true },
                 { id: 'title', columnName: 'Title', ddSort: true, ddGroup: false, ddFilters: false, dropDownEnabled: true, width: '300', renderHybridCellDefn: true },
                 { id: 'category', columnName: 'Category', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, width: '150' },
                 { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150', renderHybridCellDefn: true },
