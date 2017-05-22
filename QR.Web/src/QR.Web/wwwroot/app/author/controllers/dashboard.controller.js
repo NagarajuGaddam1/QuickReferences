@@ -217,20 +217,25 @@
         })
 
         self.onTabSelected = function (tab) {
+            self.shared.showLoader = true;
             if (tab == 'authors') {
                 self.authorsService.getAll()
                 .then(function (data) {
                     self.authorsGridConfig.data = data;
+                    self.shared.showLoader = false;
                 }, function (error) {
                     console.log(data);
+                    self.shared.showLoader = false;
                 })
             }
             else if (tab == 'posts') {
                 self.postsService.getAllBriefs()
                 .then(function (data) {
                     self.postsGridConfig.data = data;
+                    self.shared.showLoader = false;
                 }, function (error) {
                     console.log(data);
+                    self.shared.showLoader = false;
                 });
             }
         }

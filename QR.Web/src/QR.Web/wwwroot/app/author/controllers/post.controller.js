@@ -63,24 +63,26 @@
         self.flasks = [];
         self.post = {};
         self.shared.revertChangesPost = function () {
-            console.log('revertChangesPost');
+            window.location.reload();
         }
         self.shared.deletePost = function () {
             console.log('suspendPost');
         }
         self.shared.suspendPost = function () {
+            self.shared.showLoader = true;
             self.post['isSuspended'] = true;
             self.postsService.updatePost(self.post)
-            .then(function (data) { console.log('update success', data) }, function (error) { console.log(error) });
+            .then(function (data) { console.log('update success', data); self.shared.showLoader = false; }, function (error) { console.log(error); self.shared.showLoader = false; });
         }
         self.shared.savePost = function () {
+            self.shared.showLoader = true;
             if (typeof self.stateParams.id !== 'undefined' && self.stateParams.id != null && self.stateParams.id != '') {
                 self.postsService.updatePost(self.post)
-                .then(function (data) { console.log('update success', data) }, function(error){ console.log(error) });
+                .then(function (data) { console.log('update success', data); self.shared.showLoader = false; window.location.reload(); }, function (error) { console.log(error); self.shared.showLoader = false; });
             }
             else {
                 self.postsService.addPost(self.post)
-                .then(function (data) { console.log('add success', data) }, function(error){ console.log(error) });
+                .then(function (data) { console.log('add success', data); self.shared.showLoader = false; }, function (error) { console.log(error); self.shared.showLoader = false; });
             }
         }
         self.onDropComplete = function (_dropIndex, data) {
@@ -167,13 +169,16 @@
                 .then(function (data) {
                     self.post = data;
                     self.currentFlaskIndex = self.post.contentItems.length;
+                    self.shared.showLoader = false;
                 }, function (error) {
-                    console.log('Error', error)
+                    console.log('Error', error);
+                    self.shared.showLoader = false;
                 });
             }
             else {
                 self.post = self.postsService.getSampleNewPost();
-                self.currentFlaskIndex = self.post.contentItems.length;                
+                self.currentFlaskIndex = self.post.contentItems.length;
+                self.shared.showLoader = false;
             }
         }
         
