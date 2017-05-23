@@ -298,6 +298,9 @@
                 border: 1px dotted rgba(0,0,0,0.33);
                 margin-bottom: 10px;
                 position: relative;
+                &.--noPadBottom{
+                    padding-bottom:0;
+                }
 
                 label.title {
                     font-size: small;
@@ -411,6 +414,7 @@
                     width: 60px;
                     display: inline-block;
                     margin-right: 15px;
+                    margin-bottom:15px;
                     position: relative;
                     transition: all 0.3s linear 0s;
                     cursor: pointer;

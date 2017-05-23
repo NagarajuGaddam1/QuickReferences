@@ -105,6 +105,13 @@
 
             &-user-logo {
                 display: none;
+                overflow:hidden;
+
+                &-pic {
+                    height: 48px;
+                    width: 48px;
+                    border-radius: 48px;
+                }
 
                 @include _READINGMODE_ONLY(&) {
                     display: block;

@@ -32,7 +32,7 @@
                     <label class="title">Description for the post</label>
                     <input ng-model="authoringPost.post.description" />
                 </div>
-                <div class="flask-instance tagged">
+                <div class="flask-instance tagged --noPadBottom">
                     <label class="title">Categorize post as </label>
                     <div class="flask-instance-tag" ng-repeat="tag in authoringPost.mainCategories" ng-style="{ 'color': tag.forecolor, 'background-color': tag.backcolor}" ng-click="authoringPost.post.category = tag.id">
                         <label ng-bind="tag.name"></label>

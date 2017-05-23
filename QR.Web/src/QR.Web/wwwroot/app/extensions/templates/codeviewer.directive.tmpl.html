@@ -12,8 +12,9 @@
                     <div class="codeview-container-actions-title" ng-bind="codeViewer.post.title">Lorem Ipsum Dolor Sit Amet</div>
                 </div>
                 <div class="pull-right codeview-container-actions-user-logo show">
-                    <div class="codeview-container-actions-action">
-                        <i class="ms-Icon ms-Icon--Contact" aria-hidden="true"></i>
+                    <div class="codeview-container-actions-action" ng-attr-title="{{codeViewer.post.author.alias}}">
+                        <img class="codeview-container-actions-user-logo-pic" ng-if="codeViewer.post.author.imgSrc" ng-src="{{codeViewer.post.author.imgSrc}}" />
+                        <i class="ms-Icon ms-Icon--Contact" ng-if="!codeViewer.post.author.imgSrc" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="clearfix"></div>

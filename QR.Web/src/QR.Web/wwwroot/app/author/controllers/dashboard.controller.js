@@ -21,6 +21,7 @@
         ];
         self.selectedAuthors = [];
         self.selectedPosts = [];
+        self.selectedTab = '';
         self.processForPostRelatedActions = function () {
             //Save
             //Delete
@@ -83,8 +84,8 @@
                 { id: 'author', columnName: 'Author', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, hidden: false, width: '150', renderHybridCellDefn: true },
                 //{ id: 'contentType', columnName: 'Type', ddSort: true, ddGroup: false, ddFilters: true, ddFiltersWithSearch: true, dropDownEnabled: true, renderHybridCellDefn: false, width: '150' },
                 { id: 'modifiedOn', columnName: 'Modified On', columnIsDate: true, columnDatePipe: 'dd-MM-yyyy', ddSort: true, ddGroup: false, ddFilters: true, dropDownEnabled: true, ddFiltersWithSearch: true, width: '150' },
-                { id: 'isPublished', columnName: 'Is Published', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, headTabIndex: -1, renderHybridCellDefn: true, width: '200' },
-                { id: 'isSuspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
+                { id: 'isPublished', columnName: 'Is Published', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, headTabIndex: -1, renderHybridCellDefn: true, width: '200' }
+                //,{ id: 'isSuspended', columnName: 'Is Suspended', ddSort: true, ddGroup: false, ddFilters: false, hidden: false, renderHybridCellDefn: true, width: '200' }
             ]
         };
 
@@ -216,20 +217,8 @@
             }
         })
 
-        self.onTabSelected = function (tab) {
-            self.shared.showLoader = true;
-            if (tab == 'authors') {
-                self.authorsService.getAll()
-                .then(function (data) {
-                    self.authorsGridConfig.data = data;
-                    self.shared.showLoader = false;
-                }, function (error) {
-                    console.log(data);
-                    self.shared.showLoader = false;
-                })
-            }
-            else if (tab == 'posts') {
-                self.postsService.getAllBriefs()
+        self.loadPosts = function () {
+            self.postsService.getAllBriefs()
                 .then(function (data) {
                     self.postsGridConfig.data = data;
                     self.shared.showLoader = false;
@@ -237,6 +226,27 @@
                     console.log(data);
                     self.shared.showLoader = false;
                 });
+        }
+
+        self.loadAuthors = function () {
+            self.authorsService.getAll()
+                .then(function (data) {
+                    self.authorsGridConfig.data = data;
+                    self.shared.showLoader = false;
+                }, function (error) {
+                    console.log(data);
+                    self.shared.showLoader = false;
+                })
+        }
+
+        self.onTabSelected = function (tab) {
+            self.selectedTab = tab;
+            self.shared.showLoader = true;
+            if (self.selectedTab == 'authors') {
+                self.loadAuthors();
+            }
+            else if (self.selectedTab == 'posts') {
+                self.loadPosts();
             }
         }
 
@@ -257,6 +267,25 @@
                 }
             });
         };
+
+        self.shared['addNewPost'] = function () {
+            var _path = location.origin + '/Author/#post';
+            window.open(_path, '_self');
+        }
+
+        self.shared['syncPosts'] = function () {
+            if (self.selectedTab == 'posts') {
+                self.shared.showLoader = true;
+                self.loadPosts();
+            }
+        }
+
+        self.shared['syncAuthors'] = function () {
+            if (self.selectedTab == 'authors') {
+                self.shared.showLoader = true;
+                self.loadAuthors();
+            }        
+        }
 
         self.init();
     }]);
