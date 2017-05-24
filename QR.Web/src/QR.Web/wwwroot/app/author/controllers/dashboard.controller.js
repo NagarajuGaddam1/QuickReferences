@@ -6,6 +6,7 @@
         var self = this;
         self.timeout = $timeout;
         self.detailsPane = false;
+        self.detailsPaneInModifyMode = false;
         self.authorDetailsForPane = {};
         self.shared = SharedService;
         self.postsService = postsService;
@@ -216,14 +217,19 @@
                 var _path = location.origin + '/Home/Index';
                 window.open(_path, '_self');
             }
-            else if (e.target.matches('[data-tag="edit-author"]')) {
+            else if (e.target.matches('[data-tag="edit-author"]')) {                
                 var _authorId = e.target.getAttribute('uid');
-                var author = _.find(self.authorsGridConfig.data, function (item) { return item.id.localeCompare(_authorId) == 0 });
-                self.authorDetailsForPane = author;
+                var author = _.find(self.authorsGridConfig.data, function (item) { return item.id.localeCompare(_authorId) == 0 });                
+                self.authorDetailsForPane = author;                
                 self.detailsPane = true;
+                self.detailsPaneInModifyMode = true;
                 $scope.$apply();
             }
         })
+        
+        self.closeDetailsPane = function () {
+            self.detailsPane = false;
+        }
 
         self.loadPosts = function () {
             self.postsService.getAllBriefs()
@@ -293,6 +299,27 @@
                 self.shared.showLoader = true;
                 self.loadAuthors();
             }        
+        }
+
+        self.shared['addNewAuthor'] = function () {
+            var author = {
+                "authorId": null,
+                "name": "",
+                "authType": null,
+                "sourceId": "",
+                "alias": "",
+                "createdOn": null,
+                "modifiedOn": null,
+                "activatedOn": null,
+                "isSuspended": null,
+                "imgSrc": null,
+                "authenticationType": "GITHUB",
+                "authenticationUID": null
+            };
+            self.authorDetailsForPane = author;
+            self.detailsPane = true;
+            self.detailsPaneInModifyMode = false;
+            $scope.$apply();
         }
 
         self.init();

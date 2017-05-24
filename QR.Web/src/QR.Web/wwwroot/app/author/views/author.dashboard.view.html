@@ -18,46 +18,63 @@
         </md-tabs>
     </md-content>
     <div class="authoring-dashboard-pane" ng-class="{'in': authoringDashboard.detailsPane}">
-        <div class="authoring-dashboard-pane-item">
-            <div class="authoring-dashboard-pane-item-label">Thumbnail Preview</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <img ng-attr-src="{{authoringDashboard.authorDetailsForPane.imgSrc}}" />
+        <button class="authoring-dashboard-pane-close" ng-click="authoringDashboard.closeDetailsPane()">
+            <i class="ms-Icon ms-Icon--Cancel"></i>
+        </button>
+        <div class="authoring-dashboard-pane-content">
+            <div class="authoring-dashboard-pane-item">
+                <div class="authoring-dashboard-pane-item-label">Thumbnail Preview</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <i class="ms-Icon ms-Icon--Contact" ng-show="authoringDashboard.authorDetailsForPane.imgSrc == null"></i>
+                    <img ng-attr-src="{{authoringDashboard.authorDetailsForPane.imgSrc}}" ng-show="authoringDashboard.authorDetailsForPane.imgSrc != null" />
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item">
-            <div class="authoring-dashboard-pane-item-label">Name</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <label>{{authoringDashboard.authorDetailsForPane.name}}</label>
+            <div class="authoring-dashboard-pane-item">
+                <div class="authoring-dashboard-pane-item-label">Name</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <label ng-show="authoringDashboard.authorDetailsForPane.name">{{authoringDashboard.authorDetailsForPane.name}}</label>
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.name">--</label>
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item">
-            <div class="authoring-dashboard-pane-item-label">Alias</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <input ng-model="authoringDashboard.authorDetailsForPane.alias" />
+            <div class="authoring-dashboard-pane-item w50">
+                <div class="authoring-dashboard-pane-item-label">Auth Type</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <label ng-show="authoringDashboard.authorDetailsForPane.authenticationType">{{authoringDashboard.authorDetailsForPane.authenticationType}}</label>
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.authenticationType">--</label>
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item w50">
-            <div class="authoring-dashboard-pane-item-label">Auth Type</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <label>{{authoringDashboard.authorDetailsForPane.authenticationType}}</label>
+            <div class="authoring-dashboard-pane-item w50">
+                <div class="authoring-dashboard-pane-item-label">Auth Source ID</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <label ng-show="authoringDashboard.authorDetailsForPane.authenticationUID">{{authoringDashboard.authorDetailsForPane.authenticationUID}}</label>
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.authenticationUID">--</label>
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item w50">
-            <div class="authoring-dashboard-pane-item-label">Auth Source ID</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <label>{{authoringDashboard.authorDetailsForPane.authenticationUID}}</label>
+            <div class="authoring-dashboard-pane-item">
+                <div class="authoring-dashboard-pane-item-label">Alias</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <input ng-model="authoringDashboard.authorDetailsForPane.alias" />
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.alias">--</label>
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item w50">
-            <div class="authoring-dashboard-pane-item-label">Is Suspended</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <label>{{authoringDashboard.authorDetailsForPane.isSuspended}}</label>
+            <div class="authoring-dashboard-pane-item w50">
+                <div class="authoring-dashboard-pane-item-label">Is Suspended</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <label ng-show="authoringDashboard.authorDetailsForPane.isSuspended">{{authoringDashboard.authorDetailsForPane.isSuspended}}</label>
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.isSuspended">--</label>
+                </div>
             </div>
-        </div>
-        <div class="authoring-dashboard-pane-item w50">
-            <div class="authoring-dashboard-pane-item-label">Last Modified On</div>
-            <div class="authoring-dashboard-pane-item-value">
-                <label>{{authoringDashboard.authorDetailsForPane.modifiedOn | date:'MMM d, y'}}</label>
+            <div class="authoring-dashboard-pane-item w50">
+                <div class="authoring-dashboard-pane-item-label">Last Modified On</div>
+                <div class="authoring-dashboard-pane-item-value">
+                    <label ng-show="authoringDashboard.authorDetailsForPane.modifiedOn">{{authoringDashboard.authorDetailsForPane.modifiedOn | date:'MMM d, y'}}</label>
+                    <label ng-show="!authoringDashboard.authorDetailsForPane.modifiedOn">--</label>
+                </div>
+            </div>
+            <div class="authoring-dashboard-pane-item">
+                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == false">Add</button>
+                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == true">Save</button>
+                <button class="authoring-dashboard-pane-item-action" ng-click="authoringDashboard.closeDetailsPane()">Cancel</button>
             </div>
         </div>
     </div>
