@@ -1,9 +1,9 @@
 ﻿<div class="container-fluid authoring-dashboard">
-    <md-content class="authoring-dashboard-content" >
+    <md-content class="authoring-dashboard-content">
         <md-tabs md-dynamic-height="" md-border-bottom="" md-selected="authoringDashboard.selectedTabIndex">
             <md-tab label="Posts" md-on-select="authoringDashboard.onTabSelected('posts')">
-                <md-content class="md-padding authoring-dashboard-content-post">                    
-                    <div class="vx-container post"  ng-if="authoringDashboard.selectedTabIndex == 0" >
+                <md-content class="md-padding authoring-dashboard-content-post">
+                    <div class="vx-container post" ng-if="authoringDashboard.selectedTabIndex == 0">
                         <vx-grid config="authoringDashboard.postsGridConfig" scroll-parent="'.vx-container.post .vxTableContainer'"></vx-grid>
                     </div>
                 </md-content>
@@ -17,5 +17,49 @@
             </md-tab>
         </md-tabs>
     </md-content>
+    <div class="authoring-dashboard-pane" ng-class="{'in': authoringDashboard.detailsPane}">
+        <div class="authoring-dashboard-pane-item">
+            <div class="authoring-dashboard-pane-item-label">Thumbnail Preview</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <img ng-attr-src="{{authoringDashboard.authorDetailsForPane.imgSrc}}" />
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item">
+            <div class="authoring-dashboard-pane-item-label">Name</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <label>{{authoringDashboard.authorDetailsForPane.name}}</label>
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item">
+            <div class="authoring-dashboard-pane-item-label">Alias</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <input ng-model="authoringDashboard.authorDetailsForPane.alias" />
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item w50">
+            <div class="authoring-dashboard-pane-item-label">Auth Type</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <label>{{authoringDashboard.authorDetailsForPane.authenticationType}}</label>
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item w50">
+            <div class="authoring-dashboard-pane-item-label">Auth Source ID</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <label>{{authoringDashboard.authorDetailsForPane.authenticationUID}}</label>
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item w50">
+            <div class="authoring-dashboard-pane-item-label">Is Suspended</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <label>{{authoringDashboard.authorDetailsForPane.isSuspended}}</label>
+            </div>
+        </div>
+        <div class="authoring-dashboard-pane-item w50">
+            <div class="authoring-dashboard-pane-item-label">Last Modified On</div>
+            <div class="authoring-dashboard-pane-item-value">
+                <label>{{authoringDashboard.authorDetailsForPane.modifiedOn | date:'MMM d, y'}}</label>
+            </div>
+        </div>
+    </div>
     <div class="clearfix"></div>
 </div>

@@ -5,6 +5,8 @@
     .controller('DashboardController', ['$timeout', 'SharedService', '$scope', 'PostsService', 'AuthorsService', function ($timeout, SharedService, $scope, postsService, authorsService) {
         var self = this;
         self.timeout = $timeout;
+        self.detailsPane = false;
+        self.authorDetailsForPane = {};
         self.shared = SharedService;
         self.postsService = postsService;
         self.authorsService = authorsService;
@@ -185,7 +187,7 @@
             ]
         };
 
-        function hybridCellDefnForAuthors(row, col) {
+        function hybridCellDefnForAuthors(row, col) {            
             var tmpl = '<span>VX_DATA_POINT</span>';
             if (col.id == 'isSuspended') {
                 tmpl = row[col.id] == true ? '<p class="vx-grid-p"><i class="ms-Icon ms-Icon--SkypeCircleCheck red"></i></p>' : '<p class="vx-grid-p"><span>-</span></p>'
@@ -194,7 +196,11 @@
                 tmpl = '<div class="icon-container vx-grid-action" title="Edit Author"><i class="ms-Icon ms-Icon--Edit" tabindex="0" uid="' + row.id + '" data-tag="edit-author" ></i></div>';
             }
             else if (col.id == 'authorPic') {
-                tmpl = '<div class="vx-grid-picture" title="' + row['name'] + '"><i class="ms-Icon ms-Icon--Contact" ></i></div>';
+                if (row['imgSrc'] != null && row['imgSrc'] != '') {
+                    tmpl = '<div class="vx-grid-picture noOpacity" title="' + row['name'] + '"><img class="vx-grid-picture-user-logo" src="' + row['imgSrc'] + '"></i></div>';
+                }
+                else
+                    tmpl = '<div class="vx-grid-picture" title="' + row['name'] + '"><i class="ms-Icon ms-Icon--Contact" ></i></div>';
             }
             return tmpl;
         }
@@ -211,9 +217,11 @@
                 window.open(_path, '_self');
             }
             else if (e.target.matches('[data-tag="edit-author"]')) {
-                var _postId = e.target.getAttribute('uid');
-                var _path = location.origin + '/Author/#post';
-                window.open(_path, '_self');
+                var _authorId = e.target.getAttribute('uid');
+                var author = _.find(self.authorsGridConfig.data, function (item) { return item.id.localeCompare(_authorId) == 0 });
+                self.authorDetailsForPane = author;
+                self.detailsPane = true;
+                $scope.$apply();
             }
         })
 
