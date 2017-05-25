@@ -33,7 +33,7 @@
             .state
             ({
                 name: 'post',
-                url: '/post',
+                url: '/post?id',
                 templateUrl: 'templates/author/author.post.view.html',
                 controller: 'PostController',
                 controllerAs: 'authoringPost'

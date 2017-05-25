@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using QR.Models;
 using QR.DataAccess.Repository;
 using QR.Web.Filters;
+using QR.Web.Services;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,99 +14,103 @@ namespace QR.Web.Controllers.api
     [Route("api/[controller]")]
     public class PostItemController : Controller
     {
-        public IPostItemRepository Repo { get; set; }
-        public PostItemController(IPostItemRepository repository)
+        public IPostItemService PostService { get; set; }
+        public PostItemController(IPostItemService postService)
         {
-            Repo = repository;
+            PostService = postService;
         }
 
         // GET: api/PostItem
         [HttpGet]        
-        public IEnumerable<PostItem> Get()
+        public IActionResult Get()
         {
             //todo:
             //Add validations and other stuff
-
-            return Repo.GetAllPosts();
+            return PostService.GetAllPosts();
         }
 
         // GET api/PostItem/someguid
         [HttpGet("{id}")]
-        public async Task<PostItem> Get(Guid id)
+        public Task<IActionResult> Get(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return await Repo.FindPostById(id);
+            return PostService.GetPostById(id);
+        }
+
+        // GET: api/PostItem
+        [HttpGet("briefs")]
+        public IActionResult GetBriefs()
+        {
+            //todo:
+            //Add validations and other stuff
+            return PostService.GetAllPostBriefs();
         }
 
         [HttpGet("authors/{author}")]
-        public IEnumerable<PostItem> SearchByAuthor(string author)
+        public IActionResult SearchByAuthor(string author)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByAuthor(author);
+            return PostService.GetPostsByAuthor(author);
         }
 
         [HttpGet("tags/{tag}")]
-        public IEnumerable<PostItem> SearchByTag(string tag)
+        public IActionResult SearchByTag(string tag)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByTag(tag);
+            return PostService.GetPostsTaggedWith(tag);
         }
 
         [HttpGet("categories/{category}")]
-        public IEnumerable<PostItem> SearchByCategory(string category)
+        public IActionResult SearchByCategory(string category)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByCategory(category);
+            return PostService.GetPostsInCategory(category);
         }
 
         [HttpGet("title/{title}")]
-        public IEnumerable<PostItem> SearchByTitle(string title)
+        public IActionResult SearchByTitle(string title)
         {
             //todo:
             //Add validations and other stuff
 
-            return Repo.GetAllPostByTitleText(title);
+            return PostService.GetPostsWithTitle(title);
         }
 
         // POST api/PostItem
         [HttpPost]
         [AdminAuthorized]
-        public IActionResult Post([FromBody]PostItem value)
+        public Task<IActionResult> Post([FromBody]PostItem value)
         {
-            //todo:
-            //Add validations and other stuff
-
-            return new ObjectResult(Repo.AddPost(value));
+            return PostService.CreatePost(value);
         }
 
         // PUT api/PostItem/5
         [HttpPut("{id}")]
         [AdminAuthorized]
-        public IActionResult Put(Guid id, [FromBody]PostItem value)
+        public Task<IActionResult> Put(Guid id, [FromBody]PostItemResponse value)
         {
             //todo:
             //Add validations and other stuff
-
-            return new ObjectResult(Repo.UpdatePost(value));
+            return PostService.UpdatePost(value);
         }
 
         // DELETE api/PostItem/5
         [HttpDelete("{id}")]
         [AdminAuthorized]
-        public IActionResult Delete(Guid id)
+        public Task<IActionResult> Delete(Guid id)
         {
             //todo:
             //Add validations and other stuff
 
-            return new ObjectResult(Repo.DeletePostById(id));
-        }       
+            return PostService.DeletePostById(id);
+        }
     }
 }

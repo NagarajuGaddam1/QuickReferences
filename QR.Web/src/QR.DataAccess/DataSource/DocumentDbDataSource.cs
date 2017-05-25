@@ -5,18 +5,16 @@ using System.Threading.Tasks;
 using System.Net;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
-using Microsoft.Azure.Documents.Linq;
-using Microsoft.Azure.Documents.Spatial;
-using Newtonsoft.Json;
 using QR.Common.Resources;
 using QR.Models;
 
 namespace QR.DataAccess.DataSource
 {
+
     public class DocumentDbDataSource
     {
         private AppConfig config;
-        private string endpointUri; 
+        private string endpointUri;
         private string primaryKey;
         private DocumentClient client;
 
@@ -24,8 +22,8 @@ namespace QR.DataAccess.DataSource
         {
             get { return client ?? (client = new DocumentClient(new Uri(endpointUri), primaryKey)); }
             set { client = value; }
-        }            
-        
+        }
+
         public DocumentDbDataSource()
         {
             endpointUri = config.DocDbEndpointUri;
@@ -59,7 +57,7 @@ namespace QR.DataAccess.DataSource
                     throw;
                 }
             }
-        }        
+        }
 
         public async Task CreateDocumentCollectionIfNotExists(string databaseName, string collectionName)
         {
@@ -90,17 +88,17 @@ namespace QR.DataAccess.DataSource
                 }
             }
         }
-        
+
         public async Task CreateDocumentAsync<T>(string dbName, string collectionName, T item)
         {
             await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), item);
-        }        
+        }
 
         public IEnumerable<T> ExecuteQuery<T>(string databaseName, string collectionName, string query)
         {
             if (!string.IsNullOrEmpty(query))
             {
-                var queryOptions = new FeedOptions {MaxItemCount = -1, EnableCrossPartitionQuery = true};
+                var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
                 return client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(databaseName, collectionName), query, queryOptions);
             }
             return null;
@@ -125,33 +123,38 @@ namespace QR.DataAccess.DataSource
             }
         }
 
-        public PostItem GetDocumentById(string dbName, string collectionName, Guid id)
+        public T GetDocumentById<T>(string dbName, string collectionName, Guid id) where T : GenericDocument
         {
             var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
-            var item = client.CreateDocumentQuery<PostItem>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).Where(x => x.PostId == id).AsEnumerable().FirstOrDefault();
+            var item = client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).Where(x => x.id == id).AsEnumerable().FirstOrDefault();
             return item;
         }
 
-        public IEnumerable<PostItem> GetDocuments(string dbName, string collectionName)
+        public IEnumerable<T> GetDocuments<T>(string dbName, string collectionName) where T : GenericDocument
         {
             var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
-            return client.CreateDocumentQuery<PostItem>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).AsEnumerable();
+            return client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).AsEnumerable();
         }
 
-        public async Task<bool> DeleteDocumentByIdAsync(string dbName, string collectionName, Guid id)
+        public async Task<bool> DeleteDocumentByIdAsync<T>(string dbName, string collectionName, Guid id) where T : GenericDocument
         {
             var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
-            var item = client.CreateDocumentQuery<PostItem>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).Where(x => x.PostId == id).AsEnumerable().FirstOrDefault();
-            await client.DeleteDocumentAsync(item.SelfLink);
+            await client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, id.ToString()));
             return true;
         }
 
-        public async Task<bool> UpdateDocumentByIdAsync(string dbName, string collectionName, Guid id, PostItem newPost)
+        public async Task<bool> UpdateDocumentByIdAsync<T>(string dbName, string collectionName, Guid id, T item) where T : GenericDocument
         {
-            var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
-            var item = client.CreateDocumentQuery<PostItem>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions).Where(x => x.PostId == id).AsEnumerable().FirstOrDefault();
-            await client.ReplaceDocumentAsync(item.SelfLink,newPost);
-            return true;
+            try
+            {
+                var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
+                await client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(dbName, collectionName, id.ToString()), item);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }

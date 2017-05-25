@@ -20,8 +20,11 @@ namespace QR.Common.Resources
             Instance.DocDbEndpointUri = config["DocumentDb:EndpointUri"];
             Instance.DocDbPrimaryKey = config["DocumentDb:PrimaryKey"];
             Instance.DocDbDatabaseName = config["DocumentDb:DatabaseName"];
-            Instance.DocDbCollectionName = config["DocumentDb:CollectionName"];
+            Instance.DocDbCollectionNameForPosts = config["DocumentDb:PostsCollectionName"];
+            Instance.DocDbCollectionNameForAuthors = config["DocumentDb:AuthorsCollectionName"];
             Instance.AuthEnableAdminAuth = bool.Parse(config["Authentication:EnableAdminAuth"]);
+            Instance.GitHubCredClientId = config["Authentication:GitHubCredentials:ClientId"];
+            Instance.GitHubCredClientSecret = config["Authentication:GitHubCredentials:ClientSecret"];            
             Instance.Admins = config
                 .GetSection("Authentication")
                 .GetSection("Admins")
@@ -33,8 +36,11 @@ namespace QR.Common.Resources
         public string DocDbEndpointUri { get; set; }
         public string DocDbPrimaryKey { get; set; }
         public string DocDbDatabaseName { get; set; }
-        public string DocDbCollectionName { get; set; }
+        public string DocDbCollectionNameForPosts { get; set; }
+        public string DocDbCollectionNameForAuthors { get; set; }
         public bool AuthEnableAdminAuth { get; set; }
+        public string GitHubCredClientId { get; set; }
+        public string GitHubCredClientSecret { get; set; }
         public List<string> Admins { get; set; }
     }
 }

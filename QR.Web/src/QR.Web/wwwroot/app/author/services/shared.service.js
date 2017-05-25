@@ -6,6 +6,7 @@
 
     function SharedService($http, $q, $window) {
         var self = this;
+        self.showLoader = true;
         self.actions = [];
         var _name = 'Harold E. Foley'
         self.profile = {

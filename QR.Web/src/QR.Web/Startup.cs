@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using QR.DataAccess.Repository;
 using Swashbuckle.AspNetCore.Swagger;
 using QR.Common.Resources;
+using QR.Web.Services;
 
 namespace QR.Web
 {
@@ -33,6 +34,11 @@ namespace QR.Web
 
             //Add our repository type
             services.AddSingleton<IPostItemRepository, PostItemRepository>();
+            services.AddSingleton<IAuthorItemRepository, AuthorItemRepository>();
+
+            //Add our service type
+            services.AddSingleton<IAuthorItemService, AuthorItemService>();
+            services.AddSingleton<IPostItemService, PostItemService>();
 
             // Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

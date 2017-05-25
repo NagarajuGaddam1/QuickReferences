@@ -22,76 +22,76 @@ namespace QR.DataAccess.Repository
             var config = AppConfig.Instance;
             _db = new DocumentDbDataSource(config.DocDbEndpointUri, config.DocDbPrimaryKey);
             dbName = config.DocDbDatabaseName;
-            collectionName = config.DocDbCollectionName;
+            collectionName = config.DocDbCollectionNameForPosts;
 
-            ValidateDbAndCollectionExists(dbName, collectionName);            
+            ValidateDbAndCollectionExists(dbName, collectionName);
         }
 
         private async void ValidateDbAndCollectionExists(string db, string collection)
         {
             await _db.CreateDatabaseIfNotExists(db);
-            await _db.CreateDocumentCollectionIfNotExists(dbName,collection);
+            await _db.CreateDocumentCollectionIfNotExists(dbName, collection);
         }
 
-        public async Task<Guid> AddPost(PostItem item)
+        public async Task<Guid> AddPost(PostItem item, AuthorMapForPost author)
         {
             item.PostId = Guid.NewGuid();
             item.Upvotes = 0;
             item.Views = 0;
             item.CreatedOn = DateTime.UtcNow;
             item.ModifiedOn = DateTime.UtcNow;
-           
+            item.Author = author;
             await _db.CreateDocumentAsync<PostItem>(dbName, collectionName, item);
             return item.PostId;
         }
 
-        public IEnumerable<PostItem> GetAllPosts()
+        public IEnumerable<PostItemResponse> GetAllPosts()
         {
-            var items = _db.GetDocuments(dbName, collectionName);
+            var items = _db.GetDocuments<PostItemResponse>(dbName, collectionName);
             return items;
         }
 
-        public IEnumerable<PostItem> GetAllPostByAuthor(string author)
+        public IEnumerable<PostItemResponse> GetAllPostByAuthor(string author)
         {
             string query = $"select * from {collectionName} p where p.Author = '{author}'";
-            return _db.ExecuteQuery<PostItem>(dbName, collectionName, query);
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 
-        public IEnumerable<PostItem> GetAllPostByCategory(string category)
+        public IEnumerable<PostItemResponse> GetAllPostByCategory(string category)
         {
-            string query = $"select * from {collectionName} p where Array_Contains(p.Categories,{(int)Utils.GetEnumIntValue<Category>(category)})";
-            return _db.ExecuteQuery<PostItem>(dbName, collectionName, query);
+            string query = $"select * from {collectionName} p where p.Category = {(int)Utils.GetEnumIntValue<Category>(category)}";
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 
-        public IEnumerable<PostItem> GetAllPostByTag(string tag)
+        public IEnumerable<PostItemResponse> GetAllPostByTag(string tag)
         {
-            string query = $"select * from {collectionName} p where Array_Contains(p.Tags,{(int)Utils.GetEnumIntValue<Tag>(tag)})";
-            return _db.ExecuteQuery<PostItem>(dbName, collectionName, query);
+            string query = $"select * from {collectionName} p where Array_Contains(p.Tags,{tag})";
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 
-        public IEnumerable<PostItem> GetAllPostByTitleText(string titletext)
+        public IEnumerable<PostItemResponse> GetAllPostByTitleText(string titletext)
         {
             string query = $"select * from {collectionName} p where Contains(Lower(p.Title),'{titletext.ToLower()}')";
-            return _db.ExecuteQuery<PostItem>(dbName, collectionName, query);
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
         }
 
-        public async Task<PostItem> FindPostById(Guid id)
+        public async Task<PostItemResponse> FindPostById(Guid id)
         {
-            var item = _db.GetDocumentById(dbName, collectionName, id);
+            var item = _db.GetDocumentById<PostItemResponse>(dbName, collectionName, id);
             if (item != null)
             {
                 item.Views++;
-                await _db.UpdateDocumentByIdAsync(dbName, collectionName,id, item);
+                await _db.UpdateDocumentByIdAsync(dbName, collectionName, id, item);
             }
             return item;
-        }        
+        }
 
-        public async Task<Guid> UpdatePost(PostItem item)
+        public async Task<Guid> UpdatePost(PostItemResponse item)
         {
             var oldId = item.PostId;
             item.ModifiedOn = DateTime.UtcNow;
             item.PostId = Guid.NewGuid();
-            var result = await _db.UpdateDocumentByIdAsync(dbName, collectionName, oldId, item);
+            var result = await _db.UpdateDocumentByIdAsync<PostItemResponse>(dbName, collectionName, item.id, item);
             if (result)
                 return item.PostId;
 
@@ -99,7 +99,13 @@ namespace QR.DataAccess.Repository
         }
         public async Task<bool> DeletePostById(Guid id)
         {
-            return await _db.DeleteDocumentByIdAsync(dbName, collectionName, id);
+            return await _db.DeleteDocumentByIdAsync<PostItemResponse>(dbName, collectionName, id);
+        }
+
+        public IEnumerable<PostItemBrief> GetAllPostBriefs()
+        {
+            var items = _db.GetDocuments<PostItemBrief>(dbName, collectionName);
+            return items;
         }
     }
 }

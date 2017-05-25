@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Linq;
+using QR.Common.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,8 +40,8 @@ namespace QR.Web
 
             app.UseGitHubAuthentication(new GitHubAuthenticationOptions
             {
-                ClientId = "0919e0ecf2d44af4a8c3",
-                ClientSecret = "65d50cdf81cd526d6a8e9315f7e562ad565bf604",
+                ClientId = AppConfig.Instance.GitHubCredClientId,
+                ClientSecret = AppConfig.Instance.GitHubCredClientSecret,
                 Scope = {
                     "user",
                     "user:email"
