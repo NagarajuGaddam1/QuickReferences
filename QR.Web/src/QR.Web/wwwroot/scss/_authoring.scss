@@ -195,7 +195,8 @@
                 box-shadow: none;
                 background: transparent;
                 border: none;
-                @include focus-states();                
+                @include focus-states();
+                /* Hello */
             }
 
             &-item {
@@ -274,348 +275,348 @@
             }
         }
     }
-}
 
-&.content-body {
-    height: calc(100vh - 108px);
+    &.content-body {
+        height: calc(100vh - 108px);
 
-    .content-body-container {
-        height: 100%;
-        overflow: hidden;
-        position: relative;
-    }
-}
-
-&-flask {
-    width: 50%;
-    float: left;
-    position: relative;
-    z-index: 1;
-
-    &-pane {
-        width: 60px;
-        height: 100%;
-        float: left;
-        position: absolute;
-        background: #fff;
-        padding: 4px 0 4px 6px;
-        display: table;
-        table-layout: fixed;
-        z-index: 2;
-
-        &-after {
+        .content-body-container {
             height: 100%;
-            width: 100%;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            -ms-overflow-style: -ms-autohiding-scrollbar;
-        }
-
-        &-holder {
+            overflow: hidden;
             position: relative;
-            display: table-cell;
-            vertical-align: middle;
-        }
-
-        &-item {
-            margin-top: 5px;
-            border: 2px solid #909090;
-            transition: background 0.3s linear 0s, border-color 0.3s linear 0s;
-            cursor: pointer;
-
-            &.js {
-                border-color: #ffc629;
-            }
-
-            &.htm {
-                border-color: #ff6d2e;
-            }
-
-            &.css {
-                border-color: #2facdb;
-            }
-
-            &.scss {
-                border-color: #d2679e;
-            }
-
-            &-separator {
-                height: 3px;
-                width: 100%;
-                background: rgba(0,0,0,0.10);
-                margin-top: 8px;
-                margin-bottom: 8px;
-            }
-
-            label {
-                color: inherit;
-                margin: 0;
-                font-family: 'Open Sans', sans-serif;
-                font-size: medium;
-                font-weight: 500;
-                text-align: center;
-                width: 72px;
-                line-height: 48px;
-                letter-spacing: 1px;
-                transition: color 0.3s linear 0s;
-                cursor: pointer;
-                background: transparent;
-            }
-
-            &.action {
-                background-color: #303030;
-                border-color: #303030;
-                color: #fff;
-            }
-
-            i {
-                height: 48px;
-                line-height: 48px;
-                width: 44px;
-                text-align: center;
-                font-size: x-large;
-            }
-
-            &:last-child {
-                margin-bottom: 6px;
-            }
-
-            &:hover,
-            &[data-active="true"] {
-                background-color: #303030;
-                border-color: #303030;
-                color: #fff;
-            }
         }
     }
 
-    .flask {
-        padding: 30px 0 30px 30px;
-        width: calc(100% - 60px);
-        float: right;
+    &-flask {
+        width: 50%;
+        float: left;
+        position: relative;
+        z-index: 1;
 
-        .tagged {
-            textarea {
-                height: 100px;
-            }
+        &-pane {
+            width: 60px;
+            height: 100%;
+            float: left;
+            position: absolute;
+            background: #fff;
+            padding: 4px 0 4px 6px;
+            display: table;
+            table-layout: fixed;
+            z-index: 2;
 
-            input,
-            textarea {
-                font-size: small;
+            &-after {
+                height: 100%;
                 width: 100%;
-                padding: 10px;
-                border: 1px solid rgba(0,0,0,0.20);
-
-                &:active {
-                    border-color: rgba(0,0,0,0.50);
-                }
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                -ms-overflow-style: -ms-autohiding-scrollbar;
             }
 
-            md-content {
-                background: transparent;
-                padding: 0;
-
-                ._md-chip-content {
-                    padding-right: 10px;
-                }
-
-                .md-chips md-chip ._md-chip-remove md-icon {
-                    height: 14px;
-                    width: 14px;
-                    min-height: auto;
-                    min-width: auto;
-                }
-            }
-        }
-
-        &-instance {
-            padding: 15px;
-            border: 1px dotted rgba(0,0,0,0.33);
-            margin-bottom: 10px;
-            position: relative;
-
-            &.--noPadBottom {
-                padding-bottom: 0;
+            &-holder {
+                position: relative;
+                display: table-cell;
+                vertical-align: middle;
             }
 
-            label.title {
-                font-size: small;
-                font-weight: bold;
-                width: 100%;
-                margin-bottom: 15px;
-                text-align: left;
-
-                span {
-                    text-transform: uppercase;
-                }
-            }
-
-            &.draglist {
-                display: inline-block;
-                margin: 0 auto;
-                width: 100%;
-
-                [ng-drag] {
-                    -moz-user-select: -moz-none;
-                    -khtml-user-select: none;
-                    -webkit-user-select: none;
-                    -ms-user-select: none;
-                    user-select: none;
-                }
-
-                [ng-drag].drag-over {
-                    &.drag-enter {
-                        border: solid 5px $standardBg;
-                        opacity: 1;
-                    }
-                }
-
-                [ng-drop] {
-                    text-align: center;
-                    display: block;
-                    position: relative;
-                    width: 100%;
-                    float: left;
-                }
-
-                [ng-drop].drag-enter {
-                    border: solid 5px lighten($standardBg, 33);
-                    opacity: 0.50;
-                }
-
-                [ng-drop] span.title {
-                    display: block;
-                    position: absolute;
-                    top: 50%;
-                    left: 50%;
-                    width: 200px;
-                    height: 20px;
-                    margin-left: -100px;
-                    margin-top: -10px;
-                }
-
-                [ng-drop] div {
-                    position: relative;
-                    z-index: 2;
-                }
-            }
-
-            &[data-reordering="true"] {
-                .flask-instance-content {
-                    height: 100px;
-                    overflow: hidden;
-
-                    textarea {
-                        border: none;
-                        overflow: hidden;
-                        opacity: 0.50;
-                        height: 100px;
-                    }
-                }
-            }
-
-            &-content {
-                width: 100%;
-
-                &.type-list {
-                }
-            }
-
-            i {
-                position: absolute;
-                top: 0px;
-                right: 0px;
-                z-index: 10;
-                background: #fff;
-                color: #909090;
-                width: 36px;
-                height: 36px;
-                line-height: 36px;
-                text-align: center;
-                cursor: pointer;
+            &-item {
+                margin-top: 5px;
+                border: 2px solid #909090;
                 transition: background 0.3s linear 0s, border-color 0.3s linear 0s;
+                cursor: pointer;
 
-                &:hover {
-                    background: #303030;
+                &.js {
+                    border-color: #ffc629;
+                }
+
+                &.htm {
+                    border-color: #ff6d2e;
+                }
+
+                &.css {
+                    border-color: #2facdb;
+                }
+
+                &.scss {
+                    border-color: #d2679e;
+                }
+
+                &-separator {
+                    height: 3px;
+                    width: 100%;
+                    background: rgba(0,0,0,0.10);
+                    margin-top: 8px;
+                    margin-bottom: 8px;
+                }
+
+                label {
+                    color: inherit;
+                    margin: 0;
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: medium;
+                    font-weight: 500;
+                    text-align: center;
+                    width: 72px;
+                    line-height: 48px;
+                    letter-spacing: 1px;
+                    transition: color 0.3s linear 0s;
+                    cursor: pointer;
+                    background: transparent;
+                }
+
+                &.action {
+                    background-color: #303030;
+                    border-color: #303030;
                     color: #fff;
                 }
 
-                &.ms-Icon--Move {
-                    right: 36px;
+                i {
+                    height: 48px;
+                    line-height: 48px;
+                    width: 44px;
+                    text-align: center;
+                    font-size: x-large;
+                }
+
+                &:last-child {
+                    margin-bottom: 6px;
+                }
+
+                &:hover,
+                &[data-active="true"] {
+                    background-color: #303030;
+                    border-color: #303030;
+                    color: #fff;
+                }
+            }
+        }
+
+        .flask {
+            padding: 30px 0 30px 30px;
+            width: calc(100% - 60px);
+            float: right;
+
+            .tagged {
+                textarea {
+                    height: 100px;
+                }
+
+                input,
+                textarea {
+                    font-size: small;
+                    width: 100%;
+                    padding: 10px;
+                    border: 1px solid rgba(0,0,0,0.20);
+
+                    &:active {
+                        border-color: rgba(0,0,0,0.50);
+                    }
+                }
+
+                md-content {
+                    background: transparent;
+                    padding: 0;
+
+                    ._md-chip-content {
+                        padding-right: 10px;
+                    }
+
+                    .md-chips md-chip ._md-chip-remove md-icon {
+                        height: 14px;
+                        width: 14px;
+                        min-height: auto;
+                        min-width: auto;
+                    }
                 }
             }
 
-            &-tag {
-                height: 60px;
-                width: 60px;
-                display: inline-block;
-                margin-right: 15px;
-                margin-bottom: 15px;
+            &-instance {
+                padding: 15px;
+                border: 1px dotted rgba(0,0,0,0.33);
+                margin-bottom: 10px;
                 position: relative;
-                transition: all 0.3s linear 0s;
-                cursor: pointer;
 
-                &:hover {
-                    background-color: #303030 !important;
-                    color: #fff !important;
+                &.--noPadBottom {
+                    padding-bottom: 0;
+                }
+
+                label.title {
+                    font-size: small;
+                    font-weight: bold;
+                    width: 100%;
+                    margin-bottom: 15px;
+                    text-align: left;
+
+                    span {
+                        text-transform: uppercase;
+                    }
+                }
+
+                &.draglist {
+                    display: inline-block;
+                    margin: 0 auto;
+                    width: 100%;
+
+                    [ng-drag] {
+                        -moz-user-select: -moz-none;
+                        -khtml-user-select: none;
+                        -webkit-user-select: none;
+                        -ms-user-select: none;
+                        user-select: none;
+                    }
+
+                    [ng-drag].drag-over {
+                        &.drag-enter {
+                            border: solid 5px $standardBg;
+                            opacity: 1;
+                        }
+                    }
+
+                    [ng-drop] {
+                        text-align: center;
+                        display: block;
+                        position: relative;
+                        width: 100%;
+                        float: left;
+                    }
+
+                    [ng-drop].drag-enter {
+                        border: solid 5px lighten($standardBg, 33);
+                        opacity: 0.50;
+                    }
+
+                    [ng-drop] span.title {
+                        display: block;
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        width: 200px;
+                        height: 20px;
+                        margin-left: -100px;
+                        margin-top: -10px;
+                    }
+
+                    [ng-drop] div {
+                        position: relative;
+                        z-index: 2;
+                    }
+                }
+
+                &[data-reordering="true"] {
+                    .flask-instance-content {
+                        height: 100px;
+                        overflow: hidden;
+
+                        textarea {
+                            border: none;
+                            overflow: hidden;
+                            opacity: 0.50;
+                            height: 100px;
+                        }
+                    }
+                }
+
+                &-content {
+                    width: 100%;
+
+                    &.type-list {
+                    }
                 }
 
                 i {
                     position: absolute;
-                    top: -4px;
-                    right: -4px;
-                    background: #000;
-                    color: #fff;
-                    width: 20px;
-                    line-height: 20px;
-                    height: 20px;
+                    top: 0px;
+                    right: 0px;
+                    z-index: 10;
+                    background: #fff;
+                    color: #909090;
+                    width: 36px;
+                    height: 36px;
+                    line-height: 36px;
                     text-align: center;
+                    cursor: pointer;
+                    transition: background 0.3s linear 0s, border-color 0.3s linear 0s;
+
+                    &:hover {
+                        background: #303030;
+                        color: #fff;
+                    }
+
+                    &.ms-Icon--Move {
+                        right: 36px;
+                    }
                 }
 
-                label {
-                    width: 100%;
-                    line-height: 60px;
+                &-tag {
                     height: 60px;
-                    margin: 0;
-                    text-align: center;
-                    font-size: medium;
-                    font-weight: 400;
-                    font-family: 'Open Sans', sans-serif;
+                    width: 60px;
+                    display: inline-block;
+                    margin-right: 15px;
+                    margin-bottom: 15px;
+                    position: relative;
+                    transition: all 0.3s linear 0s;
                     cursor: pointer;
-                    background: transparent;
+
+                    &:hover {
+                        background-color: #303030 !important;
+                        color: #fff !important;
+                    }
+
+                    i {
+                        position: absolute;
+                        top: -4px;
+                        right: -4px;
+                        background: #000;
+                        color: #fff;
+                        width: 20px;
+                        line-height: 20px;
+                        height: 20px;
+                        text-align: center;
+                    }
+
+                    label {
+                        width: 100%;
+                        line-height: 60px;
+                        height: 60px;
+                        margin: 0;
+                        text-align: center;
+                        font-size: medium;
+                        font-weight: 400;
+                        font-family: 'Open Sans', sans-serif;
+                        cursor: pointer;
+                        background: transparent;
+                    }
                 }
+            }
+
+            .CodeFlask {
+                textarea {
+                    padding: 11px 26px !important;
+                }
+            }
+
+            pre {
+                border-left-width: 3px;
+                background: #f6f6f6;
             }
         }
+    }
 
-        .CodeFlask {
-            textarea {
-                padding: 11px 26px !important;
-            }
+    &-preview {
+        width: 50%;
+        height: 100%;
+        float: right;
+
+        .codeview-container-view {
+            border: 1px solid #f0F0F0;
         }
 
         pre {
-            border-left-width: 3px;
-            background: #f6f6f6;
+            padding: 15px 30px 0 30px;
         }
     }
-}
 
-&-preview {
-    width: 50%;
-    height: 100%;
-    float: right;
-
-    .codeview-container-view {
-        border: 1px solid #f0F0F0;
-    }
-
-    pre {
-        padding: 15px 30px 0 30px;
-    }
-}
-
-.codeview {
-    &:last-child {
-        margin-bottom: 30px;
+    .codeview {
+        &:last-child {
+            margin-bottom: 30px;
+        }
     }
 }
