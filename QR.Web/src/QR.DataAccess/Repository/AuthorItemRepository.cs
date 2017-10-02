@@ -31,7 +31,7 @@ namespace QR.DataAccess.Repository
             await _db.CreateDocumentCollectionIfNotExists(dbName, collection);
         }
 
-        public async Task<Guid> AddAuthor(AuthorItem item)
+        public async Task<Guid?> AddAuthor(AuthorItem item)
         {
             try
             {
@@ -44,9 +44,8 @@ namespace QR.DataAccess.Repository
                     item.CreatedOn = DateTime.UtcNow;
                     item.ModifiedOn = DateTime.UtcNow;
                     item.AuthType = AuthenticationType.GITHUB;
-                    item.ImgSrc = null;
                     item.ActivatedOn = DateTime.UtcNow;
-                    item.IsSuspended = true;
+                    item.IsSuspended = false;
                     await _db.CreateDocumentAsync<AuthorItem>(dbName, collectionName, item);
                     return item.AuthorId;
                 }
@@ -84,7 +83,7 @@ namespace QR.DataAccess.Repository
             return response;
         }
 
-        public async Task<Guid> UpdateAuthor(AuthorItemResponse item)
+        public async Task<Guid?> UpdateAuthor(AuthorItemResponse item)
         {
             var oldId = item.AuthorId;
             item.ModifiedOn = DateTime.UtcNow;

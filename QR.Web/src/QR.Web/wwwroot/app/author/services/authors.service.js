@@ -26,6 +26,23 @@
             }).then(handleSuccessAndMap, handleError);
         }
 
+        var resolveAlias = function (alias) {
+            return $http({
+                url: "https://api.github.com/users/" + alias,
+                method: "GET"
+            }).then(handleSuccess, handleError);
+        }
+
+        var createUser = function (data) {
+            delete data.authenticationType
+            delete data.authenticationUID;
+            return $http({
+                url: "/api/AuthorItem",
+                method: "POST",
+                data: JSON.stringify(data)
+            }).then(handleSuccess, handleError);
+        }
+
         var suspendAuthor = function (data) {
 
             delete data.authenticationType
@@ -57,7 +74,9 @@
 
         return {
             getAll: getData,
-            suspendAuthor: suspendAuthor
+            suspendAuthor: suspendAuthor,
+            resolveAlias: resolveAlias,
+            createUser: createUser
         }
     }
 

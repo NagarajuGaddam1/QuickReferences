@@ -8,6 +8,8 @@
         self.detailsPane = false;
         self.detailsPaneInModifyMode = false;
         self.authorDetailsForPane = {};
+        self.aliasResolved = false;
+        self.disableActionsOnPane = false;
         self.shared = SharedService;
         self.postsService = postsService;
         self.authorsService = authorsService;
@@ -95,7 +97,7 @@
         function hybridCellDefnForPosts(row, col) {
             var tmpl = '<span>VX_DATA_POINT</span>';
             if (col.id == 'title')
-                tmpl = '<a class="vx-grid-a" href="#/post" title="' + row[col.id] + '">' + row[col.id] + '</a>';
+                tmpl = '<a class="vx-grid-a" href="#/post?id=' + row.id + '" title="' + row[col.id] + '">' + row[col.id] + '</a>';
             else if (col.id == 'category')
                 tmpl = tmpl.replace('VX_DATA_POINT', row[col.id] || '');
             else if (col.id == 'author')
@@ -320,6 +322,41 @@
             self.detailsPane = true;
             self.detailsPaneInModifyMode = false;
             $scope.$apply();
+        }
+
+        self.resolveAlias = function () {
+            if (self.authorDetailsForPane.alias.trim() !== '') {
+                self.authorsService.resolveAlias(self.authorDetailsForPane.alias.trim()).then(function (data) {
+                    var author = {
+                        "authorId": null,
+                        "name": data.name,
+                        "authType": 0,
+                        "sourceId": data.login,
+                        "alias": data.login,
+                        "createdOn": null,
+                        "modifiedOn": null,
+                        "activatedOn": null,
+                        "isSuspended": true,
+                        "imgSrc": data.avatar_url,
+                        "authenticationType": "GITHUB",
+                        "authenticationUID": null
+                    };
+                    self.authorDetailsForPane = author;
+                    self.aliasResolved = true;
+                });
+            }
+        }
+
+        self.addUser = function () {
+            self.disableActionsOnPane = true;
+            self.authorDetailsForPane.isSuspended = false;
+            self.authorDetailsForPane.createdOn = new Date();
+            self.authorDetailsForPane.modifiedOn = self.authorDetailsForPane.createdOn;
+            self.authorsService.createUser(self.authorDetailsForPane).then(function (data) {
+                self.disableActionsOnPane = false;
+                self.closeDetailsPane();
+                self.loadAuthors();
+            });
         }
 
         self.init();
