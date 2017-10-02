@@ -48,6 +48,15 @@ namespace QR.Web.Controllers.api
             return PostService.GetAllPostBriefs();
         }
 
+        // GET: api/PostItem
+        [HttpGet("ids")]
+        public IActionResult GetAllIds([FromQuery]int pageLength, [FromQuery]int pageIndex, [FromQuery]string sortBy)
+        {
+            //todo:
+            //Add validations and other stuff
+            return PostService.GetAllPostIDs(pageLength, pageIndex, sortBy);
+        }
+
         [HttpGet("authors/{author}")]
         public IActionResult SearchByAuthor(string author)
         {

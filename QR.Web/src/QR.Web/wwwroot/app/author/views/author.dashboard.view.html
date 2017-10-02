@@ -56,6 +56,7 @@
                     <input ng-model="authoringDashboard.authorDetailsForPane.alias" />
                     <label ng-show="!authoringDashboard.authorDetailsForPane.alias">--</label>
                 </div>
+                <button class="authoring-dashboard-pane-item-action m-t-15" ng-show="authoringDashboard.detailsPaneInModifyMode == false" ng-click="authoringDashboard.resolveAlias()">Resolve</button>
             </div>
             <div class="authoring-dashboard-pane-item w50">
                 <div class="authoring-dashboard-pane-item-label">Is Suspended</div>
@@ -72,9 +73,9 @@
                 </div>
             </div>
             <div class="authoring-dashboard-pane-item">
-                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == false">Add</button>
-                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == true">Save</button>
-                <button class="authoring-dashboard-pane-item-action" ng-click="authoringDashboard.closeDetailsPane()">Cancel</button>
+                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == false" ng-disabled="!authoringDashboard.aliasResolved || disableActionsOnPane" ng-click="authoringDashboard.addUser()">Add</button>
+                <button class="authoring-dashboard-pane-item-action primary" ng-show="authoringDashboard.detailsPaneInModifyMode == true" ng-disabled="authoringDashboard.disableActionsOnPane">Save</button>
+                <button class="authoring-dashboard-pane-item-action" ng-click="authoringDashboard.closeDetailsPane()" ng-disabled="authoringDashboard.disableActionsOnPane">Cancel</button>
             </div>
         </div>
     </div>

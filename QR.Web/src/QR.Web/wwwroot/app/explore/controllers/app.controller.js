@@ -39,6 +39,10 @@
         var _setToDisappear = false;
         var _noOfPostsLoaded = 0;
         var _currentFetchInProgress = false;
+        var _postsPageLength = 10;
+        var _postsPageIndex = 1;
+        var _postsSortBy = null;
+        var _postsFetchIsDisabled = false;
         self.constants = $constants;
         self.timeout = $timeout;
         self.interval = $interval
@@ -85,10 +89,14 @@
                     self.loadLoaderElementsIntoAllContent(tabTitle);
                 }, 500);
                 self.currentTitle = tabTitle;
-                self.postService.get(self.currentTitle)
+                self.postService.get(self.currentTitle, _postsPageLength, _postsPageIndex, _postsSortBy)
                 .then(function (data) {
-                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
+                    if (data.posts) {
+                        if (data.posts.length == 0 || data.posts.length < _postsPageLength) {
+                            _postsFetchIsDisabled = true;
+                        }
+                    }
                 }, function (data) {
                 })
             }
@@ -153,10 +161,13 @@
                     var _imgElm = _holderElm.querySelector('[data-tag="cat-logo"]');
                     if (_imgElm) {
                         var _imgElmSrc = '';
-                        switch (_post.category) {
+                        switch (_post.category.toLowerCase()) {
                             case 'css': _imgElmSrc = '/dist/images/css3.png'; break;
+                            case 'css': _imgElmSrc = '/dist/images/css3.png'; break;
+                            case 'js': _imgElmSrc = '/dist/images/js.png'; break;
                             case 'javascript': _imgElmSrc = '/dist/images/js.png'; break;
                             case 'scss': _imgElmSrc = '/dist/images/scss.png'; break;
+                            case 'html': _imgElmSrc = '/dist/images/html5.png'; break;
                             case 'markup': _imgElmSrc = '/dist/images/html5.png'; break;
                             default: _imgElmSrc = '/dist/images/css3.png'; break;
                         }
@@ -282,7 +293,7 @@
                 tryToHideHeader();
                 var _props = _viewBottom.getBoundingClientRect();
                 var _currentTotalHeight = document.querySelector('[data-tag="content-holder"] md-content').getBoundingClientRect().height;
-                if ((_top + _props.height) > (_currentTotalHeight - 100) && !_currentFetchInProgress)
+                if ((_top + _props.height) > (_currentTotalHeight - 100) && !_currentFetchInProgress && !_postsFetchIsDisabled)
                     self.insertPostsFromSameCategory();
             }
             else if (_top < 48) {
@@ -293,13 +304,18 @@
         self.insertPostsFromSameCategory = function () {
             if (self.selectedCategory != '_post') {
                 _currentFetchInProgress = true;
-                console.log('insertPostsFromSameCategory')
+                _postsPageIndex = _postsPageIndex + 1;
                 self.loadLoaderElementsIntoAllContent(self.selectedCategory);
-                self.postService.getWithDelay(self.currentTitle)
+                self.postService.get(self.currentTitle, _postsPageLength, _postsPageIndex, _postsSortBy)
                .then(function (data) {
-                   console.log(data);
+                   console.log(111, data);
                    var _negateCurrentFetch = true;
                    tryLoadingPostsForActiveContent(data, _negateCurrentFetch);
+                   if (data.posts) {
+                       if (data.posts.length == 0 || data.posts.length < _postsPageLength) {
+                           _postsFetchIsDisabled = true;
+                       }
+                   }
                }, function (data) {
                })
             }
@@ -389,10 +405,14 @@
         self.dataInit = function () {
             if (self.constants["_IS_POST_SPECIFIC"] == false) {
                 self.selectedCategory = self.currentTitle;
-                self.postService.get(self.currentTitle)
+                self.postService.get(self.currentTitle, _postsPageLength, _postsPageIndex, _postsSortBy)
                 .then(function (data) {
-                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
+                    if (data.posts) {
+                        if (data.posts.length == 0 || data.posts.length < _postsPageLength) {
+                            _postsFetchIsDisabled = true;
+                        }
+                    }
                     self.initialized = true;
                 }, function (data) {
                 })
@@ -405,6 +425,7 @@
                 self.lastCategoryIsPost = true;
                 self.postService.getSpecificPost()
                 .then(function (data) {
+                    console.log(data);
                     tryLoadingPostsForActiveContent(data);
                     self.initialized = true;
                 }, function (data) {
@@ -413,6 +434,7 @@
         }
         self.init = function () {
             self.timeout(function () {
+                console.log(self);
                 if (self.constants["_IS_POST_SPECIFIC"] == false) {
                     if (self.constants["_IS_CATEGORY_SPECIFIC"] == false) {
                         self.currentTitle = 'all';

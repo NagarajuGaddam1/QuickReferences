@@ -41,6 +41,7 @@ namespace QR.DataAccess.Repository
             item.CreatedOn = DateTime.UtcNow;
             item.ModifiedOn = DateTime.UtcNow;
             item.Author = author;
+            item.IsPublished = true;
             await _db.CreateDocumentAsync<PostItem>(dbName, collectionName, item);
             return item.PostId;
         }
@@ -51,28 +52,28 @@ namespace QR.DataAccess.Repository
             return items;
         }
 
-        public IEnumerable<PostItemResponse> GetAllPostByAuthor(string author)
+        public IEnumerable<Guid> GetAllPostByAuthor(string author)
         {
-            string query = $"select * from {collectionName} p where p.Author = '{author}'";
-            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
+            string query = $"select * from {collectionName} p where p.Author.Alias = '{author}'";
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query).Select(x => x.id);
         }
 
-        public IEnumerable<PostItemResponse> GetAllPostByCategory(string category)
+        public IEnumerable<Guid> GetAllPostByCategory(string category)
         {
             string query = $"select * from {collectionName} p where p.Category = {(int)Utils.GetEnumIntValue<Category>(category)}";
-            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query).Select(x => x.id);
         }
 
-        public IEnumerable<PostItemResponse> GetAllPostByTag(string tag)
+        public IEnumerable<Guid> GetAllPostByTag(string tag)
         {
             string query = $"select * from {collectionName} p where Array_Contains(p.Tags,{tag})";
-            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query).Select(x => x.id);
         }
 
-        public IEnumerable<PostItemResponse> GetAllPostByTitleText(string titletext)
+        public IEnumerable<Guid> GetAllPostByTitleText(string titletext)
         {
             string query = $"select * from {collectionName} p where Contains(Lower(p.Title),'{titletext.ToLower()}')";
-            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query);
+            return _db.ExecuteQuery<PostItemResponse>(dbName, collectionName, query).Select(x => x.id);
         }
 
         public async Task<PostItemResponse> FindPostById(Guid id)
@@ -106,6 +107,13 @@ namespace QR.DataAccess.Repository
         {
             var items = _db.GetDocuments<PostItemBrief>(dbName, collectionName);
             return items;
+        }
+
+        public IEnumerable<Guid> GetAllPostIDs(int pageLength, int pageIndex, string sortBy)
+        {
+            var items = _db.GetDocuments<PostItemBrief>(dbName, collectionName, pageLength, pageIndex, sortBy);
+            return items
+                .Select(x => x.id);
         }
     }
 }

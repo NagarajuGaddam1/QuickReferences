@@ -1,6 +1,38 @@
 ﻿(function () {
     "use strict";
 
+    var CATEGORY;
+    (function (b) {
+        b[b["HTML"] = 0] = "HTML";
+        b[b["JS"] = 1] = "JS";
+        b[b["CSS"] = 2] = "CSS";
+        b[b["SCSS"] = 3] = "SCSS";
+        b[b["CSHARP"] = 4] = "CSHARP";
+        b[b["AZURE"] = 5] = "AZURE";
+    })(CATEGORY || (CATEGORY = {}));
+
+    var ContentItemType;
+    (function (b) {
+        b[b["text"] = 0] = "text";
+        b[b["flask"] = 1] = "flask";
+    })(ContentItemType || (ContentItemType = {}));
+
+    var ContentItemFlaskType;
+    (function (b) {
+        b[b["javascript"] = 0] = "javascript";
+        b[b["markup"] = 1] = "markup";
+        b[b["css"] = 2] = "css";
+    })(ContentItemFlaskType || (ContentItemFlaskType = {}));
+
+    var ContentItemLanguage;
+    (function (b) {
+        b[b["javascript"] = 0] = "javascript";
+        b[b["markup"] = 1] = "markup";
+        b[b["css"] = 2] = "css";
+        b[b["htm"] = 3] = "htm";
+        b[b["scss"] = 4] = "scss";
+    })(ContentItemLanguage || (ContentItemLanguage = {}));
+
     angular.module('QR.Web')
     .service("PostsService", ["$http", "$q", "$timeout", PostsService]);
 
@@ -12,62 +44,67 @@
             })
         }
 
-        var _getPosts = function (_filter) {
+        var _getPosts = function (_filter, _postsPageLength, _postsPageIndex, _postsSortBy) {
             var _defer = $q.defer();
-            $timeout(function () {
-                if (_filter == "all") {
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_posts) });
-                }
-                else if (_filter == "css") {
-                    var _data = _.filter(_posts, function (_post) {
-                        return _post.category == "css" || _post.category == "scss";
-                    })
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
-                }
-                else {
-                    var _data = _.filter(_posts, function (_post) {
-                        return _post.category == _filter;
-                    })
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
-                }
-            }, 1000);
+            var url = "/api/PostItem/ids?";
+            if (_postsPageLength) {
+                url = url + "&pageLength=" + _postsPageLength;
+            }
+            if (_postsPageIndex) {
+                url = url + "&pageIndex=" + _postsPageIndex;
+            }
+            if (_postsSortBy && _postsSortBy !== null && _postsSortBy !== '') {
+                url = url + "&sortBy=" + _postsSortBy;
+            }
+            $http({
+                url: url,
+                method: "GET"
+            }).then(function (response) {
+                _defer.resolve({ filter: _filter, posts: response.data });
+            }, function () {
+                _defer.resolve({ filter: _filter, posts: [] });
+            });
             return _defer.promise;
         }
 
         var _getPostsWithDelay = function (_filter) {
             var _defer = $q.defer();
-            $timeout(function () {
-                var _newPosts = [];
-                _.each(_posts, function (_post) {
-                    _post.id = _.uniqueId('_ORIG_POST');
-                })
-                if (_filter == "all") {
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_posts) });
-                }
-                else if (_filter == "css") {
-                    var _data = _.filter(_posts, function (_post) {
-                        return _post.category == "css" || _post.category == "scss";
-                    })
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
-                }
-                else {
-                    var _data = _.filter(_posts, function (_post) {
-                        return _post.category == _filter;
-                    })
-                    _defer.resolve({ filter: _filter, posts: _mappedIDs(_data) });
-                }
-            }, 3000);
+            $http({
+                url: "/api/PostItem/ids",
+                method: "GET"
+            }).then(function (response) {
+                _defer.resolve({ filter: _filter, posts: response.data });
+            }, function () {
+                _defer.resolve({ filter: _filter, posts: [] });
+            });
             return _defer.promise;
         }
 
         var _getDataForPost = function (_holder) {
             var _defer = $q.defer();
-            $timeout(function () {
+            $http({
+                url: "/api/PostItem/" + _holder.loadedId,
+                method: "GET"
+            }).then(function (response) {
+                if (response.data) {
+                    response.data.content = response.data.contentItems;
+                    response.data.name = response.data.title;
+                    response.data.category = CATEGORY[response.data.category];
+                    _.each(response.data.content, function (_content, _iter) {
+                        _content.uid = _content['contentItemId'] || _.uniqueId('_flask_content_');
+                        _content.index = _iter;
+                        _content.type = ContentItemType[_content['type']];
+                        if (typeof _content.lang !== 'undefined' && _content.lang != null) _content.lang = ContentItemLanguage[_content.lang];
+                        if (typeof _content.flaskLang !== 'undefined' && _content.flaskLang != null) _content.flaskLang = ContentItemFlaskType[_content.flaskLang];
+                    });
+                }
                 var _post = _.find(_posts, function (_p) {
-                    return _p.id == _holder.loadedId;
+                    return _p.id == '_ORIG_POST5';
                 })
-                _defer.resolve({ holder: _holder, post: _post });
-            }, 50 * Math.random());
+                _defer.resolve({ holder: _holder, post: response.data });
+            }, function () {
+                _defer.reject();
+            });
             return _defer.promise;
         }
 

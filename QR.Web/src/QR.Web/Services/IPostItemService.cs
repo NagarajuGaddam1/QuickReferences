@@ -9,6 +9,7 @@ namespace QR.Web.Services
     {
         IActionResult GetAllPosts();
         IActionResult GetAllPostBriefs();
+        IActionResult GetAllPostIDs(int pageLength, int pageIndex, string sortBy);
         Task<IActionResult> GetPostById(Guid id);
         IActionResult GetPostsByAuthor(string alias);
         IActionResult GetPostsTaggedWith(string tag);

@@ -8,13 +8,13 @@ namespace QR.DataAccess.Repository
 {
     public interface IAuthorItemRepository
     {
-        Task<Guid> AddAuthor(AuthorItem item);
+        Task<Guid?> AddAuthor(AuthorItem item);
         IEnumerable<AuthorItemResponse> GetAllAuthors();
         AuthorMapForPost GetAuthorMapForPost(Guid id);
         AuthorItemResponse FindAuthorByAuthSource(AuthenticationType authType, string sourceId);
         AuthorItemResponse FindAuthorById(Guid id);
         AuthorItemResponse FindAuthorByAlias(string alias);
         Task<bool> DeleteAuthorById(Guid id);
-        Task<Guid> UpdateAuthor(AuthorItemResponse item);
+        Task<Guid?> UpdateAuthor(AuthorItemResponse item);
     }
 }

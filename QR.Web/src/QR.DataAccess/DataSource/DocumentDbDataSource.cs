@@ -7,6 +7,7 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using QR.Common.Resources;
 using QR.Models;
+using System.Reflection;
 
 namespace QR.DataAccess.DataSource
 {
@@ -155,6 +156,30 @@ namespace QR.DataAccess.DataSource
             {
                 return false;
             }
+        }
+
+        public IEnumerable<T> GetDocuments<T>(string dbName, string collectionName, int? pageLength = Int32.MaxValue, int? pageIndex = 1, string sortBy = "ModifiedOn") where T : GenericDocument
+        {
+            if (!pageLength.HasValue || pageLength == 0) {
+                pageLength = Int32.MaxValue;
+                pageIndex = 1;
+            }
+            if (!pageIndex.HasValue || pageIndex == 0) {
+                pageIndex = 1;
+            }
+            if (sortBy == null || sortBy == "") {
+                sortBy = "ModifiedOn";
+            }
+            var queryOptions = new FeedOptions { MaxItemCount = -1, EnableCrossPartitionQuery = true };
+            return client.CreateDocumentQuery<T>(UriFactory.CreateDocumentCollectionUri(dbName, collectionName), queryOptions)
+                .AsEnumerable()
+                .OrderBy( x => {
+                    PropertyInfo prop = x.GetType().GetProperty(sortBy);
+                    prop = prop != null ? prop : x.GetType().GetProperty("id");
+                    return prop.GetValue(x);
+                })
+                .Skip(pageLength.Value * (pageIndex.Value - 1))
+                .Take(pageLength.Value);
         }
     }
 }
