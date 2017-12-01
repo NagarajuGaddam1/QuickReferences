@@ -33,7 +33,7 @@
     };
 
     angular.module('QR.Web.Author')
-    .controller('PostController', ['$uibModal', 'Notify', 'SharedService', 'SampleGet', '$timeout', '$stateParams', 'PostsService', function ($uibModal, notifyService, shared, SampleGet, $timeout, $stateParams, PostsService) {
+        .controller('PostController', ['$uibModal', 'Notify', 'SharedService', 'SampleGet', '$timeout', '$stateParams', 'PostsService', '$scope', function ($uibModal, notifyService, shared, SampleGet, $timeout, $stateParams, PostsService, $scope) {
         var self = this;
         self.shared = shared;
         self.shared.currentContext = 'Edit Post';
@@ -89,11 +89,22 @@
             self.swapContent(_dropIndex, data.index)
         }
         self.swapContent = function (_dropIndex, _pickIndex) {
-            var _temp = self.post.contentItems[_pickIndex];
-            self.post.contentItems.splice(_pickIndex, 1);
-            self.post.contentItems.splice(_dropIndex, 0, _temp);
-            _.each(self.post.contentItems, function (_content, _iter) {
-                _content.index = _iter;
+            var _tempPosts = [].concat(self.post.contentItems);
+            self.post.contentItems = [];
+            if (!$scope.$$phase) {
+                $scope.$apply();
+            }
+            setTimeout(function () {
+                var _temp = _tempPosts[_pickIndex];
+                _tempPosts.splice(_pickIndex, 1);
+                _tempPosts.splice(_dropIndex, 0, _temp);
+                _.each(_tempPosts, function (_content, _iter) {
+                    _content.index = _iter;
+                });
+                self.post.contentItems = _tempPosts;
+                if (!$scope.$$phase) {
+                    $scope.$apply();
+                }
             });
         }
         self.enableFlaskReordering = function () {

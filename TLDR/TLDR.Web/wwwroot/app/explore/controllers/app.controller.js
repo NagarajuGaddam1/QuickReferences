@@ -240,7 +240,7 @@
             }, function (data) { console.log('error'); console.log(data); });
         }
         function tryToShowHeader() {
-            var _topHeight = window.innerWidth < 768 ? 240 : 380;
+            var _topHeight = window.innerWidth < 768 ? 240 : 200;
             if (_viewTop && _setToDisappear && !self.headerPinned) {
                 TweenMax.to(_viewHeader, 0.1, {
                     opacity: 0, onComplete: function () {
@@ -446,7 +446,7 @@
                     self.loadLoaderElementsIntoAllContent(self.currentTitle);
                 }
                 self.dataInit();
-                var _topHeight = window.innerWidth < 768 ? 240 : 380; 1
+                var _topHeight = window.innerWidth < 768 ? 240 : 200;
                 _viewTop = document.querySelector('[data-tag="view-top"]');
                 _viewBottom = document.querySelector('[data-tag="content-holder"]');
                 _viewHeader = document.querySelector('[data-tag="view-header"]');
@@ -459,7 +459,7 @@
                     self.debScrollFn(e.target.scrollTop);
                 });
                 window.addEventListener('resize', function (e) {
-                    var _topHeight = window.innerWidth < 768 ? 240 : 380;
+                    var _topHeight = window.innerWidth < 768 ? 240 : 200;
                     TweenLite.set(_viewTop, { marginTop: -_topHeight });
                     if (self.headerPinned) {
                         TweenLite.set(_viewBottom, { height: window.innerHeight - 72 });
