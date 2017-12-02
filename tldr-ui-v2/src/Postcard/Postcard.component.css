@@ -9,7 +9,7 @@
   display: block;
   margin: 30px auto; }
   .Postcard.JavaScript .Postcard-Header {
-    background: rgba(252, 246, 222, 0.8); }
+    background: #fefcf1; }
     .Postcard.JavaScript .Postcard-Header-Type {
       background: rgba(241, 196, 15, 0.25); }
     .Postcard.JavaScript .Postcard-Header-Meta-User {
@@ -18,7 +18,7 @@
     border: 1px solid rgba(241, 196, 15, 0.5);
     color: rgba(48, 3, 48, 0.75); }
   .Postcard.HTML5 .Postcard-Header {
-    background: rgba(251, 237, 224, 0.8); }
+    background: #fefbfb; }
     .Postcard.HTML5 .Postcard-Header-Type {
       background: #fae8d7; }
     .Postcard.HTML5 .Postcard-Header-Meta-User {
@@ -27,7 +27,7 @@
     border: 1px solid rgba(239, 185, 134, 0.5);
     color: rgba(48, 3, 48, 0.75); }
   .Postcard.SCSS .Postcard-Header {
-    background: rgba(253, 243, 242, 0.8); }
+    background: #fbf8fc; }
     .Postcard.SCSS .Postcard-Header-Type {
       background: #fcebe9; }
     .Postcard.SCSS .Postcard-Header-Meta-User {
@@ -37,7 +37,7 @@
     color: rgba(48, 3, 48, 0.75); }
   .Postcard-Header {
     padding: 0 15px 15px 15px;
-    background: rgba(69, 142, 209, 0.1); }
+    background: rgba(69, 142, 209, 0.05); }
     .Postcard-Header-Type {
       font-size: x-small;
       font-weight: normal;

@@ -49,7 +49,7 @@ export class Postcard extends React.Component<OwnProps, OwnState> {
 			default: break;
 		}
 		return (
-			<div className={"Postcard " + postType}>
+			<div className={"Postcard " + postType} id={post.id}>
 				<div className="Postcard-Header">
 					<img className="Postcard-Header-Logo" src={postLogo} />
 					<h5 className="Postcard-Header-Type">{postType}</h5>

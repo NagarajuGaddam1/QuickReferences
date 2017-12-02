@@ -36,4 +36,5 @@ export class Post {
 	IsPublished: Boolean;
 	IsSuspended: Boolean;
 	Author: { AuthorDocumentId: string, Alias: string, ImgSrc: string };
+	active: Boolean  = false;
 }

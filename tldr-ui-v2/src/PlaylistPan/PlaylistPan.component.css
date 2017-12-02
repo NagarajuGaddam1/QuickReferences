@@ -1,0 +1,107 @@
+.PlaylistPan {
+  top: 0;
+  position: fixed;
+  z-index: 999;
+  text-align: left;
+  height: 245px;
+  width: 100%;
+  overflow: hidden;
+  padding: 10px 40px 10px 40px;
+  background: #fafafa;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s linear 0s; }
+  .PlaylistPan.non-sticky {
+    transform: translateY(-100%); }
+  .PlaylistPan label.title {
+    line-height: 72px;
+    font-size: x-large;
+    font-weight: 100; }
+  .PlaylistPan-Chevron {
+    position: absolute;
+    top: 120px;
+    cursor: pointer; }
+    .PlaylistPan-Chevron.Left {
+      left: 0; }
+    .PlaylistPan-Chevron.Right {
+      right: 0; }
+    .PlaylistPan-Chevron i {
+      width: 30px;
+      text-align: center;
+      line-height: 60px; }
+      .PlaylistPan-Chevron i:hover, .PlaylistPan-Chevron i:focus, .PlaylistPan-Chevron i:active {
+        background: rgba(0, 0, 0, 0.05); }
+  .PlaylistPan-Holder {
+    width: 100%;
+    height: calc(100% + 60px);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    padding: 10px 2px;
+    box-sizing: border-box; }
+  .PlaylistPan-Item {
+    background: #fff;
+    margin-right: 15px;
+    display: inline-block;
+    height: 135px;
+    padding: 10px 20px 10px 10px;
+    border-top: 5px solid transparent;
+    position: relative;
+    cursor: pointer;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.15);
+    vertical-align: top;
+    min-width: 250px; }
+    .PlaylistPan-Item:last-child {
+      margin-right: 0; }
+    .PlaylistPan-Item-Logo {
+      max-height: 24px;
+      display: block;
+      max-width: 24px;
+      margin-bottom: 20px; }
+    .PlaylistPan-Item-Title {
+      font-size: small;
+      width: 100%;
+      display: block;
+      padding: 10px 0;
+      box-sizing: border-box;
+      white-space: normal;
+      max-width: 240px; }
+    .PlaylistPan-Item.active {
+      background: #fff;
+      border-top: 5px solid #0073c6; }
+      .PlaylistPan-Item.active.JavaScript {
+        border-top-color: #f1c40f;
+        background: #fefcf1; }
+        .PlaylistPan-Item.active.JavaScript .Postcard-Tag {
+          border: 1px solid rgba(241, 196, 15, 0.5); }
+      .PlaylistPan-Item.active.HTML5 {
+        border-top-color: #e74c3c;
+        background: #fefbfb; }
+        .PlaylistPan-Item.active.HTML5 .Postcard-Tag {
+          border: 1px solid rgba(239, 185, 134, 0.5); }
+      .PlaylistPan-Item.active.SCSS {
+        border-top-color: #9b59b6;
+        background: #fbf8fc; }
+        .PlaylistPan-Item.active.SCSS .Postcard-Tag {
+          border: 1px solid rgba(155, 89, 182, 0.5); }
+      .PlaylistPan-Item.active.CSS {
+        border-top-color: #3498db;
+        background: rgba(69, 142, 209, 0.05); }
+        .PlaylistPan-Item.active.CSS .Postcard-Tag {
+          border: 1px solid rgba(69, 142, 209, 0.5); }
+      .PlaylistPan-Item.active .Playlist-Item-Title {
+        font-weight: bold; }
+  .PlaylistPan .Postcard-Tag {
+    border: 1px solid rgba(69, 142, 209, 0.5);
+    color: rgba(48, 3, 48, 0.75);
+    font-size: x-small;
+    display: inline-block;
+    padding: 1px 5px;
+    margin: 0 5px 0 0; }
+    .PlaylistPan .Postcard-Tag:first-child {
+      margin-left: 5px; }
+    .PlaylistPan .Postcard-Tag-Container {
+      display: block;
+      padding-top: 5px;
+      font-size: x-small; }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import './App.css';
 import { Postcard } from './Postcard/Postcard.component';
 // import { PlaylistVertical } from './PlaylistVertical/PlaylistVertical.component';
+import { PlaylistPan } from './PlaylistPan/PlaylistPan.component';
 import { SAMPLES as Posts } from './samples';
 
 class App extends React.Component {
@@ -11,8 +12,8 @@ class App extends React.Component {
 		});
 		return (
 			<div className="App">
-				{/* <PlaylistVertical posts={Posts} activeIndex={10} /> */}
-				<div style={{ width: 'calc(100vw)', float: 'right'}}>
+				{<PlaylistPan posts={Posts} activeIndex={10} title={'Sorting in JavaScript'} />}
+				<div className="PostsHolder" >
 					{PostCollection}
 				</div>
 			</div>
