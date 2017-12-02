@@ -1,0 +1,56 @@
+.PlaylistVertical {
+    text-align: left;
+    height: 100vh;
+    width: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    float: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    &-Item {
+        background: #f6f6f6;
+        height: 48px;
+        padding: 0 10px;
+        line-height: 48px;
+        border-bottom: 1px solid #f0f0f0;
+        position: relative;
+        border-left: 5px solid transparent;
+        cursor: pointer;
+        &-Logo {
+            max-height: 24px;
+            vertical-align: middle;
+            display: inline-block;
+            max-width: 24px;
+        }
+        &-Title {
+            font-size: small;
+            line-height: 48px;
+            width: calc(100% - 40px);
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+            white-space: nowrap;
+            display: inline-block;
+            vertical-align: middle;
+            padding: 0 5px 0 15px;
+            box-sizing: border-box;
+        }
+        &.active {
+            background: #fff;
+            border-left: 5px solid #303030;
+            .Playlist-Item-Title {
+                font-weight: bold;
+            }
+            .arrow-left {
+                position: absolute;
+                top: 14px;
+                right: 0;
+                width: 0; 
+                height: 0; 
+                border-top: 10px solid transparent;
+                border-bottom: 10px solid transparent; 
+                border-right:10px solid #fff; 
+              }
+        }
+    }
+}

@@ -1,0 +1,92 @@
+.Postcard {
+  width: 80%;
+  max-width: 800px;
+  background: #fdfdfd;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  margin: 15px;
+  text-align: left;
+  padding: 0;
+  display: block;
+  margin: 30px auto; }
+  .Postcard.JavaScript .Postcard-Header {
+    background: rgba(252, 246, 222, 0.8); }
+    .Postcard.JavaScript .Postcard-Header-Type {
+      background: rgba(241, 196, 15, 0.25); }
+    .Postcard.JavaScript .Postcard-Header-Meta-User {
+      color: #0073c6; }
+  .Postcard.JavaScript .Postcard-Tag {
+    border: 1px solid rgba(241, 196, 15, 0.5);
+    color: rgba(48, 3, 48, 0.75); }
+  .Postcard.HTML5 .Postcard-Header {
+    background: rgba(251, 237, 224, 0.8); }
+    .Postcard.HTML5 .Postcard-Header-Type {
+      background: #fae8d7; }
+    .Postcard.HTML5 .Postcard-Header-Meta-User {
+      color: #0073c6; }
+  .Postcard.HTML5 .Postcard-Tag {
+    border: 1px solid rgba(239, 185, 134, 0.5);
+    color: rgba(48, 3, 48, 0.75); }
+  .Postcard.SCSS .Postcard-Header {
+    background: rgba(253, 243, 242, 0.8); }
+    .Postcard.SCSS .Postcard-Header-Type {
+      background: #fcebe9; }
+    .Postcard.SCSS .Postcard-Header-Meta-User {
+      color: #0073c6; }
+  .Postcard.SCSS .Postcard-Tag {
+    border: 1px solid rgba(239, 161, 154, 0.5);
+    color: rgba(48, 3, 48, 0.75); }
+  .Postcard-Header {
+    padding: 0 15px 15px 15px;
+    background: rgba(69, 142, 209, 0.1); }
+    .Postcard-Header-Type {
+      font-size: x-small;
+      font-weight: normal;
+      display: inline-block;
+      background: rgba(69, 142, 209, 0.1);
+      padding: 5px 10px;
+      margin: 15px 0 10px 0; }
+    .Postcard-Header-Meta {
+      margin: 0;
+      font-weight: normal;
+      font-size: x-small;
+      padding: 5px 0;
+      display: inline-block; }
+      .Postcard-Header-Meta-User {
+        color: #0073c6;
+        text-decoration: underline; }
+    .Postcard-Header-Logo {
+      height: 20px;
+      vertical-align: middle;
+      margin-right: 10px; }
+  .Postcard-Content {
+    padding: 0 15px 0 15px; }
+    .Postcard-Content h3 {
+      margin: 15px 0 10px 0;
+      padding: 0;
+      width: 100%;
+      display: block; }
+    .Postcard-Content pre {
+      padding: 10px 0;
+      font-size: 0.8em; }
+      .Postcard-Content pre code {
+        border-left: none;
+        box-shadow: none; }
+        .Postcard-Content pre code:after, .Postcard-Content pre code:before {
+          display: none; }
+    .Postcard-Content-Item-Text {
+      font-size: small;
+      color: #303030;
+      white-space: pre-wrap; }
+  .Postcard-Tag {
+    border: 1px solid rgba(69, 142, 209, 0.5);
+    color: rgba(48, 3, 48, 0.75);
+    font-size: x-small;
+    display: inline-block;
+    padding: 1px 5px;
+    margin: 0 5px 0 0; }
+    .Postcard-Tag:first-child {
+      margin-left: 5px; }
+    .Postcard-Tag-Container {
+      display: block;
+      padding-top: 5px;
+      font-size: x-small; }

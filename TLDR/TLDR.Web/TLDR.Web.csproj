@@ -29,4 +29,7 @@
     <ProjectReference Include="..\TLDR.Models\TLDR.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Dashboard\" />
+  </ItemGroup>
 </Project>

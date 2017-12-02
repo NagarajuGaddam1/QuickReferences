@@ -1,0 +1,144 @@
+.Postcard {
+    width: 80%;
+    max-width: 800px;
+    background: #fdfdfd;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 15px;
+    text-align: left;
+    padding: 0;
+    display: block;
+    margin: 30px auto;
+    &.JavaScript {
+        .Postcard {
+            &-Header {
+                background: rgba(#fcf6de, 0.80);
+                &-Type {
+                    background: rgba(#f1c40f, 0.25);
+                }
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+            &-Tag {
+                border: 1px solid rgba(#f1c40f, 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+    &.HTML5 {
+        .Postcard {
+            &-Header {
+                background: rgba(#fbede0, 0.80);
+                &-Type {
+                    background: darken(#fbede0, 2);
+                }
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+            &-Tag {
+                border: 1px solid rgba(darken(#fbede0, 20), 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+    &.SCSS {
+        .Postcard {
+            &-Header {
+                background: rgba(#fdf3f2, 0.80);
+                &-Type {
+                    background: darken(#fdf3f2, 2);
+                }
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+            &-Tag {
+                border: 1px solid rgba(darken(#fdf3f2, 20), 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+    &-Header {
+        padding: 0 15px 15px 15px;
+        background: rgba(69, 142, 209, 0.1);
+        &-Type {
+            font-size: x-small;
+            font-weight: normal; 
+            display: inline-block;
+            background: rgba(69, 142, 209, 0.1);
+            padding: 5px 10px;
+            margin: 15px 0 10px 0;
+        }
+        &-Meta {
+            margin: 0;
+            font-weight: normal;
+            font-size: x-small;
+            padding: 5px 0;
+            display: inline-block;
+
+            &-User {
+                color: rgba(#0073c6, 1);
+                text-decoration: underline;
+            }
+        }
+        &-Logo {
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    }
+    
+    &-Content {
+        padding: 0 15px 0 15px;
+        h3 {
+            margin: 15px 0 10px 0;
+            padding: 0;
+            width: 100%;
+            display: block;
+        }
+        pre {
+            padding: 10px 0;
+            font-size: 0.8em;
+            code {
+                border-left: none;
+                box-shadow: none;
+                &:after,
+                &:before {
+                    display: none;
+                }
+            }
+        }
+        &-Item {
+            &-Text {
+                font-size: small;
+                color: #303030;
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    &-Tag {
+        border: 1px solid rgba(69, 142, 209, 0.5);
+        color: rgba(#300330, 0.75);
+        font-size: x-small;
+        display: inline-block;
+        padding: 1px 5px;
+        margin: 0 5px 0 0;
+        &:first-child {
+            margin-left: 5px;
+        }
+        &-Container {
+            // border-top: 1px solid rgba(69, 142, 209, 0.1);
+            display: block;
+            padding-top: 5px;
+            font-size: x-small;
+        }
+    }
+}
