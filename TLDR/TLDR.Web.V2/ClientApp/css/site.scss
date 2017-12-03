@@ -1,0 +1,423 @@
+.main-nav li .glyphicon {
+    margin-right: 10px;
+}
+
+/* Highlighting rules for nav menu items */
+.main-nav li a.active,
+.main-nav li a.active:hover,
+.main-nav li a.active:focus {
+    background-color: #4189C7;
+    color: white;
+}
+
+/* Keep the nav menu independent of scrolling and on top of other items */
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+@media (max-width: 767px) {
+    /* On small screens, the nav menu spans the full width of the screen. Leave a space for it. */
+    body {
+        padding-top: 50px;
+    }
+}
+
+@media (min-width: 768px) {
+    /* On small screens, convert the nav menu to a vertical sidebar */
+    .main-nav {
+        height: 100%;
+        width: calc(25% - 20px);
+    }
+    .main-nav .navbar {
+        border-radius: 0px;
+        border-width: 0px;
+        height: 100%;
+    }
+    .main-nav .navbar-header {
+        float: none;
+    }
+    .main-nav .navbar-collapse {
+        border-top: 1px solid #444;
+        padding: 0px;
+    }
+    .main-nav .navbar ul {
+        float: none;
+    }
+    .main-nav .navbar li {
+        float: none;
+        font-size: 15px;
+        margin: 6px;
+    }
+    .main-nav .navbar li a {
+        padding: 10px 16px;
+        border-radius: 4px;
+    }
+    .main-nav .navbar a {
+        /* If a menu item's text is too long, truncate it */
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+}
+
+h1 {
+    &.title {
+        color: #0073c6;
+    }
+}
+
+.PlaylistPan {
+    top: 0;
+    position: fixed;
+    z-index: 999;
+    text-align: left;
+    height: 245px;
+    width: 100%;
+    overflow: hidden;
+    padding: 10px 40px 10px 40px;
+    background: lighten(#d7edff, 5);
+    box-sizing: border-box;
+    box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.15);
+    transition: transform 0.3s linear 0s;
+
+    &.non-sticky {
+        transform: translateY(-100%);
+    }
+
+    label.title {
+        line-height: 66px;
+        font-size: x-large;
+        font-weight: 100;
+    }
+
+    &-Chevron {
+        position: absolute;
+        top: 120px;
+        cursor: pointer;
+
+        &.Left {
+            left: 0;
+        }
+
+        &.Right {
+            right: 0;
+        }
+
+        i {
+            width: 30px;
+            text-align: center;
+            line-height: 60px;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background: rgba(0,0,0,0.05);
+            }
+        }
+    }
+
+    &-Holder {
+        width: 100%;
+        height: calc(100% + 60px);
+        overflow-x: scroll;
+        overflow-y: hidden;
+        white-space: nowrap;
+        padding: 10px 2px;
+        box-sizing: border-box;
+    }
+
+    &-Item {
+        background: #fff;
+        margin-right: 15px;
+        display: inline-block;
+        height: 135px;
+        padding: 10px 20px 10px 12px;
+        border-top: 5px solid transparent;
+        position: relative;
+        cursor: pointer;
+        box-sizing: border-box;
+        box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.25);
+        vertical-align: top;
+        min-width: 250px;
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &-Logo {
+            max-height: 24px;
+            display: block;
+            max-width: 24px;
+            margin-bottom: 15px;
+        }
+
+        &-Title {
+            font-size: small;
+            width: 100%;
+            display: block;
+            padding: 10px 0;
+            box-sizing: border-box;
+            white-space: normal;
+            max-width: 240px;
+        }
+
+        &.active {
+            background: #fff;
+            border-top: 5px solid #0073c6;
+
+            &.JavaScript {
+                border-top-color: #f1c40f;
+                background: lighten(#f1c40f, 47);
+
+                .Postcard-Tag {
+                    border: 1px solid rgba(#f1c40f, 0.5);
+                }
+            }
+
+            &.HTML5 {
+                border-top-color: #e74c3c;
+                background: lighten(#e74c3c, 42);
+
+                .Postcard-Tag {
+                    border: 1px solid rgba(darken(#fbede0, 20), 0.5);
+                }
+            }
+
+            &.SCSS {
+                border-top-color: #9b59b6;
+                background: lighten(#9b59b6, 45);
+
+                .Postcard-Tag {
+                    border: 1px solid rgba(#9b59b6, 0.5);
+                }
+            }
+
+            &.CSS {
+                border-top-color: #3498db;
+                background: rgba(69, 142, 209, 0.05);
+
+                .Postcard-Tag {
+                    border: 1px solid rgba(69, 142, 209, 0.5);
+                }
+            }
+
+            .Playlist-Item-Title {
+                font-weight: bold;
+            }
+        }
+    }
+
+    .Postcard-Tag {
+        border: 1px solid rgba(69, 142, 209, 0.5);
+        color: rgba(#300330, 0.75);
+        font-size: small;
+        font-weight: normal;
+        display: inline-block;
+        padding: 1px 5px;
+        margin: 0 5px 0 0;
+
+        &:first-child {
+            margin-left: 5px;
+        }
+
+        &-Container {
+            // border-top: 1px solid rgba(69, 142, 209, 0.1);
+            display: block;
+            padding-top: 5px;
+            font-size: x-small;
+        }
+    }
+}
+
+.Postcard {
+    width: 80%;
+    max-width: 800px;
+    background: #fdfdfd;
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
+    margin: 15px;
+    text-align: left;
+    padding: 0;
+    display: block;
+    margin: 30px auto;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.20);
+
+    &.JavaScript {
+        .Postcard {
+            &-Header {
+                background: lighten(#f1c40f, 45);
+
+                &-Type {
+                    background: rgba(#f1c40f, 0.25);
+                }
+
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+
+            &-Tag {
+                border: 1px solid rgba(#f1c40f, 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+
+    &.HTML5 {
+        .Postcard {
+            &-Header {
+                background: lighten(#e74c3c, 42);
+
+                &-Type {
+                    background: darken(#fbede0, 2);
+                }
+
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+
+            &-Tag {
+                border: 1px solid rgba(darken(#fbede0, 20), 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+
+    &.SCSS {
+        .Postcard {
+            &-Header {
+                background: lighten(#9b59b6, 45);
+
+                &-Type {
+                    background: darken(#fdf3f2, 2);
+                }
+
+                &-Meta {
+                    &-User {
+                        color: rgba(#0073c6, 1);
+                    }
+                }
+            }
+
+            &-Tag {
+                border: 1px solid rgba(darken(#fdf3f2, 20), 0.5);
+                color: rgba(#300330, 0.75);
+            }
+        }
+    }
+
+    &-Header {
+        padding: 15px 30px 30px 30px;
+        background: rgba(69, 142, 209, 0.05);
+
+        &-Type {
+            font-size: small;
+            font-weight: 500;
+            display: inline-block;
+            background: rgba(69, 142, 209, 0.1);
+            padding: 5px 10px;
+            margin: 15px 0 10px 0;
+        }
+
+        &-Meta {
+            margin: 0;
+            font-weight: normal;
+            font-size: small;
+            padding: 5px 0;
+            display: inline-block;
+
+            &-User {
+                color: rgba(#0073c6, 1);
+                text-decoration: underline;
+            }
+        }
+
+        &-Logo {
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+    }
+
+    &-Content {
+        padding: 0 30px 15px 30px;
+
+        h3 {
+            margin: 0;
+            padding: 25px 0;
+            width: 100%;
+            display: block;
+        }
+
+        pre {
+            padding: 10px 0;
+            font-size: 0.8em;
+            border: none;
+
+            &:after,
+            &:before {
+                display: none;
+            }
+
+            code {
+                border-left: none;
+                box-shadow: none;
+
+                &:after,
+                &:before {
+                    display: none;
+                }
+            }
+        }
+
+        &-Item {
+            &-Text {
+                font-size: small;
+                color: #303030;
+                white-space: pre-wrap;
+            }
+        }
+    }
+
+    &-Tag {
+        border: 1px solid rgba(69, 142, 209, 0.5);
+        color: rgba(#300330, 0.75);
+        font-size: small;
+        font-weight: normal;
+        display: inline-block;
+        padding: 1px 5px;
+        margin: 0 5px 0 0;
+
+        &:first-child {
+            margin-left: 5px;
+        }
+
+        &-Container {
+            // border-top: 1px solid rgba(69, 142, 209, 0.1);
+            display: block;
+            padding-top: 5px;
+            font-size: x-small;
+        }
+    }
+}
+
+.PostsHolder {
+    width: 100%;
+    margin-top: 268px;
+}
