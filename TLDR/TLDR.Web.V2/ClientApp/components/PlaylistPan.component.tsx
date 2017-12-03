@@ -45,12 +45,24 @@ export class PlaylistPan extends React.Component<OwnProps, OwnState> {
 		let ticking1 = false;
 		let ticking2 = false;
 		let stickyHeader = true;
-		let init = false;
+        let init = false;
+        let headerIsPinned = false;
+        const headerPinner = document.querySelector('[data-tag="pannable-playlist-pin"]');
+        if (headerPinner) {
+            headerPinner.addEventListener('click', () => {
+                headerIsPinned = !headerIsPinned;
+                if (headerIsPinned) {
+                    headerPinner.classList.add('pinned');
+                } else {
+                    headerPinner.classList.remove('pinned');
+                }
+            });
+        }
 		const holder: Element | null = document.querySelector('.PostsHolder');
 		const onScroll = function() {
 			if (init) {
 				if (window.scrollY > lastKnownScrollPosition) {
-					if (stickyHeader) {
+                    if (stickyHeader && !headerIsPinned) {
 						if (holder) {
 							const props: ClientRect  = holder.getBoundingClientRect();
 							if (props && props.top && props.top < 0) {
@@ -119,7 +131,6 @@ export class PlaylistPan extends React.Component<OwnProps, OwnState> {
 	}
 	render() {
 		const { posts, title } = this.props;
-		// posts[0].active = true;
 		const postsCollection = posts.map((post: Post, index: number) => {
 			let postLogo = '';
 			let postType = '';
@@ -145,7 +156,11 @@ export class PlaylistPan extends React.Component<OwnProps, OwnState> {
 		});
 		const itemsLengthMarkup = posts.length > 0 ? `(${posts.length})` : '';
 		return (
-			<div className="PlaylistPan" data-tag="pannable-playlist">
+            <div className="PlaylistPan" data-tag="pannable-playlist">
+                <div className="PlaylistPan-Pin" data-tag="pannable-playlist-pin">
+                    <i className="ms-Icon ms-Icon--Pin" aria-hidden="true"></i>
+                    <i className="ms-Icon ms-Icon--Pinned" aria-hidden="true"></i>
+                </div>
 				<label className="title">{title} {itemsLengthMarkup}</label>
 				<div className="PlaylistPan-Chevron Left">
 					<i className="ms-Icon ms-Icon--ChevronLeftMed" aria-hidden="true" />
