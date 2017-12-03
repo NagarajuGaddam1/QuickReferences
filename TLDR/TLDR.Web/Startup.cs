@@ -33,12 +33,12 @@ namespace TLDR.Web
             ConfigureAuthServices(services);
             services.AddMvc();
             //Add our repository type
-            services.AddSingleton<IPostItemRepository, PostItemRepository>();
-            services.AddSingleton<IAuthorItemRepository, AuthorItemRepository>();
+                services.AddSingleton<IPostItemRepository, PostItemRepository>();
+                services.AddSingleton<IAuthorItemRepository, AuthorItemRepository>();
 
-            //Add our service type
-            services.AddSingleton<IAuthorItemService, AuthorItemService>();
-            services.AddSingleton<IPostItemService, PostItemService>();
+                //Add our service type
+                services.AddSingleton<IAuthorItemService, AuthorItemService>();
+                services.AddSingleton<IPostItemService, PostItemService>();
 
             //Register the Swagger generator, defining one or more Swagger documents
             services.AddSwaggerGen(c =>

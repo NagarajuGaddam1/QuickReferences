@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Author";
+}
+<script src="~/dist/js/lib.min.js"></script>
+<script src="~/dist/js/app.extensions.min.js"></script>
+<script src="~/dist/js/app.author.min.js"></script>
+<div class="container-fluid" ng-csp ng-app="QR.Web.Author">
+    <div class="row h100" ng-controller="AppController as app">
+        <div class="authoring-loader-holder" ng-show="app.shared.showLoader">
+            <div class="authoring-loader-bg">
+                <div class="authoring-loader-entity">
+                    <md-progress-circular md-diameter="60"></md-progress-circular>
+                </div>
+            </div>
+        </div>
+        <div ng-include="'templates/author/header.tmpl.html'"></div>
+        <div class="content-body authoring" id="contentBody">
+            <div class="content-body-container authoring" ui-view></div>
+        </div>
+    </div>
+</div>
+<a class="jump-link" href="/Home">Dashboard</a>
